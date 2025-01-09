@@ -1,0 +1,10 @@
+# qdc caras channel:AGLAEA
+1:QDC4:AGLAEA
+# qdc caras channel:MrBig
+2:QDC4:MrBig
+# qdc caras channel:TETRA_ORall
+7:QDC4:TETRA_ORall
+# adc mosahr channel trapezoid:R3A1_green
+27:ADC1:R3A1_green
+# rf caras channel:Beam
+251:RF:Beam

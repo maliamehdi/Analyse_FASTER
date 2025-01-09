@@ -1,0 +1,468 @@
+# qdc caras channel:R3A1_BGO1
+23:QDC1:R3A1_BGO1
+# qdc caras channel:R3A1_BGO2
+24:QDC1:R3A1_BGO2
+# adc mosahr channel trapezoid:R3A1_red
+25:TRAPEZ_SPECTRO:R3A1_red
+# adc mosahr channel trapezoid:R3A1_green
+26:TRAPEZ_SPECTRO:R3A1_green
+# adc mosahr channel trapezoid:R3A1_black
+27:TRAPEZ_SPECTRO:R3A1_black
+# adc mosahr channel trapezoid:R3A1_blue
+28:TRAPEZ_SPECTRO:R3A1_blue
+# qdc caras channel:R3A2_BGO1
+29:QDC1:R3A2_BGO1
+# qdc caras channel:R3A2_BGO2
+30:QDC1:R3A2_BGO2
+# adc mosahr channel trapezoid:R3A2_red
+31:TRAPEZ_SPECTRO:R3A2_red
+# adc mosahr channel trapezoid:R3A2_green
+32:TRAPEZ_SPECTRO:R3A2_green
+# adc mosahr channel trapezoid:R3A2_black
+33:TRAPEZ_SPECTRO:R3A2_black
+# adc mosahr channel trapezoid:R3A2_blue
+34:TRAPEZ_SPECTRO:R3A2_blue
+# qdc caras channel:R3A3_BGO1
+35:QDC1:R3A3_BGO1
+# qdc caras channel:R3A3_BGO2
+36:QDC1:R3A3_BGO2
+# adc mosahr channel trapezoid:R3A3_red
+37:TRAPEZ_SPECTRO:R3A3_red
+# adc mosahr channel trapezoid:R3A3_green
+38:TRAPEZ_SPECTRO:R3A3_green
+# adc mosahr channel trapezoid:R3A3_black
+39:TRAPEZ_SPECTRO:R3A3_black
+# adc mosahr channel trapezoid:R3A3_blue
+40:TRAPEZ_SPECTRO:R3A3_blue
+# qdc caras channel:R3A4_BGO1
+41:QDC1:R3A4_BGO1
+# qdc caras channel:R3A4_BGO2
+42:QDC1:R3A4_BGO2
+# adc mosahr channel trapezoid:R3A4_red
+43:TRAPEZ_SPECTRO:R3A4_red
+# adc mosahr channel trapezoid:R3A4_green
+44:TRAPEZ_SPECTRO:R3A4_green
+# adc mosahr channel trapezoid:R3A4_black
+45:TRAPEZ_SPECTRO:R3A4_black
+# adc mosahr channel trapezoid:R3A4_blue
+46:TRAPEZ_SPECTRO:R3A4_blue
+# qdc caras channel:R3A5_BGO1
+47:QDC1:R3A5_BGO1
+# qdc caras channel:R3A5_BGO2
+48:QDC1:R3A5_BGO2
+# adc mosahr channel trapezoid:R3A5_red
+49:TRAPEZ_SPECTRO:R3A5_red
+# adc mosahr channel trapezoid:R3A5_green
+50:TRAPEZ_SPECTRO:R3A5_green
+# adc mosahr channel trapezoid:R3A5_black
+51:TRAPEZ_SPECTRO:R3A5_black
+# adc mosahr channel trapezoid:R3A5_blue
+52:TRAPEZ_SPECTRO:R3A5_blue
+# qdc caras channel:R3A6_BGO1
+53:QDC1:R3A6_BGO1
+# qdc caras channel:R3A6_BGO2
+54:QDC1:R3A6_BGO2
+# adc mosahr channel trapezoid:R3A6_red
+55:TRAPEZ_SPECTRO:R3A6_red
+# adc mosahr channel trapezoid:R3A6_green
+56:TRAPEZ_SPECTRO:R3A6_green
+# adc mosahr channel trapezoid:R3A6_black
+57:TRAPEZ_SPECTRO:R3A6_black
+# adc mosahr channel trapezoid:R3A6_blue
+58:TRAPEZ_SPECTRO:R3A6_blue
+# qdc caras channel:R3A7_BGO1
+59:QDC1:R3A7_BGO1
+# qdc caras channel:R3A7_BGO2
+60:QDC1:R3A7_BGO2
+# adc mosahr channel trapezoid:R3A7_red
+61:TRAPEZ_SPECTRO:R3A7_red
+# adc mosahr channel trapezoid:R3A7_green
+62:TRAPEZ_SPECTRO:R3A7_green
+# adc mosahr channel trapezoid:R3A7_black
+63:TRAPEZ_SPECTRO:R3A7_black
+# adc mosahr channel trapezoid:R3A7_blue
+64:TRAPEZ_SPECTRO:R3A7_blue
+# qdc caras channel:R3A8_BGO1
+65:QDC1:R3A8_BGO1
+# qdc caras channel:R3A8_BGO2
+66:QDC1:R3A8_BGO2
+# adc mosahr channel trapezoid:R3A8_red
+67:TRAPEZ_SPECTRO:R3A8_red
+# adc mosahr channel trapezoid:R3A8_green
+68:TRAPEZ_SPECTRO:R3A8_green
+# adc mosahr channel trapezoid:R3A8_black
+69:TRAPEZ_SPECTRO:R3A8_black
+# adc mosahr channel trapezoid:R3A8_blue
+70:TRAPEZ_SPECTRO:R3A8_blue
+# qdc caras channel:R3A9_BGO1
+71:QDC1:R3A9_BGO1
+# qdc caras channel:R3A9_BGO2
+72:QDC1:R3A9_BGO2
+# adc mosahr channel trapezoid:R3A9_red
+73:TRAPEZ_SPECTRO:R3A9_red
+# adc mosahr channel trapezoid:R3A9_green
+74:TRAPEZ_SPECTRO:R3A9_green
+# adc mosahr channel trapezoid:R3A9_black
+75:TRAPEZ_SPECTRO:R3A9_black
+# adc mosahr channel trapezoid:R3A9_blue
+76:TRAPEZ_SPECTRO:R3A9_blue
+# qdc caras channel:R3A12_BGO1
+89:QDC1:R3A12_BGO1
+# qdc caras channel:R3A12_BGO2
+90:QDC1:R3A12_BGO2
+# adc mosahr channel trapezoid:R3A12_red
+91:TRAPEZ_SPECTRO:R3A12_red
+# adc mosahr channel trapezoid:R3A12_green
+92:TRAPEZ_SPECTRO:R3A12_green
+# adc mosahr channel trapezoid:R3A12_black
+93:TRAPEZ_SPECTRO:R3A12_black
+# adc mosahr channel trapezoid:R3A12_blue
+94:TRAPEZ_SPECTRO:R3A12_blue
+# qdc caras channel:R2A1_BGO1
+95:QDC1:R2A1_BGO1
+# qdc caras channel:R2A1_BGO2
+96:QDC1:R2A1_BGO2
+# adc mosahr channel trapezoid:R2A1_red
+97:TRAPEZ_SPECTRO:R2A1_red
+# adc mosahr channel trapezoid:R2A1_green
+98:TRAPEZ_SPECTRO:R2A1_green
+# adc mosahr channel trapezoid:R2A1_black
+99:TRAPEZ_SPECTRO:R2A1_black
+# adc mosahr channel trapezoid:R2A1_blue
+100:TRAPEZ_SPECTRO:R2A1_blue
+# qdc caras channel:R2A2_BGO1
+101:QDC1:R2A2_BGO1
+# qdc caras channel:R2A2_BGO2
+102:QDC1:R2A2_BGO2
+# adc mosahr channel trapezoid:R2A2_red
+103:TRAPEZ_SPECTRO:R2A2_red
+# adc mosahr channel trapezoid:R2A2_green
+104:TRAPEZ_SPECTRO:R2A2_green
+# adc mosahr channel trapezoid:R2A2_black
+105:TRAPEZ_SPECTRO:R2A2_black
+# adc mosahr channel trapezoid:R2A2_blue
+106:TRAPEZ_SPECTRO:R2A2_blue
+# qdc caras channel:R2A3_BGO1
+107:QDC1:R2A3_BGO1
+# qdc caras channel:R2A3_BGO2
+108:QDC1:R2A3_BGO2
+# adc mosahr channel trapezoid:R2A3_red
+109:TRAPEZ_SPECTRO:R2A3_red
+# adc mosahr channel trapezoid:R2A3_green
+110:TRAPEZ_SPECTRO:R2A3_green
+# adc mosahr channel trapezoid:R2A3_black
+111:TRAPEZ_SPECTRO:R2A3_black
+# adc mosahr channel trapezoid:R2A3_blue
+112:TRAPEZ_SPECTRO:R2A3_blue
+# qdc caras channel:R2A4_BGO1
+113:QDC1:R2A4_BGO1
+# qdc caras channel:R2A4_BGO2
+114:QDC1:R2A4_BGO2
+# adc mosahr channel trapezoid:R2A4_red
+115:TRAPEZ_SPECTRO:R2A4_red
+# adc mosahr channel trapezoid:R2A4_green
+116:TRAPEZ_SPECTRO:R2A4_green
+# adc mosahr channel trapezoid:R2A4_black
+117:TRAPEZ_SPECTRO:R2A4_black
+# adc mosahr channel trapezoid:R2A4_blue
+118:TRAPEZ_SPECTRO:R2A4_blue
+# qdc caras channel:R2A5_BGO1
+119:QDC1:R2A5_BGO1
+# qdc caras channel:R2A5_BGO2
+120:QDC1:R2A5_BGO2
+# adc mosahr channel trapezoid:R2A5_red
+121:TRAPEZ_SPECTRO:R2A5_red
+# adc mosahr channel trapezoid:R2A5_green
+122:TRAPEZ_SPECTRO:R2A5_green
+# adc mosahr channel trapezoid:R2A5_black
+123:TRAPEZ_SPECTRO:R2A5_black
+# adc mosahr channel trapezoid:R2A5_blue
+124:TRAPEZ_SPECTRO:R2A5_blue
+# qdc caras channel:R2A6_BGO1
+125:QDC1:R2A6_BGO1
+# qdc caras channel:R2A6_BGO2
+126:QDC1:R2A6_BGO2
+# adc mosahr channel trapezoid:R2A6_red
+127:TRAPEZ_SPECTRO:R2A6_red
+# adc mosahr channel trapezoid:R2A6_green
+128:TRAPEZ_SPECTRO:R2A6_green
+# adc mosahr channel trapezoid:R2A6_black
+129:TRAPEZ_SPECTRO:R2A6_black
+# adc mosahr channel trapezoid:R2A6_blue
+130:TRAPEZ_SPECTRO:R2A6_blue
+# qdc caras channel:R2A7_BGO1
+131:QDC1:R2A7_BGO1
+# qdc caras channel:R2A7_BGO2
+132:QDC1:R2A7_BGO2
+# adc mosahr channel trapezoid:R2A7_red
+133:TRAPEZ_SPECTRO:R2A7_red
+# adc mosahr channel trapezoid:R2A7_green
+134:TRAPEZ_SPECTRO:R2A7_green
+# adc mosahr channel trapezoid:R2A7_black
+135:TRAPEZ_SPECTRO:R2A7_black
+# adc mosahr channel trapezoid:R2A7_blue
+136:TRAPEZ_SPECTRO:R2A7_blue
+# qdc caras channel:R2A8_BGO1
+137:QDC1:R2A8_BGO1
+# qdc caras channel:R2A8_BGO2
+138:QDC1:R2A8_BGO2
+# adc mosahr channel trapezoid:R2A8_red
+139:TRAPEZ_SPECTRO:R2A8_red
+# adc mosahr channel trapezoid:R2A8_green
+140:TRAPEZ_SPECTRO:R2A8_green
+# adc mosahr channel trapezoid:R2A8_black
+141:TRAPEZ_SPECTRO:R2A8_black
+# adc mosahr channel trapezoid:R2A8_blue
+142:TRAPEZ_SPECTRO:R2A8_blue
+# qdc caras channel:R2A9_BGO1
+143:QDC1:R2A9_BGO1
+# qdc caras channel:R2A9_BGO2
+144:QDC1:R2A9_BGO2
+# adc mosahr channel trapezoid:R2A9_red
+145:TRAPEZ_SPECTRO:R2A9_red
+# adc mosahr channel trapezoid:R2A9_green
+146:TRAPEZ_SPECTRO:R2A9_green
+# adc mosahr channel trapezoid:R2A9_black
+147:TRAPEZ_SPECTRO:R2A9_black
+# adc mosahr channel trapezoid:R2A9_blue
+148:TRAPEZ_SPECTRO:R2A9_blue
+# qdc caras channel:R2A10_BGO1
+149:QDC1:R2A10_BGO1
+# qdc caras channel:R2A10_BGO2
+150:QDC1:R2A10_BGO2
+# adc mosahr channel trapezoid:R2A10_red
+151:TRAPEZ_SPECTRO:R2A10_red
+# adc mosahr channel trapezoid:R2A10_green
+152:TRAPEZ_SPECTRO:R2A10_green
+# adc mosahr channel trapezoid:R2A10_black
+153:TRAPEZ_SPECTRO:R2A10_black
+# adc mosahr channel trapezoid:R2A10_blue
+154:TRAPEZ_SPECTRO:R2A10_blue
+# qdc caras channel:R2A12_BGO1
+161:QDC1:R2A12_BGO1
+# qdc caras channel:R2A12_BGO2
+162:QDC1:R2A12_BGO2
+# adc mosahr channel trapezoid:R2A12_red
+163:TRAPEZ_SPECTRO:R2A12_red
+# adc mosahr channel trapezoid:R2A12_green
+164:TRAPEZ_SPECTRO:R2A12_green
+# adc mosahr channel trapezoid:R2A12_black
+165:TRAPEZ_SPECTRO:R2A12_black
+# adc mosahr channel trapezoid:R2A12_blue
+166:TRAPEZ_SPECTRO:R2A12_blue
+# qdc caras channel:R2A11_BGO1
+155:QDC1:R2A11_BGO1
+# qdc caras channel:R2A11_BGO2
+156:QDC1:R2A11_BGO2
+# adc mosahr channel trapezoid:R2A11_red
+157:TRAPEZ_SPECTRO:R2A11_red
+# adc mosahr channel trapezoid:R2A11_green
+158:TRAPEZ_SPECTRO:R2A11_green
+# adc mosahr channel trapezoid:R2A11_black
+159:TRAPEZ_SPECTRO:R2A11_black
+# adc mosahr channel trapezoid:R2A11_blue
+160:TRAPEZ_SPECTRO:R2A11_blue
+# qdc caras channel:R3A10_BGO1
+77:QDC1:R3A10_BGO1
+# qdc caras channel:R3A10_BGO2
+78:QDC1:R3A10_BGO2
+# adc mosahr channel trapezoid:R3A10_red
+79:TRAPEZ_SPECTRO:R3A10_red
+# adc mosahr channel trapezoid:R3A10_green
+80:TRAPEZ_SPECTRO:R3A10_green
+# adc mosahr channel trapezoid:R3A10_black
+81:TRAPEZ_SPECTRO:R3A10_black
+# adc mosahr channel trapezoid:R3A10_blue
+82:TRAPEZ_SPECTRO:R3A10_blue
+# qdc caras channel:R3A11_BGO1
+83:QDC1:R3A11_BGO1
+# qdc caras channel:R3A11_BGO2
+84:QDC1:R3A11_BGO2
+# adc mosahr channel trapezoid:R3A11_red
+85:TRAPEZ_SPECTRO:R3A11_red
+# adc mosahr channel trapezoid:R3A11_green
+86:TRAPEZ_SPECTRO:R3A11_green
+# adc mosahr channel trapezoid:R3A11_black
+87:TRAPEZ_SPECTRO:R3A11_black
+# adc mosahr channel trapezoid:R3A11_blue
+88:TRAPEZ_SPECTRO:R3A11_blue
+# qdc caras channel:PARIS_BR1D5
+205:QDC2:PARIS_BR1D5
+# qdc caras channel:PARIS_BR1D6
+206:QDC2:PARIS_BR1D6
+# qdc caras channel:PARIS_BR1D7
+207:QDC2:PARIS_BR1D7
+# qdc caras channel:PARIS_BR1D8
+208:QDC2:PARIS_BR1D8
+# qdc caras channel:PARIS_BR2D1
+301:QDC2:PARIS_BR2D1
+# qdc caras channel:PARIS_BR2D2
+302:QDC2:PARIS_BR2D2
+# qdc caras channel:PARIS_BR2D3
+303:QDC2:PARIS_BR2D3
+# qdc caras channel:PARIS_BR2D4
+304:QDC2:PARIS_BR2D4
+# qdc caras channel:PARIS_BR2D5
+305:QDC2:PARIS_BR2D5
+# qdc caras channel:PARIS_BR2D6
+306:QDC2:PARIS_BR2D6
+# qdc caras channel:PARIS_BR2D7
+307:QDC2:PARIS_BR2D7
+# qdc caras channel:PARIS_BR2D8
+308:QDC2:PARIS_BR2D8
+# qdc caras channel:PARIS_BR2D9
+309:QDC2:PARIS_BR2D9
+# qdc caras channel:PARIS_BR2D10
+310:QDC2:PARIS_BR2D10
+# qdc caras channel:PARIS_BR2D11
+311:QDC2:PARIS_BR2D11
+# qdc caras channel:PARIS_BR2D12
+312:QDC2:PARIS_BR2D12
+# qdc caras channel:PARIS_BR2D13
+313:QDC2:PARIS_BR2D13
+# qdc caras channel:PARIS_BR2D14
+314:QDC2:PARIS_BR2D14
+# qdc caras channel:PARIS_BR2D15
+315:QDC2:PARIS_BR2D15
+# qdc caras channel:PARIS_BR2D16
+316:QDC2:PARIS_BR2D16
+# qdc caras channel:PARIS_FR1D1
+501:QDC2:PARIS_FR1D1
+# qdc caras channel:PARIS_FR1D2
+502:QDC2:PARIS_FR1D2
+# qdc caras channel:PARIS_FR1D3
+503:QDC2:PARIS_FR1D3
+# qdc caras channel:PARIS_FR1D4
+504:QDC2:PARIS_FR1D4
+# qdc caras channel:PARIS_FR1D5
+505:QDC2:PARIS_FR1D5
+# qdc caras channel:PARIS_FR1D6
+506:QDC2:PARIS_FR1D6
+# qdc caras channel:PARIS_FR1D7
+507:QDC2:PARIS_FR1D7
+# qdc caras channel:PARIS_FR1D8
+508:QDC2:PARIS_FR1D8
+# qdc caras channel:PARIS_FR2D1
+601:QDC2:PARIS_FR2D1
+# qdc caras channel:PARIS_FR2D2
+602:QDC2:PARIS_FR2D2
+# qdc caras channel:PARIS_FR2D3
+603:QDC2:PARIS_FR2D3
+# qdc caras channel:PARIS_FR2D4
+604:QDC2:PARIS_FR2D4
+# qdc caras channel:PARIS_FR2D5
+605:QDC2:PARIS_FR2D5
+# qdc caras channel:PARIS_FR2D6
+606:QDC2:PARIS_FR2D6
+# qdc caras channel:PARIS_FR2D7
+607:QDC2:PARIS_FR2D7
+# qdc caras channel:PARIS_FR2D8
+608:QDC2:PARIS_FR2D8
+# qdc caras channel:PARIS_FR2D9
+609:QDC2:PARIS_FR2D9
+# qdc caras channel:PARIS_FR2D10
+610:QDC2:PARIS_FR2D10
+# qdc caras channel:PARIS_FR2D11
+611:QDC2:PARIS_FR2D11
+# qdc caras channel:PARIS_FR2D12
+612:QDC2:PARIS_FR2D12
+# qdc caras channel:PARIS_FR2D13
+613:QDC2:PARIS_FR2D13
+# qdc caras channel:PARIS_FR2D14
+614:QDC2:PARIS_FR2D14
+# qdc caras channel:PARIS_FR2D15
+615:QDC2:PARIS_FR2D15
+# qdc caras channel:PARIS_FR2D16
+616:QDC2:PARIS_FR2D16
+# qdc caras channel:PARIS_FR3D1
+701:QDC2:PARIS_FR3D1
+# qdc caras channel:PARIS_FR3D2
+702:QDC2:PARIS_FR3D2
+# qdc caras channel:PARIS_FR3D3
+703:QDC2:PARIS_FR3D3
+# qdc caras channel:PARIS_FR3D4
+704:QDC2:PARIS_FR3D4
+# qdc caras channel:PARIS_FR3D5
+705:QDC2:PARIS_FR3D5
+# qdc caras channel:PARIS_FR3D6
+706:QDC2:PARIS_FR3D6
+# qdc caras channel:PARIS_FR3D7
+707:QDC2:PARIS_FR3D7
+# qdc caras channel:PARIS_FR3D8
+708:QDC2:PARIS_FR3D8
+# qdc caras channel:PARIS_FR3D9
+709:QDC2:PARIS_FR3D9
+# qdc caras channel:PARIS_FR3D10
+710:QDC2:PARIS_FR3D10
+# qdc caras channel:PARIS_FR3D11
+711:QDC2:PARIS_FR3D11
+# qdc caras channel:PARIS_FR3D12
+712:QDC2:PARIS_FR3D12
+# qdc caras channel:PARIS_BR3D1
+401:QDC2:PARIS_BR3D1
+# qdc caras channel:PARIS_BR3D2
+402:QDC2:PARIS_BR3D2
+# qdc caras channel:PARIS_BR3D3
+403:QDC2:PARIS_BR3D3
+# qdc caras channel:PARIS_BR3D4
+404:QDC2:PARIS_BR3D4
+# qdc caras channel:PARIS_BR3D5
+405:QDC2:PARIS_BR3D5
+# qdc caras channel:PARIS_BR3D6
+406:QDC2:PARIS_BR3D6
+# qdc caras channel:PARIS_BR3D7
+407:QDC2:PARIS_BR3D7
+# qdc caras channel:PARIS_BR3D8
+408:QDC2:PARIS_BR3D8
+# qdc caras channel:PARIS_BR3D9
+409:QDC2:PARIS_BR3D9
+# qdc caras channel:PARIS_BR3D10
+410:QDC2:PARIS_BR3D10
+# qdc caras channel:PARIS_BR3D11
+411:QDC2:PARIS_BR3D11
+# qdc caras channel:PARIS_BR3D12
+412:QDC2:PARIS_BR3D12
+# qdc caras channel:PARIS_BR1D1
+201:QDC2:PARIS_BR1D1
+# qdc caras channel:PARIS_BR1D2
+202:QDC2:PARIS_BR1D2
+# qdc caras channel:PARIS_BR1D3
+203:QDC2:PARIS_BR1D3
+# qdc caras channel:PARIS_BR1D4
+204:QDC2:PARIS_BR1D4
+# sampler channel:Cath
+1:SAMPLER:Cath
+# sampler channel:Thalia
+725:SAMPLER:Thalia
+# sampler channel:DCath2
+902:SAMPLER:DCath2
+# sampler channel:BAnod1
+2:SAMPLER:BAnod1
+# sampler channel:DCath3
+903:SAMPLER:DCath3
+# sampler channel:BAnod2
+3:SAMPLER:BAnod2
+# sampler channel:DCath4
+904:SAMPLER:DCath4
+# sampler channel:BGrid1
+4:SAMPLER:BGrid1
+# sampler channel:DCath5
+905:SAMPLER:DCath5
+# sampler channel:BGrid2
+5:SAMPLER:BGrid2
+# sampler channel:DCath6
+906:SAMPLER:DCath6
+# sampler channel:FAnod1
+6:SAMPLER:FAnod1
+# sampler channel:DCath7
+907:SAMPLER:DCath7
+# sampler channel:FAnod2
+7:SAMPLER:FAnod2
+# sampler channel:DCath8
+908:SAMPLER:DCath8
+# sampler channel:FGrid1
+8:SAMPLER:FGrid1
+# sampler channel:DCath9
+909:SAMPLER:DCath9
+# sampler channel:FGrid2
+9:SAMPLER:FGrid2
