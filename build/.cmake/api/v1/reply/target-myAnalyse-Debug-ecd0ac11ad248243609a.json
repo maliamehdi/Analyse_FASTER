@@ -1,0 +1,254 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "myAnalyse"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"link_directories",
+			"include",
+			"target_link_libraries",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"/data/root/cmake/ROOTUseFile.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 65,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 51,
+				"parent" : 0
+			},
+			{
+				"file" : 1,
+				"parent" : 2
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 8,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 67,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 7,
+				"parent" : 3
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 57,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g    -std=c++17 -pipe -fsigned-char -pthread"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 6,
+					"path" : "/mnt/data/root/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/data/Malia/Analyse_FASTER"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/data/Malia/Analyse_FASTER/include"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "RootLib::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "myAnalyse::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-rdynamic",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "-L/mnt/data/root/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/mnt/data/root/lib:/data/Malia/Analyse_FASTER/build:/data/root/lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "libRootLib.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lSpectrum",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libCore.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libImt.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libRIO.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libNet.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libHist.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libGraf.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libGraf3d.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libGpad.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libROOTDataFrame.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libTree.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libTreePlayer.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libRint.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libPostscript.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libMatrix.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libPhysics.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libMathCore.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libThread.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libMultiProc.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/data/root/lib/libROOTVecOps.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lrt",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "myAnalyse",
+	"nameOnDisk" : "myAnalyse",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Analyse_Main.cxx",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

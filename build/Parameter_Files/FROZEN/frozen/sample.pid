@@ -1,0 +1,88 @@
+# sampler channel:Cath
+1:SAMPLER:Cath
+# sampler channel:SAMPLER_11
+11:SAMPLER:SAMPLER_11
+# sampler channel:BAnod1
+2:SAMPLER:BAnod1
+# sampler channel:BGrid1
+4:SAMPLER:BGrid1
+# sampler channel:BGrid2
+5:SAMPLER:BGrid2
+# sampler channel:BAnod2
+3:SAMPLER:BAnod2
+# sampler channel:FAnod1
+6:SAMPLER:FAnod1
+# sampler channel:FGrid1
+8:SAMPLER:FGrid1
+# sampler channel:FGrid2
+9:SAMPLER:FGrid2
+# sampler channel:FAnod2
+7:SAMPLER:FAnod2
+# qdc caras channel:QDC2_51
+51:QDC2:QDC2_51
+# qdc caras channel:QDC2_52
+52:QDC2:QDC2_52
+# qdc caras channel:QDC2_53
+53:QDC2:QDC2_53
+# qdc caras channel:QDC2_54
+54:QDC2:QDC2_54
+# qdc caras channel:QDC2_55
+55:QDC2:QDC2_55
+# qdc caras channel:QDC2_56
+56:QDC2:QDC2_56
+# qdc caras channel:QDC2_57
+57:QDC2:QDC2_57
+# qdc caras channel:QDC2_58
+58:QDC2:QDC2_58
+# qdc caras channel:PARIS50
+20:QDC2:PARIS50
+# qdc caras channel:PARIS70
+21:QDC2:PARIS70
+# qdc caras channel:PARIS90
+22:QDC2:PARIS90
+# qdc caras channel:PARIS110
+23:QDC2:PARIS110
+# qdc caras channel:PARIS130
+24:QDC2:PARIS130
+# qdc caras channel:PARIS235
+25:QDC2:PARIS235
+# qdc caras channel:PARIS262
+26:QDC2:PARIS262
+# qdc caras channel:PARIS278
+27:QDC2:PARIS278
+# qdc caras channel:PARIS305
+28:QDC2:PARIS305
+# qdc caras channel:P9
+30:QDC2:P9
+# qdc caras channel:R11
+31:QDC2:R11
+# qdc caras channel:R12
+32:QDC2:R12
+# qdc caras channel:R21
+33:QDC2:R21
+# qdc caras channel:R22
+34:QDC2:R22
+# qdc caras channel:R23
+43:QDC2:R23
+# qdc caras channel:empty
+44:QDC2:empty
+# adc mosahr channel trapezoid:R31
+37:TRAPEZ_SPECTRO:R31
+# adc mosahr channel trapezoid:R32
+38:TRAPEZ_SPECTRO:R32
+# adc mosahr channel trapezoid:R33
+39:TRAPEZ_SPECTRO:R33
+# adc mosahr channel trapezoid:empty
+40:TRAPEZ_SPECTRO:empty
+# qdc caras channel:ALL
+45:QDC2:ALL
+# qdc caras channel:empty
+46:QDC2:empty
+# adc mosahr channel trapezoid:R41
+47:TRAPEZ_SPECTRO:R41
+# adc mosahr channel trapezoid:R42
+48:TRAPEZ_SPECTRO:R42
+# adc mosahr channel trapezoid:R43
+49:TRAPEZ_SPECTRO:R43
+# adc mosahr channel trapezoid:R44
+50:TRAPEZ_SPECTRO:R44
