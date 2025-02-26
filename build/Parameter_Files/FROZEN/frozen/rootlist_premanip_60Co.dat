@@ -2,6 +2,6 @@
 /mnt/data/Malia/Analyse_FASTER/Parameter_Files/FROZEN/frozen/calibration.data
 /mnt/data/Malia/Analyse_FASTER/Parameter_Files/FROZEN/frozen/deltaT.dat
 /mnt/data/Malia/Analyse_FASTER/Parameter_Files/FROZEN/frozen/PARIS_Angles.txt
-/mnt/data/FROZEN/ROOT_DATA/Calibration/Eu/Run1_152Eu_Calibration/
-/mnt/data/FROZEN/ROOT_DATA/Calibration/premanip_Eu/bintest/
-Run1_152Eu_Calibration_1.root
+/mnt/data/FROZEN/ROOT_DATA/Calibration/Eu/run3_152Eu_BOT_252Cf_calib_170624_17h39_/
+/mnt/data/FROZEN/ROOT_DATA/Calibration/Eu/Results/
+run1_152Eu_252Cf_calib_170624_10h34_1.root

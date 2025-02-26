@@ -60,6 +60,8 @@ protected:
   Float_t nai_discri_sigma;
   Float_t resA;
   Float_t respower;
+  Float_t caliba;
+  Float_t calibb;
   Bool_t  ispurenai;
 
 public:
@@ -100,6 +102,8 @@ public:
   Float_t GetResolution_pow() const {return res_pow;};
   Float_t GetResA() const {return resA;};
   Float_t GetRespower() const {return respower;};
+  Float_t GetCaliba() const {return caliba;};
+  Float_t GetCalibb() const {return calibb;};
   Double_t GetTimeShift() const {return tm_shift;};
   Double_t GetEnergy(Double_t NRJ);
   Double_t GetSecondaryEnergy(Double_t NRJ);

@@ -2609,7 +2609,7 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
   std::vector<TH1F*> QDC1Spectra;
   std::vector<TH1F*> QDC2Spectra;
   //std::vector<double> binedges;
-  Int_t nbrbin = 200;
+  Int_t nbrbin = 220;
   double binedges[nbrbin+1];
   Int_t highestdetlabel = 0;
   Int_t highestnbrchannels = 0;
@@ -2687,7 +2687,7 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
         //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
         Double_t resA = experiment.GetDetector(sindex)->GetResA();
         Double_t respower = experiment.GetDetector(sindex)->GetRespower();
-        cout<<"The resolution fit parameter:"<< resA <<"power:"<<respower<<endl;
+        //cout<<"The resolution fit parameter:"<< resA <<"power:"<<respower<<endl;
         //binedges.push_back(0.);
         //binedges.push_back(11.);
         if (resA!=0 && resA<100 && respower!=0 && respower<1)
@@ -2760,7 +2760,7 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
 
   // Creation of the file to save all the data
   TString outputfilename = experiment.GetFileDirectory_OUT();
-  outputfilename += "3New_UncalibratedPARISspectraROTATED_all.root";
+  outputfilename += "ResCeBr_UncalibratedPARISspectraROTATED_all.root";
   TFile *outputfile = new TFile(outputfilename,"RECREATE");
 
   // Loading the TTree for reading the Data
@@ -2915,6 +2915,7 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
   TString PSDoutputfilename = "PSDParameter1_PARIS.txt";
   ofstream PSDoutput(PSDoutputfilename, ios::out);
   PSDoutput << "Det Name \t LaBrPos \t LaBrSigma \t NaIPos \t NaISigma \t theta"<< endl;
+  
   for(int i = 0; i < nbrofspectra; i++)
   {
     if(experiment.GetDetectors().at(i)->GetDetectorType()=="PARIS" && PSDSpectra.at(i)->GetEntries() !=0)
@@ -2927,7 +2928,47 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
 
       // I write it to file
       PSDoutput << experiment.GetDetectors().at(i)->GetDetectorName() << "\t" << pos.at(0) << "\t" << sigma.at(0) << "\t" << pos.at(1) << "\t" << sigma.at(1)<< "\t" << theta << endl;
+      /* UNCOMMENT FOR NORMALIZATION
+      // TH1 normalization to compare the resolutions
+      //Normalization of CeBr3 spectra
+      if (QDC1Spectra.at(i)) {  // Only process if histogram exists
+          Double_t normintegral = 0;  // Reset the value for this histogram
 
+          // Compute the integral considering bin widths
+          for (int bin = 1; bin <= QDC1Spectra.at(i)->GetNbinsX(); bin++) {
+              normintegral += QDC1Spectra.at(i)->GetBinContent(bin) * QDC1Spectra.at(i)->GetBinWidth(bin);
+          }
+
+          // Normalize each bin to density
+          if (normintegral > 0) {
+              for (int bin = 1; bin <= QDC1Spectra.at(i)->GetNbinsX(); bin++) {
+                  Double_t content = QDC1Spectra.at(i)->GetBinContent(bin);
+                  Double_t width = QDC1Spectra.at(i)->GetBinWidth(bin);
+                  QDC1Spectra.at(i)->SetBinContent(bin, content / (normintegral * width));
+                // Debug bin normalization
+                //std::cout << "Bin " << bin << ": Old Content=" << content << ", Width=" << width << ", New Content=" << content / (normintegral * width) << "\n";
+              }
+          }
+      }
+      //Normalization of NaI spectra
+      if (QDC2Spectra.at(i)) {
+        Double_t normintegral = 0;  // Reset the value for this histogram
+
+        // Compute the integral considering bin widths
+        for (int bin = 1; bin <= QDC2Spectra.at(i)->GetNbinsX(); bin++) {
+            normintegral += QDC2Spectra.at(i)->GetBinContent(bin) * QDC2Spectra.at(i)->GetBinWidth(bin);
+        }
+
+        // Normalize each bin to density
+        if (normintegral > 0) {
+            for (int bin = 1; bin <= QDC2Spectra.at(i)->GetNbinsX(); bin++) {
+                Double_t content = QDC2Spectra.at(i)->GetBinContent(bin);
+                Double_t width = QDC2Spectra.at(i)->GetBinWidth(bin);
+                QDC2Spectra.at(i)->SetBinContent(bin, content / (normintegral * width));
+            }
+        }
+      }
+      */
       QDC1Spectra.at(i)->Write();
       QDC2Spectra.at(i)->Write();
       PSDSpectra.at(i)->Write();
@@ -2979,16 +3020,17 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-int DrawAllParisCalibratedSpectra(const CExperiment &experiment)
+int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
 {
   //Definition du germe pour le tirage aleatoire
   srand48(time(NULL));
 
   //Declaration of all variables for names
-  TString title,title2,title3,title4;
-  TString spectrumname,spectrumname2,spectrumname3,spectrumname4;
+  TString title,title2,title3,title4,title5,title6,title7;
+  TString spectrumname,spectrumname2,spectrumname3,spectrumname4,spectrumname5,spectrumname6,spectrumname7;
 
   ROOT::EnableThreadSafety();
+  //ROOT::EnableImplicitMT(0);  // Disable ROOT's internal multithreading
 
   // Declaration of energy spectra
   // First I count the number of PARIS
@@ -2999,81 +3041,209 @@ int DrawAllParisCalibratedSpectra(const CExperiment &experiment)
   }
 
   Int_t nbrofspectra = (int)experiment.GetDetectors().size();
-  //std::vector<TH1F*> PSDSpectra;
-  //std::vector<TH2F*> PSDMatrix;
+  std::vector<TH1F*> PSDSpectra;
+  std::vector<TH2F*> PSDMatrix;
+  std::vector<TH2F*> PSDMatrixLaBr;
+  std::vector<TH2F*> PSDMatrixNaI;
+  std::vector<TH2F*> PSDMatrixrejected;
   std::vector<TH1F*> QDC1Spectra;
   std::vector<TH1F*> QDC2Spectra;
+  //std::vector<double> binedges;
+  Int_t nbrbin = 220;
+  double binedges[nbrbin+1];
   Int_t highestdetlabel = 0;
   Int_t highestnbrchannels = 0;
   Int_t highestEmax = 0;
   Int_t nbrchannels = 0;
   Int_t Emin = 0;
-  Int_t Emax = 20000;
-
+  Int_t Emax = 0;
+  
   // Defining all the energy spectra
-  for(int sindex = 0; sindex < nbrofspectra; sindex++)
+  for(auto sindex = 0; sindex < nbrofspectra; sindex++)
   {
     //TH1F *localPSDSpectra;
-    TH1F *localQDC1spectrum,*localQDC2spectrum;//,*localPSDSpectra;
-    //TH2F *localPSDMatrix;
+    TH1F *localQDC1spectrum = nullptr;TH1F *localQDC2spectrum = nullptr; TH1F *localPSDSpectra = nullptr;
+    TH2F *localPSDMatrix = nullptr;
+    TH2F *localPSDMatrixLaBr= nullptr;
+    TH2F *localPSDMatrixNaIcrosstalk = nullptr;
+    //TH2F *localPSDMatrixBeyondLaBrNaI = nullptr;
     // Defining the title and name of the spectrum
-    title = "LaBr Spectrum of detector ";title2 ="NaI Spectrum of detector ";title3 = " PSD Spectrum of detector ";title4 = " PSD Matrix of detector ";
-    spectrumname = "nrjspectrum";spectrumname2 = "nrjspectrum2";spectrumname3 = "psdspectrum";spectrumname4 = "psdmatrix";
-    title += experiment.GetDetector(sindex)->GetDetectorName();title2 += experiment.GetDetector(sindex)->GetDetectorName();title3 += experiment.GetDetector(sindex)->GetDetectorName();title4 += experiment.GetDetector(sindex)->GetDetectorName();
-    spectrumname +=experiment.GetDetector(sindex)->GetDetectorName();spectrumname2 +=experiment.GetDetector(sindex)->GetDetectorName();spectrumname3 +=experiment.GetDetector(sindex)->GetDetectorName();spectrumname4 +=experiment.GetDetector(sindex)->GetDetectorName();
+    title = "LaBr Spectrum of detector ";
+    title2 ="NaI Spectrum of detector ";
+    title3 = " PSD Spectrum of detector ";
+    title4 = " PSD Matrix of detector ";
+    title5 = " PSD Matrix of CeBr "; 
+    title6 = " PSD Matrix of NaI & crosstalk "; 
+    //title7 = " PSD Matrix of the rest ";
+    spectrumname = "nrjspectrum";
+    spectrumname2 = "nrjspectrum2";
+    spectrumname3 = "psdspectrum";
+    spectrumname4 = "psdmatrix";
+    spectrumname5 = "psdmatrixCeBr";
+    spectrumname6 = "psdmatrixNaI";
+    //spectrumname7 = "psdmatrixrejected";
+    title += experiment.GetDetector(sindex)->GetDetectorName();
+    title2 += experiment.GetDetector(sindex)->GetDetectorName();
+    title3 += experiment.GetDetector(sindex)->GetDetectorName();
+    title4 += experiment.GetDetector(sindex)->GetDetectorName();
+    title5 += experiment.GetDetector(sindex)->GetDetectorName();
+    title6 += experiment.GetDetector(sindex)->GetDetectorName();
+    //title7 += experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname +=experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname2 +=experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname3 +=experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname4 +=experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname5 +=experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname6 +=experiment.GetDetector(sindex)->GetDetectorName();
+    //spectrumname7 +=experiment.GetDetector(sindex)->GetDetectorName();
 
     if(experiment.GetDetector(sindex)->GetDetectorlabel()>highestdetlabel) highestdetlabel = experiment.GetDetectors().at(sindex)->GetDetectorlabel();
 
     // Getting the right range
     if(experiment.GetDetector(sindex)->GetDetectorType()!="RF")
     {
-      nbrchannels = (Emax-Emin)/2;
+      nbrchannels = experiment.GetDetector(sindex)->GetNbrChannels();
+      
       //cout << nbrchannels << "\t" << Emax << endl;
       if(nbrchannels > highestnbrchannels) highestnbrchannels=nbrchannels;
-      Emax = 20000; // keV
+      Emax = experiment.GetDetector(sindex)->GetMaxchNumber();//GetMaxchNumber();
+
       if(Emax > highestEmax) highestEmax=Emax;
-      localQDC1spectrum = new TH1F(spectrumname,title,nbrchannels,Emin,Emax);
-      localQDC2spectrum = new TH1F(spectrumname2,title2,nbrchannels,Emin,Emax);
-      //localPSDSpectra   = new TH1F(spectrumname3,title3,1600,-1,1);
-      //localPSDMatrix    = new TH2F(spectrumname4,title4,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+      //Emax = 200000;
+      //nbrchannels = 200000;
+      //if(experiment.GetDetector(sindex)->GetDetectorType()=="PARIS")
+      /*Resolution dependent bins
+      // Detecteur 34 
+      const Int_t NBinY_LABR3_34 = 154; 
+      Double_t BinY_LABR3_34[NBinY_LABR3_34+1]; BinY_LABR3_34[0] = 0; 
+      BinY_LABR3_34[1] = 11; 
+      Double_t reso_34 = 0.; 
+      for (Int_t i = 2; i < NBinY_LABR3_34+1; i++) 
+      { reso_34 = (1.546031*TMath::Power(BinY_LABR3_34[i-1],-.4967554))*BinY_LABR3_34[i-1];
+       BinY_LABR3_34[i] = BinY_LABR3_34[i-1]+reso_34; 
+      //cout <<"BinY_LABR3["<<i<<"] = " << BinY_LABR3[i] << endl;
+      */
+      {
+        //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+        Double_t resA = experiment.GetDetector(sindex)->GetResA();
+        Double_t respower = experiment.GetDetector(sindex)->GetRespower();
+        
+        //cout<<"The resolution fit parameter:"<< resA <<"power:"<<respower<<endl;
+        //binedges.push_back(0.);
+        //binedges.push_back(11.);
+        //for debug
+        //resA =0.;
+        if (resA!=0 && resA<100 && respower!=0 && respower<1)
+        {
+          binedges[0]=0.;
+          binedges[1]=5.;
+          //binedges[nbrbin]=400000.;
+          for (Int_t i = 2; i < nbrbin+1; i++)
+          {
+            binedges[i]=(binedges[i-1]+ (resA * TMath::Power(binedges[i-1], respower)*binedges[i-1]));
+            //for debug
+            //cout<<"the bin edges are: "<<binedges[i]<<endl;
+          }
+          localQDC1spectrum = new TH1F(spectrumname,title,nbrbin,binedges);
+          localQDC2spectrum = new TH1F(spectrumname2,title2,nbrchannels,Emin,Emax);
+          localPSDSpectra   = new TH1F(spectrumname3,title3,1600,0,TMath::Pi()/2.);
+          localPSDMatrix    = new TH2F(spectrumname4,title4,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+          localPSDMatrixLaBr    = new TH2F(spectrumname5,title5,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+          localPSDMatrixNaIcrosstalk    = new TH2F(spectrumname6,title6,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+        }
+        else
+        {
+          localQDC1spectrum = new TH1F(spectrumname,title,nbrchannels,Emin,Emax/100);
+          localQDC2spectrum = new TH1F(spectrumname2,title2,nbrchannels,Emin,Emax);
+          localPSDSpectra   = new TH1F(spectrumname3,title3,1600,0,TMath::Pi()/2.);
+          localPSDMatrix    = new TH2F(spectrumname4,title4,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+          localPSDMatrixLaBr    = new TH2F(spectrumname5,title5,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+          localPSDMatrixNaIcrosstalk    = new TH2F(spectrumname6,title6,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+        }
+        
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+        
+        //localPSDMatrixBeyondLaBrNaI    = new TH2F(spectrumname7,title7,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
+
+        localQDC1spectrum->SetDirectory(0);
+        localQDC2spectrum->SetDirectory(0);
+        localPSDSpectra->SetDirectory(0);
+        localPSDMatrix->SetDirectory(0);
+        localPSDMatrixLaBr->SetDirectory(0);
+        localPSDMatrixNaIcrosstalk->SetDirectory(0);
+      }
 
       
       // Storing the NRJsectrum
       QDC1Spectra.push_back(localQDC1spectrum);
       QDC2Spectra.push_back(localQDC2spectrum);
-      //PSDSpectra.push_back(localPSDSpectra);
-      //PSDMatrix.push_back(localPSDMatrix);
-      
+      PSDSpectra.push_back(localPSDSpectra);
+      PSDMatrix.push_back(localPSDMatrix);
+      PSDMatrixLaBr.push_back(localPSDMatrixLaBr);
+      PSDMatrixNaI.push_back(localPSDMatrixNaIcrosstalk);
+      //PSDMatrixrejected.push_back(localPSDMatrixBeyondLaBrNaI);
     }
 
+
     // Cleaning the names for the next iteration
-    spectrumname.Clear();spectrumname2.Clear();spectrumname3.Clear();spectrumname4.Clear();
-    title.Clear();title2.Clear();title3.Clear();title4.Clear();
+    spectrumname.Clear();spectrumname2.Clear();spectrumname3.Clear();spectrumname4.Clear();spectrumname5.Clear();spectrumname6.Clear();//spectrumname7.Clear();
+    title.Clear();title2.Clear();title3.Clear();title4.Clear();title5.Clear();title6.Clear(); //binedges.clear();//title7.Clear();
   }
 
 
   std::cout << FOREBLU << "We have " << nbrofspectra << " detectors among which " << nbrparis  << " PARIS phoswitches" << std::endl;
   std::cout << "We have created " << QDC1Spectra.size() << " QDC1 spectra among which " << nbrparis  << " PARIS phoswitches QDC1 spectra"  << std::endl;
   std::cout << "We have created " << QDC2Spectra.size() << " QDC2 spectra among which " << nbrparis  << " PARIS phoswitches QDC2 spectra"  << std::endl;
-  //std::cout << "We have created " << PSDSpectra.size() << " PSD spectra among which " << nbrparis  << " PARIS phoswitches PSD spectra"   << std::endl;
-  //std::cout << "We have created " << PSDMatrix.size() << " PSD Matrices among which " << nbrparis  << " PARIS phoswitches PSD Matrices"  << std::endl;
-  std::cout << "We are Loaded .." << RESETTEXT << std::endl;
-
-  // Creation of the file to save all the data
-  TString outputfilename = experiment.GetFileDirectory_OUT();
-  outputfilename += "CalibratedPARISspectra_all.root";
-  TFile *outputfile = new TFile(outputfilename,"RECREATE");
-
+  std::cout << "We have created " << PSDSpectra.size() << " PSD spectra among which " << nbrparis  << " PARIS phoswitches PSD spectra"   << std::endl;
+  std::cout << "We have created " << PSDMatrix.size() << " PSD Matrices among which " << nbrparis  << " PARIS phoswitches PSD Matrices"  << std::endl;
+  std::cout << "We have created " << PSDMatrixLaBr.size() << " PSD CeBr Matrices among which " << nbrparis  << " PARIS CeBr3 PSD Matrices"  << std::endl;
+  std::cout << "We have created " << PSDMatrixNaI.size() << " PSD NaI Matrices among which " << nbrparis  << " PARIS CeBr3 PSD Matrices"  << std::endl;
+  //std::cout << "We have created " << PSDMatrixrejected.size() << " PSD beyond CebR and below NaI Matrices among which " << nbrparis  << " PARIS CeBr3 PSD Matrices"  << std::endl;
   // Loading the TTree for reading the Data
   std::vector<TChain *> tab_chained_oak = experiment.GettheTChain();
   TChain *chained_oak = tab_chained_oak.at(0);
-
   label_Rawtype index;
   nrj_Rawtype enrj;
+  std::cout << "We are Loaded .." << RESETTEXT << std::endl;
+
+
+  //Creation of a new TTree to store the calibration _Ecal
+  TString inputfilename = experiment.GetDataFileNames().at(0);
+  cout<<inputfilename<<endl;
+  int it1 = inputfilename.Index(".root",5,1,inputfilename.kExact);
+  TString outputfilename2 = experiment.GetFileDirectory_OUT();
+  //outputfilename2 +=inputfilename(it1-7,it1); 
+  outputfilename2 += "_1_ROT_CeBr_ECal.root";
+  TFile *outputfile2 = new TFile(outputfilename2,"RECREATE");
+  TTree *sequoia = new TTree("DataTree",outputfilename2);
+
+  // Declaration of new tree variables
+  Double_t mynrj = 0.;
+  Double_t mynrj2 = 0.;
+  label_type index1 =0.;
+  Bool_t pileup1 = false;
+  Double_t tm1 = 0.;
+
+  // Declaration of Branches that will contain the data
+  sequoia->Branch ("mylabel", &index1);
+  sequoia->Branch ("mynrj", &mynrj);
+  sequoia->Branch ("mynrj2", &mynrj2);
+  sequoia->Branch ("mytime", &tm1);
+  sequoia->Branch ("mypileup",&pileup1);
+
+  // Creation of the file to save all the data
+  TString outputfilename = experiment.GetFileDirectory_OUT();
+  //outputfilename =+ inputfilename(0,it1)
+  outputfilename+="1706_Eu_CeBr_CalibratedPARISspectraROTATED_all.root";
+  TFile *outputfile = new TFile(outputfilename,"RECREATE");
+
+
+
+  
 
   // std::cout << FOREBLU << "Loading Tree ..." << std::endl;
-  // /*auto cachesize = 10000000; // 10 MBytes
-  // chained_oak -> SetCacheSize(cachesize);
+  //auto cachesize = 500000000; // 500 MBytes
+  //chained_oak -> SetCacheSize(cachesize);
   // chained_oak -> SetCacheLearnEntries(100000);*/
   // chained_oak -> SetBranchStatus("*",0);
   // chained_oak -> SetBranchAddress("label",&index);   // Detector number
@@ -3132,72 +3302,225 @@ int DrawAllParisCalibratedSpectra(const CExperiment &experiment)
     //PrintVector(experiment.GetDataFileNames());
     bar.set_progress((int)((double)fileindex/(double)filenumber*100.));
     // Defining a TTreeProcessor object to handle the TTree in the File in a MT mode
-    ROOT::TTreeProcessorMT TP(file, experiment.GetDataTreeName(), n_workers);
-
+    //ROOT::TTreeProcessorMT TP(file, experiment.GetDataTreeName(), n_workers);
+    TFile *rootFile = TFile::Open(file.c_str(), "READ");  // Open ROOT file
+    TTree *tree = (TTree*)rootFile->Get(experiment.GetDataTreeName().c_str()); // for debug single thread mode
+    TTreeReader myReader(tree); // for debug single thread mode
     // Scanning TTree
     // Launch the parallel processing of the tree
     int threadnbr = 0;
-    auto loop_and_fill = [&] (TTreeReader &myReader){
+    //auto loop_and_fill = [&] (TTreeReader &myReader){
+      
       TTreeReaderValue<label_Rawtype> labelRV(myReader,"label");
-      TTreeReaderValue<nrj_type> QDC1RV(myReader,"nrj");
-      TTreeReaderValue<nrj_type> QDC2RV(myReader,"nrj2");
+      TTreeReaderValue<nrj_Rawtype> QDC1RV(myReader,"nrj");
+      TTreeReaderValue<nrj_Rawtype> QDC2RV(myReader,"nrj2");
+      TTreeReaderValue<tm_Rawtype> TMRV(myReader,"time");
+      //TTreeReaderValue<pu_type> PURV(myReader,"pileup");
 
       ULong64_t hitnumber = 0;
+      //CHit *hit = new CHit(threadnbr++);
       while(myReader.Next())
       {
+        
+        //cout<<"1"<<endl;
         auto label  = *labelRV;
         auto NRJ    = *QDC1RV;  // Short Gate
         auto NRJ2   = *QDC2RV;  // Long Gate
-
+        auto TIME = *TMRV;
+        index1 = *labelRV;
+        tm1 = (Double_t) TIME;
+        pileup1 = false;
+        mynrj= (Double_t) NRJ;
+        mynrj2 = (Double_t) NRJ2;
+        //cout<<"2"<<endl;
         // I define a new hit a fill in the information
-        hitnumber++;threadnbr++;
-        if(label > 0) // To make sure I only consider PARIS detectors
+        hitnumber++;//threadnbr++;
+        if(label > 19 && label<29) // To make sure I only consider PARIS detectors
         {
+          //cout<<"fuck my life"<<endl;
           CHit *hit = new CHit(hitnumber+1000*threadnbr);
           hit->SetHit(label, 0, NRJ, NRJ2, false);
 
           int spectrumindex = experiment.GetLabel2Detnbrs(static_cast<int>(label));
           
-          Bool_t isLaBr = kFALSE;
-          if(NRJ2 == 0) isLaBr = kTRUE;
-
+          Double_t PSD = hit->PerformPARISPSD();// PSD = atan(short/long)
+          //std::cout << "All good" << std::endl;
+          Bool_t isLaBr = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsPureLaBr3(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper LaBr3 selection
+          Bool_t isBeyondLaBr3andNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsBeyondLaBr3andNaI(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper LaBr3 selection
+          Bool_t isNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsPureNaI(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper NaI selection
+          //Loading Calibration parameters
+          Double_t caliba = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba();
+          Double_t calibb = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCalibb();
+          //cout<<isLaBr<<endl;
+          //cout << " Detector " << (string)experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetDetectorName() << " discriLaBr_pos = " << experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetLaBrDiscriPosition() << endl;
           // Filling up the spectra
           //forfilling.lock();
-          if(spectrumindex < QDC1Spectra.size())
+          double NRJ_bf_ROT = hit->GetHitE1();
+          double NRJ2_bf_ROT = hit->GetHitE2();
+          if(experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetDetectorType() == "PARIS")
           {
-            // cout << endl;
-            // hit->PrintHit();
-            // cout << "Hit # " << hitnumber+1000*threadnbr << "; Filling Spectra " << spectrumindex << endl;
-            if(isLaBr) QDC1Spectra.at(spectrumindex) -> Fill(NRJ);
-            QDC2Spectra.at(spectrumindex) -> Fill(NRJ2);
+            //cout << "Qs = " << NRJ2 << "; Ql = " << NRJ << endl;
+            tie(NRJ2,NRJ) = Rotation(
+                                      static_cast<double>(experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetRotationAngle()),
+                                      static_cast<double>(experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetRotationAngleTan()),
+                                      NRJ2,
+                                      NRJ);
+             //tie(NRJ2,NRJ) = Rotation(0.,0.,NRJ2,NRJ);
+             //cout << "ROT_Qs = " << NRJ2 << "; ROT_Ql = " << NRJ << endl;
+             
+             if(isLaBr && !isNaI) {
+               mynrj = caliba * (Double_t)NRJ_bf_ROT + calibb;
+               mynrj2 = 0.;
+              }
+             if(!isLaBr && !isBeyondLaBr3andNaI ) {
+              mynrj = (Double_t)NRJ;
+              mynrj2 = (Double_t)NRJ2;
+              }
+          }
+          //cout << "mynrj = " << mynrj << "; mynrj2 " << mynrj2 << endl;
+
+          if(spectrumindex < PSDSpectra.size())
+          {
+            PSDSpectra.at(spectrumindex)  -> Fill(PSD);
+            //caliba = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba();
+            //calibb = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCalibb();
+            if(isLaBr && !isNaI) QDC1Spectra.at(spectrumindex) -> Fill(caliba * NRJ_bf_ROT + calibb);
+            if(isNaI) QDC2Spectra.at(spectrumindex) -> Fill(NRJ2);
+          }
+          
+          if(spectrumindex < PSDMatrix.size())
+          {
+            //cout << "Hit # " << hitnumber+1000*threadnbr << "; Filling Matrix " << spectrumindex << endl;
+            if(isLaBr && !isNaI)PSDMatrixLaBr.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
+            //if(isNaI)PSDMatrixNaI.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
+            if(!isLaBr && !isBeyondLaBr3andNaI ) {
+              PSDMatrixNaI.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
+            }
+            if(!isBeyondLaBr3andNaI) PSDMatrix.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
           }
           //forfilling.unlock();
-
+          //cout<<"fuck my life"<<endl;
           delete hit;
+          
         }
+      
+        sequoia->Fill();
+        
       }
-    };
-    TP.Process(loop_and_fill);
+    //};
+    //TP.Process(loop_and_fill);
+    cout<<"finished reading the file"<<endl;
   }
 
+  //Saving the new Calibrated TTree
+  std::cout << endl << RESETTEXT << "Saving the new Ecal TTree in " << outputfilename2 << std::endl;
+  outputfile2->cd();
+
+  sequoia->Write("", TObject::kOverwrite);
+
+  outputfile2->Close();
+  chained_oak->GetFile()->Close(); // Maybe?
+  std::cout << "Calibration complete. Data saved to " << outputfilename << std::endl;
+  
+
+  
   // All spectra has been built
   // Now analyzing the PSDSpectra to print to text files the parameters of PSD
   std::cout << endl << RESETTEXT << "Saving in " << outputfilename << std::endl;
   outputfile->cd();
-
-  // Now I have the peak position for LaBr3 selection
+  TString PSDoutputfilename = "PSDParameter1_PARIS.txt";
+  ofstream PSDoutput(PSDoutputfilename, ios::out);
+  PSDoutput << "Det Name \t LaBrPos \t LaBrSigma \t NaIPos \t NaISigma \t theta"<< endl;
   for(int i = 0; i < nbrofspectra; i++)
   {
-    if(experiment.GetDetectors().at(i)->GetDetectorType()=="PARIS" && QDC1Spectra.at(i)->GetEntries()!=0)
+    if(experiment.GetDetectors().at(i)->GetDetectorType()=="PARIS" && PSDSpectra.at(i)->GetEntries() !=0)
     {
       cout << "Saving Detector " << experiment.GetDetectors().at(i)->GetDetectorName() << endl;
+      std::vector<Double_t> pos, sigma;
+      Double_t theta;
+      tie(pos,sigma) = PSDSpectrumAnalyzer(PSDSpectra.at(i));
+      //theta = PSDMatrixAnalyzer(PSDMatrix.at(i));
+
+      // I write it to file
+      PSDoutput << experiment.GetDetectors().at(i)->GetDetectorName() << "\t" << pos.at(0) << "\t" << sigma.at(0) << "\t" << pos.at(1) << "\t" << sigma.at(1)<< "\t" << theta << endl;
+      /*
+      // TH1 normalization to compare the resolutions
+      //Normalization of CeBr3 spectra
+      if (QDC1Spectra.at(i)) {  // Only process if histogram exists
+          Double_t normintegral = 0;  // Reset the value for this histogram
+
+          // Compute the integral considering bin widths
+          for (int bin = 1; bin <= QDC1Spectra.at(i)->GetNbinsX(); bin++) {
+              normintegral += QDC1Spectra.at(i)->GetBinContent(bin) * QDC1Spectra.at(i)->GetBinWidth(bin);
+          }
+
+          // Normalize each bin to density
+          if (normintegral > 0) {
+              for (int bin = 1; bin <= QDC1Spectra.at(i)->GetNbinsX(); bin++) {
+                  Double_t content = QDC1Spectra.at(i)->GetBinContent(bin);
+                  Double_t width = QDC1Spectra.at(i)->GetBinWidth(bin);
+                  QDC1Spectra.at(i)->SetBinContent(bin, content / (normintegral * width));
+                // Debug bin normalization
+                //std::cout << "Bin " << bin << ": Old Content=" << content << ", Width=" << width << ", New Content=" << content / (normintegral * width) << "\n";
+              }
+          }
+      }
+      //Normalization of NaI spectra
+      if (QDC2Spectra.at(i)) {
+        Double_t normintegral = 0;  // Reset the value for this histogram
+
+        // Compute the integral considering bin widths
+        for (int bin = 1; bin <= QDC2Spectra.at(i)->GetNbinsX(); bin++) {
+            normintegral += QDC2Spectra.at(i)->GetBinContent(bin) * QDC2Spectra.at(i)->GetBinWidth(bin);
+        }
+
+        // Normalize each bin to density
+        if (normintegral > 0) {
+            for (int bin = 1; bin <= QDC2Spectra.at(i)->GetNbinsX(); bin++) {
+                Double_t content = QDC2Spectra.at(i)->GetBinContent(bin);
+                Double_t width = QDC2Spectra.at(i)->GetBinWidth(bin);
+                QDC2Spectra.at(i)->SetBinContent(bin, content / (normintegral * width));
+            }
+        }
+      }*/
       QDC1Spectra.at(i)->Write();
       QDC2Spectra.at(i)->Write();
+      PSDSpectra.at(i)->Write();
+      PSDMatrix.at(i)->Write();
+      PSDMatrixLaBr.at(i)->Write();
+      PSDMatrixNaI.at(i)->Write();
+      //PSDMatrixrejected.at(i)->Write();
+
+    }
+    else if(PSDSpectra.at(i)->GetEntries() !=0){
+      cout << SetBOLD << SetForeRED << endl;
+      cout << " PSD Spectrum for " <<experiment.GetDetectors().at(i)->GetDetectorName() << " is empty" << endl;
+      cout << " Check data file(s) " << endl,
+      cout << RESETTEXT << endl;
     }
   }
   outputfile->Close();
+  PSDoutput.close();
   
+
+  //cout << "File " << inputfilename << " energy calibrated "<< endl;
+  //chained_oak->GetFile()->Close();
   cout << "NRJ spectra are saved " << endl;
+  // Clean up histograms
+  for (auto hist : QDC1Spectra) delete hist;
+  for (auto hist : QDC2Spectra) delete hist;
+  for (auto hist : PSDSpectra) delete hist;
+  for (auto hist : PSDMatrix) delete hist;
+  for (auto hist : PSDMatrixLaBr) delete hist;
+  for (auto hist : PSDMatrixNaI) delete hist;
+
+  // Clear vectors
+  QDC1Spectra.clear();
+  QDC2Spectra.clear();
+  PSDSpectra.clear();
+  PSDMatrix.clear();
+  PSDMatrixLaBr.clear();
+  PSDMatrixNaI.clear();
 
   // Printing of chronometer measurement
   localTimer.Stop();
@@ -3208,8 +3531,7 @@ int DrawAllParisCalibratedSpectra(const CExperiment &experiment)
   std::cout << "# RealTime=" << rtime2 << " seconds, CpuTime="<< ctime2 << " seconds" <<std::endl;
   std::cout << std::endl;
 
-  return 1;
-}
+  return 1;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -3766,7 +4088,7 @@ int NRJCalibrator(const CExperiment &experiment,TChain *chained_oak, DynamicProg
   //BAR[BARnumber].tick();
   //myMutex->lock();
   //chained_oak->Print();
-  //cout << endl << "Working on TChain based on file "<< chained_oak->GetName() << endl;
+  cout << endl << "Working on TChain based on file "<< chained_oak->GetName() << endl;
   TString inputfilename = chained_oak->GetName();
   //auto maple = chained_oak->GetTree();
   //myMutex->unlock();
@@ -3856,7 +4178,7 @@ int NRJCalibrator(const CExperiment &experiment,TChain *chained_oak, DynamicProg
         
         int detindex = experiment.GetLabel2Detnbrs(static_cast<int>(index));
         
-        if(index < 200) // HPGe && BGO
+        /*if(index < 200) // HPGe && BGO
         {
           //cout << "Calibrating " << experiment.GetDetector(detindex)->GetDetectorName() << endl;
           nrj = experiment.GetDetector(detindex)->GetEnergy(*QDC1RV);
@@ -3864,9 +4186,10 @@ int NRJCalibrator(const CExperiment &experiment,TChain *chained_oak, DynamicProg
           //cout << endl << endl << index <<  "\t enrj = " << enrj << "\t" <<"NRJ = " << NRJ << "\t" << "nrj = " << nrj << endl;
           if(nrj > 10. && experiment.GetDetector(detindex)->GetCalibx1()!=1.) {stop->lock();oak->Fill();stop->unlock();}
         }
-        
+        */
+        //cout<<"tout se passe bien jusqu'ici"<<endl;
         // Case of PARIS
-        if(index1 > 0)
+        if(index1 > 19 && index1<29)
         {
           auto NRJ    = *QDC1RV;  // Short Gate
           auto NRJ2   = *QDC2RV;  // Long Gate
@@ -3876,24 +4199,28 @@ int NRJCalibrator(const CExperiment &experiment,TChain *chained_oak, DynamicProg
           
           Double_t PSD = hit->PerformPSD();// PSD = (Long-Short)/Long
           Bool_t isLaBr = experiment.GetDetector(detindex)->IsPureLaBr3(PSD,hit->GetHitE1(),hit->GetHitE2());
+          Bool_t isNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(detindex)))->IsPureNaI(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper NaI selection
           Bool_t isBeyondLaBrandNaI = experiment.GetDetector(detindex)->IsBeyondLaBr3andNaI(PSD,hit->GetHitE1(),hit->GetHitE2());
-
+          //Loading Calibration parameters
+          Double_t caliba = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(detindex)))->GetCaliba();
+          Double_t calibb = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(detindex)))->GetCalibb();
 
           if(!isBeyondLaBrandNaI)
           {
-            if(isLaBr)
+            if(isLaBr && !isNaI)
             {
-              nrj = experiment.GetDetector(detindex)->GetEnergy(NRJ);
+              nrj = caliba * (Double_t)NRJ+ calibb;
               nrj2 = 0.;
               //if(nrj > 10. && experiment.GetDetector(detindex)->GetCalibx1()!=1. && experiment.GetDetector(detindex)->GetCalibx0()!=0.) oak->Fill();
             }
             else if(!isLaBr)
             {
               tie(NRJ2,NRJ) = Rotation((double)experiment.GetDetector(detindex)->GetRotationAngle(),(double)experiment.GetDetector(detindex)->GetRotationAngleTan(),NRJ2,NRJ);
-              nrj = experiment.GetDetector(detindex)->GetEnergy(NRJ);
-              nrj2 = experiment.GetDetector(detindex)->GetSecondaryEnergy(NRJ2);
+              nrj = caliba * (Double_t)NRJ+ calibb;
+              nrj2 = (Double_t)NRJ2; //experiment.GetDetector(detindex)->GetSecondaryEnergy(NRJ2);
               //nrj2 = experiment.GetDetector(detindex)->GetSecondaryEnergy(NRJ2);
-              //if(nrj > 10. && experiment.GetDetector(detindex)->GetCalibx1()!=1. && experiment.GetDetector(detindex)->GetCalibx0()!=0.) oak->Fill();
+              //if(nrj > 10. && experiment.GetDetector(detindex)->GetCalibx1()!=1. && experiment.GetDetector(detindex)->GetCalibx0()!=0.) 
+              
             }
           }
           //cout << endl << endl << index <<   "enrj = " << enrj << "\t" <<"NRJ = " << NRJ << "\t" << "nrj = " << nrj << endl;
@@ -3903,6 +4230,7 @@ int NRJCalibrator(const CExperiment &experiment,TChain *chained_oak, DynamicProg
         }
         
         hit->Clear();
+        //oak->Fill();
       }
       delete hit;
   };

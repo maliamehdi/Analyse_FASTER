@@ -76,10 +76,18 @@ Double_t CDetectors::GetEnergy(Double_t NRJ)
   //Double_t e3 = TMath::Power((Double_t)NRJ,3);
   Double_t e2 = TMath::Power((Double_t)NRJ,2);
   Double_t e1 = TMath::Power((Double_t)NRJ,1);
-  Double_t nrj = x2*e2+x1*e1+x0;//x3*e3+x2*e2+x1*e1+x0;
+  Double_t x0 = GetCalibx0();
+  Double_t x1 = GetCalibx1();
+  Double_t x2 = GetCalibx2();
 
+  Double_t nrj = x2*e2+x1*e1+x0;//x3*e3+x2*e2+x1*e1+x0;
+  cout << "Detector: " << Detname << endl;
+  cout << "Calibration parameters:" << endl;
+  cout << "x2 = " << x2 << endl;
+  cout << "x1 = " << x1 << endl;
+  cout << "x0 = " << x0 << endl;
   // cout << "Energy before = " << NRJ << " & after " << nrj << endl;
-  // cout << "Parameters were : " << x3 << "\t" << x2<< "\t" << x1<< "\t" << x0 << endl;
+  //cout << "Parameters were : " << x3 << "\t" << x2<< "\t" << x1<< "\t" << x0 << endl;
 
   return nrj;
 }

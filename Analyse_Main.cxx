@@ -240,7 +240,16 @@ int main()
     //check = DrawAllParisUncalibratedSpectra(*experiment);
     
     // If the function before has been used to determine the PARIS rotation angles then you can run the following on your calibration data
-    check = DrawAllParisUncalibratedSpectra_with_rotation(*experiment);
+    //check = DrawAllParisUncalibratedSpectra_with_rotation(*experiment);
+    //TO apply calibration as well
+    //TString CalibrationFileName = experiment->GetNRJCalibration_filename();
+    //cout << "Using file " << CalibrationFileName << " to calibrate detectors" << endl;
+    //CalibrationFileName += "Calibrations/";
+    //CalibrationFileName += "Calibrations_Calib_Ge.data";
+    //experiment->LoadCalibration(CalibrationFileName);
+
+
+    check = DrawAllParisCalibratedSpectra(*experiment);
 
     // After Getting PARIS info, I can plot all the calibration spectra
     // Ideally a 60Co, 22Na, Cs, and AmBe+Ni run should be good for PARIS

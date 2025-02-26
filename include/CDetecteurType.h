@@ -105,6 +105,8 @@ public:
   void SetNaIDiscriSigma(Float_t sigma);
   void SetResA(Float_t resA);
   void SetRespower(Float_t respower);
+  void SetCaliba(Float_t caliba);
+  void SetCalibb(Float_t calibb);
   void Print();
 
   // The Get Functions
@@ -134,6 +136,11 @@ public:
   Float_t GetResA() const {return resA;};
   using   CDetectors::GetRespower;
   Float_t GetRespower() const {return respower;};
+  using CDetectors::GetCaliba;
+  Float_t GetCaliba() const {return caliba;};
+  using CDetectors::GetCalibb;
+  Float_t GetCalibb() const {return calibb;};
+
 
 public:
   using   CDetectors::IsPureLaBr3;

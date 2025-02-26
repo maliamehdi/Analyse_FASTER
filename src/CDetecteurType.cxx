@@ -118,6 +118,12 @@ void QDC::SetResA(Float_t resA)
 void QDC::SetRespower(Float_t respower)
 {this->respower = respower;}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QDC::SetCaliba(Float_t caliba)
+{this->caliba = caliba;}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QDC::SetCalibb(Float_t calibb)
+{this->calibb = calibb;}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QDC::Print( )
 {
   cout << "Print QDC informations : " << endl;

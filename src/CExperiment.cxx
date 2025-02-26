@@ -144,7 +144,7 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
   cout << "Now loading detectors informations : " << endl;
 
   std::vector<string> names;string name;
-  Float_t pos_labr, sigma_labr, pos_nai, sigma_nai,theta, cos, sin, tan, resA, respower;
+  Float_t pos_labr, sigma_labr, pos_nai, sigma_nai,theta, cos, sin, tan, resA, respower, caliba, calibb;
   std::vector<Float_t> vec_pos_labr; std::vector<Float_t> vec_pos_nai;
   std::vector<Float_t> vec_sigma_labr; std::vector<Float_t> vec_sigma_nai;
   std::vector<Float_t> vec_theta;
@@ -154,6 +154,11 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
   Bool_t resolution_binning = true;
   std::vector<Float_t> vec_resA;
   std::vector<Float_t> vec_respower;
+
+  //To apply energy calibration
+  Bool_t calibrating = true;
+  std::vector<Float_t> vec_caliba;
+  std::vector<Float_t> vec_calibb;
 
   if(isPARISin)
   {
@@ -174,9 +179,10 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
       getline(PARISangleliste,buffer_main); // Je skip la premiere ligne
 
       while(!PARISangleliste.eof())
-      { if (resolution_binning== true){
-        PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan >> resA >> respower;
+      { if (resolution_binning== true && calibrating == true){
+        PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan >> resA >> respower >> caliba >> calibb;
         names.push_back(name);vec_pos_labr.push_back(pos_labr);vec_sigma_labr.push_back(sigma_labr);vec_pos_nai.push_back(pos_nai);vec_sigma_nai.push_back(sigma_nai); vec_theta.push_back(theta); vec_theta_tan.push_back(tan); vec_resA.push_back(resA); vec_respower.push_back(respower);
+        vec_caliba.push_back(caliba); vec_calibb.push_back(calibb);
         }
         else{
           PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan;
@@ -341,9 +347,11 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
               temp_QDC->SetLaBrDiscriSigma(vec_sigma_labr.at(paris));
               temp_QDC->SetNaIDiscriPosition(vec_pos_nai.at(paris));
               temp_QDC->SetNaIDiscriSigma(vec_sigma_nai.at(paris));
-              if (resolution_binning){
+              if (resolution_binning && calibrating){
                 temp_QDC->SetResA(vec_resA.at(paris));
                 temp_QDC->SetRespower(vec_respower.at(paris));
+                temp_QDC->SetCaliba(vec_caliba.at(paris));
+                temp_QDC->SetCalibb(vec_calibb.at(paris));
               }
             }
           }
@@ -505,6 +513,7 @@ void CExperiment::SetReferenceDetector(const Int_t &label)
 int CExperiment::LoadCalibration(TString CalibrationFileName)
 {
   TString det_name(0),buffa,buffb,buffc,buffcste,buffamp,buffpower;
+  Double_t a3 = 0.;
   Double_t a2 = 0.;
   Double_t a1 = 0.;
   Double_t a0 = 0.;
@@ -525,24 +534,26 @@ int CExperiment::LoadCalibration(TString CalibrationFileName)
 
 
   // Now I loop on lines
-  Calibliste >> det_name >> buffa >> buffb >> buffc >> buffcste >> buffamp >> buffpower;
+  Calibliste >> det_name >> buffa >> buffb >> buffc >> buffcste;// >> buffamp >> buffpower;
   // cout << "Reading the following from calibration file: " << endl;
   // cout << det_name  << "\t" <<  buffa  << "\t" <<  buffb  << "\t" <<  buffc  << "\t" <<  buffd << endl;;
   while(!Calibliste.eof())
   {
-    Calibliste >> det_name >> a2 >> a1 >> a0 >> cste >> amp >> power ;
+    Calibliste >> det_name >> a3 >> a2 >> a1 >> a0;  // >> cste >> amp >> power ;
+
     TString shortname = det_name(0,5);
 
-    // cout << det_name << "\t" << shortname << "\t" << a << "\t" << b << "\t" << c << "\t" << d << endl;
+    //cout << det_name << "\t" << shortname << "\t" << a1 << "\t" << a0 << endl;
     // cout << "DetName2nbr["<< det_name << "])=" << DetName2nbr[det_name] << endl;
 
     if(shortname != "PARIS")GetDetector(DetName2nbr[det_name])->SetCalib(0,a2,a1,a0);
     else
     {
+      GetDetector(DetName2nbr[det_name])->SetCalib(0,a2,a1,a0);
       if(det_name.EndsWith("_Qs")) {GetDetector(DetName2nbr[det_name])->SetCalib(0,a2,a1,a0);}
       else if(det_name.EndsWith("_Ql")) {GetDetector(DetName2nbr[det_name])->SetSecondaryCalib(0,a2,a1,a0);}
     }
-    // cout << det_name << "\t" << GetDetector(DetName2nbr[det_name])->GetDetectorName() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx3() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx2() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx1() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx0() << endl;
+    cout << det_name << "\t" << GetDetector(DetName2nbr[det_name])->GetDetectorName() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx3() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx2() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx1() << "\t" << GetDetector(DetName2nbr[det_name])->GetCalibx0() << endl;
     // int det_label = GetDetector(DetName2nbr[det_name])->GetDetectorlabel();
     // cout << "Det Label " << det_label << "\t"<< GetDetector(Label2Detnbr[det_label])->GetCaliba() << "\t" << GetDetector(Label2Detnbr[det_label])->GetCalibb() << "\t" << GetDetector(Label2Detnbr[det_label])->GetCalibc() << "\t" << GetDetector(Label2Detnbr[det_label])->GetCalibd() << endl;
   }
