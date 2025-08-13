@@ -79,6 +79,9 @@
 #include "TStopwatch.h"
 #include "TStyle.h"
 #include "TCanvas.h"
+#include "TGraph.h"
+#include "TSpline.h"
+#include "TMultiGraph.h"
 #include "TRandom.h"
 #include "TChain.h"
 #include "TVirtualFitter.h"
@@ -116,19 +119,24 @@ OneSpectrumPeakSearchandAnalysis(const CExperiment &experiment,
 int DrawAllParisUncalibratedSpectra(const CExperiment &experiment);
 int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment);
 int DrawAllParisCalibratedSpectra(const CExperiment &experiment);
+
 std::tuple<std::vector<Double_t>,std::vector<Double_t>>  PSDSpectrumAnalyzer(TH1F *spectrum);
 Double_t PSDMatrixAnalyzer(TH2F *matrix);
 
 // Functions about time
-std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin);
+std::vector<TH1F*>  DrawTimeShifts_NOTECal(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin);
 std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin,  TString filename);
+std::vector<TH1F*> DrawTimeShifts_fissionevents(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin);
 int CalculateTimealignementShifts(const CExperiment &experiment, Bool_t isCalibrated);
 std::vector<Double_t> DeltaTmeasurer(TH1F *timespectrum, bool isqdc);
 int CheckCoincidenceWindow(std::vector<tm_Rawtype> tab_memory_tm, Double_t deltaTfin);
+std::vector<TH1F*>  CheckTimeShifts(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin);
 
 // Functions to manipulate data (calibration, time alignement, sorting...)
 int EnergyCalibrator(const CExperiment &experiment);
 int NRJCalibrator(const CExperiment &experiment,TChain *chained_oak, DynamicProgress<ProgressBar> &BAR, int localchainnbr, mutex *stop);
+int ApplyMyEnergyCalibration(const CExperiment &experiment);
+int TimeAlignator(const CExperiment &experiment, Bool_t isCalibrated);
 
 UInt_t CompressFASTERValue(const nrj_Rawtype &enrj, const int &originalBits, const int &targetBits);
 

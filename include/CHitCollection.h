@@ -78,6 +78,10 @@ public:
   CHit GetHit(int i){return hitcollection.at(i);}
   Bool_t IsHitInside(CHit *hit);
   int IsReferenceDetectorIn(int referencelabel);
+  int  CountLabel(int label) const;      // how many times does 'label' appear?
+  Bool_t HasLabel(int label) const;        // at least once?
+  int  FindLabel(int label) const;       // index of first occurrence or -1 if none
+  
 };
 
 

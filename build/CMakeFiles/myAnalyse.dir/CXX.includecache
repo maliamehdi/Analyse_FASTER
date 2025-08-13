@@ -129,6 +129,12 @@ TStyle.h
 ../include/TStyle.h
 TCanvas.h
 ../include/TCanvas.h
+TGraph.h
+../include/TGraph.h
+TSpline.h
+../include/TSpline.h
+TMultiGraph.h
+../include/TMultiGraph.h
 TRandom.h
 ../include/TRandom.h
 TChain.h
@@ -2768,6 +2774,14 @@ TObject.h
 TQObject.h
 /data/root/include/TQObject.h
 
+/data/root/include/TMultiGraph.h
+TNamed.h
+/data/root/include/TNamed.h
+TCollection.h
+/data/root/include/TCollection.h
+TFitResultPtr.h
+/data/root/include/TFitResultPtr.h
+
 /data/root/include/TNDArray.h
 TObject.h
 /data/root/include/TObject.h
@@ -2913,6 +2927,18 @@ TNamed.h
 /data/root/include/TSpectrum2.h
 TNamed.h
 /data/root/include/TNamed.h
+
+/data/root/include/TSpline.h
+TNamed.h
+/data/root/include/TNamed.h
+TAttLine.h
+/data/root/include/TAttLine.h
+TAttFill.h
+/data/root/include/TAttFill.h
+TAttMarker.h
+/data/root/include/TAttMarker.h
+TGraph.h
+/data/root/include/TGraph.h
 
 /data/root/include/TStatistic.h
 TObject.h

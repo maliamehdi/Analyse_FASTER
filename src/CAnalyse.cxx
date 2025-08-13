@@ -9,7 +9,7 @@
 //  contained in the root file                                             //
 //                                                                         //
 //-------------------------------------------------------------------------//
-
+#define CALIBRATED
 // Call for the principal parts of the functions
 #include "CAnalyse.h"
 
@@ -24,6 +24,19 @@ using namespace ROOT;
 // using nrj_Ucaltype = UInt_t;
 // using nrj_Caltype = Double_t;
 // using pu_type = Bool_t;
+#ifdef CALIBRATED 
+  // Definition of the types used in the analysis
+  using lab_t  = label_Rawtype;
+  using nrj_t  = Double_t;
+  using branchtime_t = tm_Rawtype;
+
+#else                // UNCALIBRATED
+using lab_t  = label_Rawtype;
+using nrj_t  = nrj_Rawtype;
+using branchtime_t = tm_Rawtype;
+#endif
+
+  
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -806,7 +819,7 @@ int CalculateCalibrationCoefficients(const CExperiment &experiment, TString sour
           reso.erase(reso.begin()+Toremove.at(rmv));
           reso_err.erase(reso_err.begin()+Toremove.at(rmv));
           integral.erase(integral.begin()+Toremove.at(rmv));
-          integral_err.erase(integral_err.begin()+Toremove.at(rmv));
+          integral_err.erase(integral.begin()+Toremove.at(rmv));
         }
 
         // I define the TGraph to plot calibration, resolution & efficiency
@@ -2211,7 +2224,7 @@ Coucou(4);
     reso.erase(reso.begin()+Toremove.at(rmv));
     reso_err.erase(reso_err.begin()+Toremove.at(rmv));
     integral.erase(integral.begin()+Toremove.at(rmv));
-    integral_err.erase(integral_err.begin()+Toremove.at(rmv));
+    integral_err.erase(integral.begin()+Toremove.at(rmv));
   }
 
   // I define the TGraph to plot calibration, resolution & efficiency
@@ -2583,6 +2596,7 @@ int DrawAllParisUncalibratedSpectra(const CExperiment &experiment)
 
 int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
 {
+  Bool_t resolutionbin = false;
   //Definition du germe pour le tirage aleatoire
   srand48(time(NULL));
 
@@ -2690,7 +2704,8 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
         //cout<<"The resolution fit parameter:"<< resA <<"power:"<<respower<<endl;
         //binedges.push_back(0.);
         //binedges.push_back(11.);
-        if (resA!=0 && resA<100 && respower!=0 && respower<1)
+        resA=0.;
+        if (resolutionbin && resA!=0 && resA<100 && respower!=0 && respower<1)
         {
           binedges[0]=0.;
           binedges[1]=11.;
@@ -2760,7 +2775,7 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
 
   // Creation of the file to save all the data
   TString outputfilename = experiment.GetFileDirectory_OUT();
-  outputfilename += "ResCeBr_UncalibratedPARISspectraROTATED_all.root";
+  outputfilename += "NoResCeBr_UncalibratedPARISspectraROTATED_all.root";
   TFile *outputfile = new TFile(outputfilename,"RECREATE");
 
   // Loading the TTree for reading the Data
@@ -3022,6 +3037,31 @@ int DrawAllParisUncalibratedSpectra_with_rotation(const CExperiment &experiment)
 
 int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
 {
+  Bool_t usespline = true;
+  Bool_t resolutionbin = false;
+  
+  if (usespline) {
+    cout << "Using spline calibration" << endl;
+    //Loading the Spline files if they exist (for calibration later on)
+    ;
+    }
+  else {
+    cout << "Using linear calibration" << endl;
+  }  
+  TFile *f = TFile::Open("/mnt/data/FROZEN/ROOT_DATA/Calibration/Eu/Run1_152Eu_Calibration/Results/Calib_peak_files/paris_calib_splines.root", "READ");
+    if (!f || f->IsZombie()) {
+      std::cerr << "Error: Could not open calibration file." << std::endl;
+     return 1;
+    }
+    // Example for PARIS70_
+    TGraph  *gCalib70 = (TGraph*) f->Get("PARIS70__graph");
+    TSpline3 *sCalib70 = (TSpline3*) f->Get("PARIS70__spline");
+    // for PARIS130
+    TGraph  *gCalib130 = (TGraph*) f->Get("PARIS130_graph");
+    TSpline3 *sCalib130 = (TSpline3*) f->Get("PARIS130_spline");
+    // for PARIS278
+    TGraph  *gCalib278 = (TGraph*) f->Get("PARIS278_graph");
+    TSpline3 *sCalib278 = (TSpline3*) f->Get("PARIS278_spline");
   //Definition du germe pour le tirage aleatoire
   srand48(time(NULL));
 
@@ -3097,6 +3137,9 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
     spectrumname6 +=experiment.GetDetector(sindex)->GetDetectorName();
     //spectrumname7 +=experiment.GetDetector(sindex)->GetDetectorName();
 
+    
+    
+
     if(experiment.GetDetector(sindex)->GetDetectorlabel()>highestdetlabel) highestdetlabel = experiment.GetDetectors().at(sindex)->GetDetectorlabel();
 
     // Getting the right range
@@ -3125,15 +3168,15 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
       */
       {
         //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-        Double_t resA = experiment.GetDetector(sindex)->GetResA();
+        Double_t resA = 0.;//experiment.GetDetector(sindex)->GetResA();
         Double_t respower = experiment.GetDetector(sindex)->GetRespower();
         
         //cout<<"The resolution fit parameter:"<< resA <<"power:"<<respower<<endl;
         //binedges.push_back(0.);
         //binedges.push_back(11.);
         //for debug
-        //resA =0.;
-        if (resA!=0 && resA<100 && respower!=0 && respower<1)
+        
+        if (resolutionbin && resA!=0 && resA<100 && respower!=0 && respower<1)
         {
           binedges[0]=0.;
           binedges[1]=5.;
@@ -3153,7 +3196,7 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
         }
         else
         {
-          localQDC1spectrum = new TH1F(spectrumname,title,nbrchannels,Emin,Emax/100);
+          localQDC1spectrum = new TH1F(spectrumname,title,nbrchannels,Emin,Emax/1000);
           localQDC2spectrum = new TH1F(spectrumname2,title2,nbrchannels,Emin,Emax);
           localPSDSpectra   = new TH1F(spectrumname3,title3,1600,0,TMath::Pi()/2.);
           localPSDMatrix    = new TH2F(spectrumname4,title4,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
@@ -3161,7 +3204,7 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
           localPSDMatrixNaIcrosstalk    = new TH2F(spectrumname6,title6,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
         }
         
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+        //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
         
         //localPSDMatrixBeyondLaBrNaI    = new TH2F(spectrumname7,title7,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
 
@@ -3206,16 +3249,16 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
   nrj_Rawtype enrj;
   std::cout << "We are Loaded .." << RESETTEXT << std::endl;
 
-
+  
   //Creation of a new TTree to store the calibration _Ecal
   TString inputfilename = experiment.GetDataFileNames().at(0);
   cout<<inputfilename<<endl;
   int it1 = inputfilename.Index(".root",5,1,inputfilename.kExact);
   TString outputfilename2 = experiment.GetFileDirectory_OUT();
   //outputfilename2 +=inputfilename(it1-7,it1); 
-  outputfilename2 += "_1_ROT_CeBr_ECal.root";
-  TFile *outputfile2 = new TFile(outputfilename2,"RECREATE");
-  TTree *sequoia = new TTree("DataTree",outputfilename2);
+  outputfilename2 += "Calibrated_ROT_CeBr_ECal.root";
+  //TFile *outputfile2 = new TFile(outputfilename2,"RECREATE");
+  //TTree *sequoia = new TTree("DataTree",outputfilename2);
 
   // Declaration of new tree variables
   Double_t mynrj = 0.;
@@ -3225,16 +3268,16 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
   Double_t tm1 = 0.;
 
   // Declaration of Branches that will contain the data
-  sequoia->Branch ("mylabel", &index1);
-  sequoia->Branch ("mynrj", &mynrj);
-  sequoia->Branch ("mynrj2", &mynrj2);
-  sequoia->Branch ("mytime", &tm1);
-  sequoia->Branch ("mypileup",&pileup1);
-
+  //sequoia->Branch ("mylabel", &index1);
+  //sequoia->Branch ("mynrj", &mynrj);
+  //sequoia->Branch ("mynrj2", &mynrj2);
+  //sequoia->Branch ("mytime", &tm1);
+  //sequoia->Branch ("mypileup",&pileup1);
+  
   // Creation of the file to save all the data
   TString outputfilename = experiment.GetFileDirectory_OUT();
   //outputfilename =+ inputfilename(0,it1)
-  outputfilename+="1706_Eu_CeBr_CalibratedPARISspectraROTATED_all.root";
+  outputfilename+="Full_CeBr_CalibratedPARISspectraROTATED_all.root";
   TFile *outputfile = new TFile(outputfilename,"RECREATE");
 
 
@@ -3302,15 +3345,12 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
     //PrintVector(experiment.GetDataFileNames());
     bar.set_progress((int)((double)fileindex/(double)filenumber*100.));
     // Defining a TTreeProcessor object to handle the TTree in the File in a MT mode
-    //ROOT::TTreeProcessorMT TP(file, experiment.GetDataTreeName(), n_workers);
-    TFile *rootFile = TFile::Open(file.c_str(), "READ");  // Open ROOT file
-    TTree *tree = (TTree*)rootFile->Get(experiment.GetDataTreeName().c_str()); // for debug single thread mode
-    TTreeReader myReader(tree); // for debug single thread mode
+    ROOT::TTreeProcessorMT TP(file, experiment.GetDataTreeName(), n_workers);
+
     // Scanning TTree
     // Launch the parallel processing of the tree
     int threadnbr = 0;
-    //auto loop_and_fill = [&] (TTreeReader &myReader){
-      
+    auto loop_and_fill = [&] (TTreeReader &myReader){
       TTreeReaderValue<label_Rawtype> labelRV(myReader,"label");
       TTreeReaderValue<nrj_Rawtype> QDC1RV(myReader,"nrj");
       TTreeReaderValue<nrj_Rawtype> QDC2RV(myReader,"nrj2");
@@ -3318,23 +3358,20 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
       //TTreeReaderValue<pu_type> PURV(myReader,"pileup");
 
       ULong64_t hitnumber = 0;
-      //CHit *hit = new CHit(threadnbr++);
       while(myReader.Next())
       {
-        
-        //cout<<"1"<<endl;
         auto label  = *labelRV;
         auto NRJ    = *QDC1RV;  // Short Gate
         auto NRJ2   = *QDC2RV;  // Long Gate
         auto TIME = *TMRV;
         index1 = *labelRV;
-        tm1 = (Double_t) TIME;
+        tm1 = (Double_t) TIME/1000.; //in ns
         pileup1 = false;
         mynrj= (Double_t) NRJ;
         mynrj2 = (Double_t) NRJ2;
         //cout<<"2"<<endl;
         // I define a new hit a fill in the information
-        hitnumber++;//threadnbr++;
+        hitnumber++;threadnbr++;
         if(label > 19 && label<29) // To make sure I only consider PARIS detectors
         {
           //cout<<"fuck my life"<<endl;
@@ -3348,13 +3385,15 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
           Bool_t isLaBr = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsPureLaBr3(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper LaBr3 selection
           Bool_t isBeyondLaBr3andNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsBeyondLaBr3andNaI(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper LaBr3 selection
           Bool_t isNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsPureNaI(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper NaI selection
-          //Loading Calibration parameters
-          Double_t caliba = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba();
-          Double_t calibb = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCalibb();
           //cout<<isLaBr<<endl;
           //cout << " Detector " << (string)experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetDetectorName() << " discriLaBr_pos = " << experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetLaBrDiscriPosition() << endl;
           // Filling up the spectra
           //forfilling.lock();
+          //Loading Calibration parameters
+          Double_t caliba = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba();
+          Double_t calibb = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCalibb();
+          Double_t caliba2 = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba2();
+
           double NRJ_bf_ROT = hit->GetHitE1();
           double NRJ2_bf_ROT = hit->GetHitE2();
           if(experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetDetectorType() == "PARIS")
@@ -3367,59 +3406,97 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
                                       NRJ);
              //tie(NRJ2,NRJ) = Rotation(0.,0.,NRJ2,NRJ);
              //cout << "ROT_Qs = " << NRJ2 << "; ROT_Ql = " << NRJ << endl;
-             
-             if(isLaBr && !isNaI) {
-               mynrj = caliba * (Double_t)NRJ_bf_ROT + calibb;
-               mynrj2 = 0.;
-              }
-             if(!isLaBr && !isBeyondLaBr3andNaI ) {
-              mynrj = (Double_t)NRJ;
-              mynrj2 = (Double_t)NRJ2;
-              }
           }
-          //cout << "mynrj = " << mynrj << "; mynrj2 " << mynrj2 << endl;
-
+          if(isLaBr && !isNaI) {
+            if (usespline)
+            {
+              switch (label)
+              {
+                case 21:
+                if (gCalib70 && sCalib70 && usespline) {
+                  mynrj = gCalib70->Eval(NRJ_bf_ROT);
+                  mynrj2 = 0.;
+                }
+                else {
+                  mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                  mynrj2 = 0.;
+                }
+                break;
+                case 24:
+                if (gCalib130 && sCalib130 && usespline && NRJ_bf_ROT > 50e3) {
+                  mynrj = gCalib130->Eval(NRJ_bf_ROT);
+                  mynrj2 = 0.;
+                }
+                else {
+                  mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                  mynrj2 = 0.;
+                }
+                break;
+                case 27:
+                if (gCalib278 && sCalib278 && usespline) {
+                  mynrj = sCalib278->Eval(NRJ_bf_ROT);
+                  mynrj2 = 0.;
+                }
+                else {
+                  mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                  mynrj2 = 0.;
+                }
+                break;
+              
+                default:
+                mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                mynrj2 = 0.;
+                break;
+              }
+            }
+            else
+            {
+              mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+              mynrj2 = 0.;
+            }
+            
+            
+          }
+         if(!isLaBr && !isBeyondLaBr3andNaI ) {
+          mynrj = (Double_t)NRJ;
+          mynrj2 = (Double_t)NRJ2;
+          }
           if(spectrumindex < PSDSpectra.size())
           {
+            // cout << endl;
+            // hit->PrintHit();
+            // cout << "Hit # " << hitnumber+1000*threadnbr << "; Filling Spectra " << spectrumindex << endl;
             PSDSpectra.at(spectrumindex)  -> Fill(PSD);
-            //caliba = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba();
-            //calibb = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCalibb();
-            if(isLaBr && !isNaI) QDC1Spectra.at(spectrumindex) -> Fill(caliba * NRJ_bf_ROT + calibb);
+            if(isLaBr && !isNaI) QDC1Spectra.at(spectrumindex) -> Fill(mynrj);
             if(isNaI) QDC2Spectra.at(spectrumindex) -> Fill(NRJ2);
           }
           
           if(spectrumindex < PSDMatrix.size())
           {
             //cout << "Hit # " << hitnumber+1000*threadnbr << "; Filling Matrix " << spectrumindex << endl;
-            if(isLaBr && !isNaI)PSDMatrixLaBr.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
+            if(isLaBr && !isNaI)PSDMatrixLaBr.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ_bf_ROT);
             //if(isNaI)PSDMatrixNaI.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
-            if(!isLaBr && !isBeyondLaBr3andNaI ) {
-              PSDMatrixNaI.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
-            }
+            if(!isLaBr && !isBeyondLaBr3andNaI ) PSDMatrixNaI.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
             if(!isBeyondLaBr3andNaI) PSDMatrix.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
           }
           //forfilling.unlock();
-          //cout<<"fuck my life"<<endl;
+
           delete hit;
-          
         }
-      
-        sequoia->Fill();
-        
       }
-    //};
-    //TP.Process(loop_and_fill);
+    };
+    TP.Process(loop_and_fill);
     cout<<"finished reading the file"<<endl;
   }
 
   //Saving the new Calibrated TTree
-  std::cout << endl << RESETTEXT << "Saving the new Ecal TTree in " << outputfilename2 << std::endl;
-  outputfile2->cd();
+  //std::cout << endl << RESETTEXT << "Saving the new Ecal TTree in " << outputfilename2 << std::endl;
+  //outputfile2->cd();
 
-  sequoia->Write("", TObject::kOverwrite);
+  //sequoia->Write("", TObject::kOverwrite);
 
-  outputfile2->Close();
-  chained_oak->GetFile()->Close(); // Maybe?
+  //outputfile2->Close();
+  //chained_oak->GetFile()->Close(); // Maybe?
   std::cout << "Calibration complete. Data saved to " << outputfilename << std::endl;
   
 
@@ -3529,9 +3606,294 @@ int  DrawAllParisCalibratedSpectra(const CExperiment &experiment)
   std::cout << std::endl;
   std::cout << "End of Energy Spectra Plotting" << std::endl;
   std::cout << "# RealTime=" << rtime2 << " seconds, CpuTime="<< ctime2 << " seconds" <<std::endl;
-  std::cout << std::endl;
+  std::cout << "RealTime/CpuTime=" << rtime2/ctime2 << std::endl;
+  std::cout << "End of the program" << std::endl;
+  return 1;
+}
 
-  return 1;}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+int  ApplyMyEnergyCalibration(const CExperiment &experiment)
+{
+  std::cout << "Starting the energy calibration" << std::endl;
+  std::cout <<SetBOLD << SetForeGRN<< "!DISCLAIMER!: I will generate Ecal.root files that only contain pure CeBr3 calibrated events, all the rest is dumped!!! " << std::endl;
+  Bool_t usespline = false; // for May Eu runs, for cobalt no need
+  if (usespline)
+  {
+    cout << "Using splines for calibration" << endl;
+    //Loading the Spline files if they exist (for calibration later on)
+    
+  }
+  else
+  {
+    cout << "Using polynomials for calibration" << endl;
+   
+  }
+  TFile *f = TFile::Open("/mnt/data/FROZEN/ROOT_DATA/Calibration/Eu/Run1_152Eu_Calibration/Results/Calib_peak_files/paris_calib_splines.root", "READ");
+    if (!f || f->IsZombie()) {
+      std::cerr << "Error: Could not open calibration file." << std::endl;
+      return 1;
+    }
+  
+   // Example for PARIS70_
+     TGraph  *gCalib70 = (TGraph*) f->Get("PARIS70__graph");
+    TSpline3 *sCalib70 = (TSpline3*) f->Get("PARIS70__spline");
+    // for PARIS130
+    TGraph  *gCalib130 = (TGraph*) f->Get("PARIS130_graph");
+    TSpline3 *sCalib130 = (TSpline3*) f->Get("PARIS130_spline");
+    // for PARIS278
+    TGraph  *gCalib278 = (TGraph*) f->Get("PARIS278_graph");
+    TSpline3 *sCalib278 = (TSpline3*) f->Get("PARIS278_spline");
+  //Definition du germe pour le tirage aleatoire
+  srand48(time(NULL));
+
+
+  ROOT::EnableThreadSafety();
+  ROOT::EnableImplicitMT(0);  // Disable ROOT's internal multithreading
+
+  // Declaration of energy spectra
+  // First I count the number of PARIS
+  int nbrparis=0;
+  for(int d=0; d < (int)experiment.GetDetectors().size();d++)
+  {
+    if(experiment.GetDetectors().at(d)->GetDetectorType() == "PARIS") nbrparis++;
+  }
+
+  // Loading the TTree for reading the Data
+  std::vector<TChain *> tab_chained_oak = experiment.GettheTChain();
+  TChain *chained_oak = tab_chained_oak.at(0);
+  label_Rawtype index;
+  nrj_Rawtype enrj;
+  std::cout << "We are Loaded .." << RESETTEXT << std::endl;
+
+  
+  //Creation of a new TTree to store the calibration _Ecal
+  TString inputfilename = experiment.GetDataFileNames().at(0);
+  cout<<inputfilename<<endl;
+  int it1 = inputfilename.Index(".root",5,1,inputfilename.kExact);
+  TString outputfilename2 = inputfilename(0,it1);
+  outputfilename2 += "_ROT_CeBr_ECal.root";
+  TFile *outputfile2 = new TFile(outputfilename2,"RECREATE");
+  TTree *sequoia = new TTree("DataTree",outputfilename2);
+
+  // Declaration of new tree variables
+  Double_t mynrj = 0.;
+  Double_t mynrj2 = 0.;
+  label_Rawtype index1 =0;
+  Bool_t pileup1 = false;
+  tm_Rawtype tm1 = 0;
+
+  // Declaration of Branches that will contain the data
+  sequoia->Branch ("label", &index1);
+  sequoia->Branch ("nrj", &mynrj);
+  sequoia->Branch ("nrj2", &mynrj2);
+  sequoia->Branch ("time", &tm1);
+  sequoia->Branch ("pileup",&pileup1);
+  
+  // Creation of the file to save all the data
+  TString outputfilename = experiment.GetFileDirectory_OUT();
+  //outputfilename =+ inputfilename(0,it1)
+  //outputfilename+="Full_CeBr_CalibratedPARISspectraROTATED_all.root";
+  //TFile *outputfile = new TFile(outputfilename,"RECREATE");
+  // Another Timer
+  TStopwatch localTimer;
+
+  //Starting of the chronometer
+  localTimer.Reset();
+  localTimer.Start();
+
+  //---------------------------------------------------------------------------//
+  //                                                                           //
+  //                            Reading the TTree                              //
+  //                                                                           //
+  //---------------------------------------------------------------------------//
+  // // Determination of the number of event that have to be treated
+  //auto n_workers = experiment.GetThreadsNbr();
+  // if(n_workers > max_workers){
+  //   cout << "Current machine only supports " << max_workers << " parallel threads. I will be using this number" << endl;
+  //   n_workers = max_workers;
+  // }
+  const auto chainentries = chained_oak -> GetEntries();
+  // const auto range = chainentries/n_workers;
+  // int percent = (int)(0.05*chainentries);
+
+  std::cout << "Beginning of Energy spectra building research" << std::endl;
+  std::cout << "On " << chainentries << " entries" << std::endl;
+
+  // Creating a ProgressBar which is nice in MT mode
+  using namespace indicators;
+  ProgressBar bar{
+    option::BarWidth{60},
+    option::Start{"["},
+    option::Fill{"="},
+    option::Lead{">"},
+    option::Remainder{"-"},
+    option::End{"]"},
+    option::PostfixText{"Reading"},
+    option::ShowElapsedTime{true},
+    option::ShowRemainingTime{true},
+    option::ForegroundColor{Color::grey},
+    option::FontStyles{std::vector<FontStyle>{FontStyle::bold}}
+  };
+
+  // I read all the file of the TChain
+  int fileindex  = 0;
+  int filenumber =  experiment.GetDataFileNames().size();
+  //mutex forfilling;
+  for(auto &file : experiment.GetDataFileNames())
+  {
+    fileindex++;
+    //PrintVector(experiment.GetDataFileNames());
+    bar.set_progress((int)((double)fileindex/(double)filenumber*100.));
+    // Defining a TTreeProcessor object to handle the TTree in a MT mode
+    //ROOT::TTreeProcessorMT TP(file, experiment.GetDataTreeName(), n_workers);
+    TFile *rootFile = TFile::Open(file.c_str(), "READ");  // Open ROOT file
+    TTree *tree = (TTree*)rootFile->Get(experiment.GetDataTreeName().c_str()); // for debug single thread mode
+    TTreeReader myReader(tree); // for debug single thread mode
+    // Scanning TTree
+    // Launch the parallel processing of the tree
+    //int threadnbr = 0;
+    //auto loop_and_fill = [&] (TTreeReader &myReader){
+      
+      TTreeReaderValue<label_Rawtype> labelRV(myReader,"label");
+      TTreeReaderValue<nrj_Rawtype> QDC1RV(myReader,"nrj");
+      TTreeReaderValue<nrj_Rawtype> QDC2RV(myReader,"nrj2");
+      TTreeReaderValue<tm_Rawtype> TMRV(myReader,"time");
+      //TTreeReaderValue<pu_type> PURV(myReader,"pileup");
+
+      ULong64_t hitnumber = 0;
+      //CHit *hit = new CHit(threadnbr++);
+      while(myReader.Next())
+      {
+        
+        //cout<<"1"<<endl;
+        auto label  = *labelRV;
+        auto NRJ    = *QDC1RV;  // Short Gate
+        auto NRJ2   = *QDC2RV;  // Long Gate
+        auto TIME = *TMRV;
+        index1 = *labelRV;
+        tm1 =  TIME; //I go back to ns and double format
+        pileup1 = false;
+        mynrj= (Double_t) NRJ;
+        mynrj2 = (Double_t) NRJ2;
+        //cout<<"2"<<endl;
+        // I define a new hit a fill in the information
+        hitnumber++;//threadnbr++;
+        if(label > 19 && label<29) // To make sure I only consider PARIS detectors
+        {
+          //cout<<"fuck my life"<<endl;
+          CHit *hit = new CHit(hitnumber);
+          hit->SetHit(label, 0, NRJ, NRJ2, false);
+
+          //int spectrumindex = experiment.GetLabel2Detnbrs(static_cast<int>(label));
+          
+          Double_t PSD = hit->PerformPARISPSD();// PSD = atan(short/long)
+          //std::cout << "All good" << std::endl;
+          Bool_t isLaBr = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsPureLaBr3(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper LaBr3 selection
+          Bool_t isBeyondLaBr3andNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsBeyondLaBr3andNaI(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper LaBr3 selection
+          Bool_t isNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsPureNaI(PSD,hit->GetHitE1(),hit->GetHitE2()); // I need the Long charge to get proper NaI selection
+          //Loading Calibration parameters
+          Double_t caliba = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba();
+          Double_t calibb = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCalibb();
+          Double_t caliba2 = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetCaliba2();
+
+          double NRJ_bf_ROT = hit->GetHitE1();
+          double NRJ2_bf_ROT = hit->GetHitE2();
+
+            tie(NRJ2,NRJ) = Rotation(
+                                      static_cast<double>(experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetRotationAngle()),
+                                      static_cast<double>(experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetRotationAngleTan()),
+                                      NRJ2,
+                                      NRJ);
+
+            
+             if(isLaBr && !isNaI) {
+                if (usespline)
+                {
+                  switch (label)
+                  {
+                    case 21:
+                    if (gCalib70 && sCalib70 && usespline) {
+                      mynrj = sCalib70->Eval(NRJ_bf_ROT);
+                      mynrj2 = 0.;
+                    }
+                    else {
+                      mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                      mynrj2 = 0.;
+                    }
+                    break;
+                    case 24:
+                    if (gCalib130 && sCalib130 && usespline && NRJ_bf_ROT > 50e3) {
+                      mynrj = sCalib130->Eval(NRJ_bf_ROT);
+                      mynrj2 = 0.;
+                    }
+                    else {
+                      mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                      mynrj2 = 0.;
+                    }
+                    break;
+                    case 27:
+                    if (gCalib278 && sCalib278 && usespline) {
+                      mynrj = sCalib278->Eval(NRJ_bf_ROT);
+                      mynrj2 = 0.;
+                    }
+                    else {
+                      mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                      mynrj2 = 0.;
+                    }
+                    break;
+                  
+                    default:
+                    mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                    mynrj2 = 0.;
+                    break;
+                  }
+                }
+                else
+                {
+                  mynrj = caliba2 * std::pow((Double_t)NRJ_bf_ROT, 2) + caliba * (Double_t)NRJ_bf_ROT + calibb;
+                  mynrj2 = 0.;
+                }
+                
+                sequoia->Fill();  
+              }
+             if(!isLaBr && !isBeyondLaBr3andNaI ) {
+              mynrj = (Double_t)NRJ;
+              mynrj2 = (Double_t)NRJ2;
+              }
+
+
+          delete hit;
+          
+        }
+      
+        
+        
+      }
+    
+    cout<<"finished reading the file"<<endl;
+  }
+
+  //Saving the new Calibrated TTree
+  std::cout << endl << RESETTEXT << "Saving the new Ecal TTree containing only pure CeBr3 events in " << outputfilename2 << std::endl;
+  outputfile2->cd();
+
+  sequoia->Write("", TObject::kOverwrite);
+
+  outputfile2->Close();
+  //chained_oak->GetFile()->Close(); // Maybe?
+  std::cout << "Calibration complete. Data saved to " << outputfilename2 << std::endl;
+
+  // Printing of chronometer measurement
+  localTimer.Stop();
+  Double_t rtime2 = localTimer.RealTime();
+  Double_t ctime2 = localTimer.CpuTime();
+  std::cout << std::endl;
+  std::cout << "End of Energy Spectra Plotting" << std::endl;
+  std::cout << "# RealTime=" << rtime2 << " seconds, CpuTime="<< ctime2 << " seconds" <<std::endl;
+  std::cout << "RealTime/CpuTime=" << rtime2/ctime2 << std::endl;
+  std::cout << "End of the program" << std::endl;
+  return 1;
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -3575,7 +3937,7 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
       nbrchannels = experiment.GetDetector(sindex)->GetNbrChannels();
       //cout << nbrchannels << "\t" << Emax << endl;
       if(nbrchannels > highestnbrchannels) highestnbrchannels=nbrchannels;
-      Emax = experiment.GetDetector(sindex)->GetMaxchNumber();//GetMaxchNumber();
+      Emax = 5000.; //experiment.GetDetector(sindex)->GetMaxchNumber();//GetMaxchNumber();
       if(Emax > highestEmax) highestEmax=Emax;
       localNRJspectrum = new TH1F(spectrumname,title,nbrchannels,Emin,Emax);
 
@@ -3637,7 +3999,7 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
       if(nbrchannels > highestnbrchannels) highestnbrchannels=nbrchannels;
       Emax = experiment.GetDetector(sindex)->GetMaxchNumber();//GetMaxchNumber();
       if(Emax > highestEmax) highestEmax=Emax;
-      localQDC1spectrum = new TH1F(spectrumname,title,nbrchannels,Emin,Emax);
+      localQDC1spectrum = new TH1F(spectrumname,title,nbrchannels,Emin,Emax/1000.);
       localQDC2spectrum = new TH1F(spectrumname2,title2,nbrchannels,Emin,Emax);
       localPSDSpectra   = new TH1F(spectrumname3,title3,1600,-1,1);
       localPSDMatrix    = new TH2F(spectrumname4,title4,nbrchannels,Emin,Emax,nbrchannels,Emin,Emax);
@@ -3664,7 +4026,7 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
 
   // Creation of the file to save all the data
   TString outputfilename = experiment.GetFileDirectory_OUT();
-  outputfilename += "UncalibratedEnergyspectra_all.root";
+  outputfilename += "calibratedEnergyspectra_all.root";
   TFile *outputfile = new TFile(outputfilename,"RECREATE");
 
 
@@ -3747,9 +4109,9 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
       // std::mt19937 gen(rd());
       // std::uniform_real_distribution<> dis(0.0,1.0);
       
-      TTreeReaderValue<label_Rawtype> labelRV(myReader,"label");
-      TTreeReaderValue<nrj_Rawtype> QDC1RV(myReader,"nrj");
-      TTreeReaderValue<nrj_Rawtype> QDC2RV(myReader,"nrj2");
+      TTreeReaderValue<label_type>labelRV(myReader,"label");
+      TTreeReaderValue<Double_t> QDC1RV(myReader,"nrj");
+      TTreeReaderValue<Double_t> QDC2RV(myReader,"nrj2");
 
       ULong64_t hitnumber = 0;
       while(myReader.Next())
@@ -3760,7 +4122,7 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
 
         // I define a new hit a fill in the information
         hitnumber++;threadnbr++;
-        if(label < 200)
+        if(label < 29)
         {
           int spectrumindex = experiment.GetLabel2Detnbrs(static_cast<int>(label));
           int orginalBits = experiment.GetDetector(static_cast<int>(spectrumindex))->GetMaxchNumber();
@@ -3775,7 +4137,7 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
           // And the energy Matrix
           if (NRJ > 10) NRJmatrix->Fill(label,NRJ);
         }
-        if(label > 0) // To make sure I only consider PARIS detectors
+        if(label > 19) // To make sure I only consider PARIS detectors
         {
           int spectrumindex = experiment.GetLabel2Detnbrs(static_cast<int>(label));
           int orginalBits = experiment.GetDetector(static_cast<int>(spectrumindex))->GetMaxchNumber();
@@ -3784,31 +4146,17 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
           hit->SetHit(label, 0, NRJ, NRJ2, false);
           auto NRJmemory = NRJ;//NRJ_compressed;
           //int spectrumindex = experiment.GetLabel2Detnbrs(static_cast<int>(label));
-          Double_t PSD = hit->PerformPARISPSD();// PSD = atan
-          if(experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetDetectorType() == "PARIS")
-          {
-            tie(NRJ2,NRJ) = Rotation((double)experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetRotationAngle(),(double)experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->GetRotationAngleTan(),NRJ2,NRJ);
-          }
-          
-          Bool_t isLaBr = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsPureLaBr3(PSD,hit->GetHitE1(),hit->GetHitE2());
-          Bool_t isBeyondLaBrandNaI = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(static_cast<int>(label)))->IsBeyondLaBr3andNaI(PSD,hit->GetHitE1(),hit->GetHitE2());
+          //Double_t PSD = hit->PerformPARISPSD();// PSD = atan
+
           
           // Filling up the spectra
           //forfilling.lock();
           if(spectrumindex < PSDSpectra.size())
           {
-            // cout << endl;
-            // hit->PrintHit();
-            // cout << "Hit # " << hitnumber+1000*threadnbr << "; Filling Spectra " << spectrumindex << endl;
-            PSDSpectra.at(spectrumindex)  -> Fill(PSD);
-            if(isLaBr) QDC1Spectra.at(spectrumindex) -> Fill(NRJmemory);
-            else if(!isLaBr && !isBeyondLaBrandNaI){QDC2Spectra.at(spectrumindex) -> Fill(NRJ2);}
+            QDC1Spectra.at(spectrumindex) -> Fill(NRJmemory);
+            QDC2Spectra.at(spectrumindex) -> Fill(NRJ2);
           }
-          if(spectrumindex < PSDMatrix.size())
-          {
-            //cout << "Hit # " << hitnumber+1000*threadnbr << "; Filling Matrix " << spectrumindex << endl;
-            if(!isBeyondLaBrandNaI) PSDMatrix.at(spectrumindex)->Fill((Double_t)NRJ2,(Double_t)NRJ);
-          }
+          
           //forfilling.unlock();
 
           delete hit;
@@ -4252,7 +4600,7 @@ int NRJCalibrator(const CExperiment &experiment,TChain *chained_oak, DynamicProg
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin)
+std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin, TString filename)
 {
   //Definition du germe pour le tirage aleatoire
   srand48(time(NULL));
@@ -4264,7 +4612,7 @@ std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t 
   Double_t deltaT(0);
   //Double_t reso;
   int nperim;
-  Int_t nbrchannels = (deltaTfin-deltaTinit)*20; //precision of 50 ps
+  Int_t nbrchannels = (deltaTfin-deltaTinit)*20; //* 20 for a precision of 50 ps
 
   //Declaration of all variables for names
   TString title;
@@ -4286,8 +4634,8 @@ std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t 
     if(experiment.GetDetector(sindex)->GetDetectorlabel()>highestdetlabel) highestdetlabel = experiment.GetDetectors().at(sindex)->GetDetectorlabel();
     title += " vs ";
     spectrumname +="vs";
-    title += experiment.GetReferenceDetector()->GetDetectorName();
-    spectrumname += experiment.GetReferenceDetector()->GetDetectorName();
+    title += experiment.GetReferenceDetector()->GetDetectorName();//title += experiment.GetReferenceDetector()->GetDetectorName();
+    spectrumname +=experiment.GetReferenceDetector()->GetDetectorName();//spectrumname += experiment.GetReferenceDetector()->GetDetectorName();
     localtimespectrum = new TH1F(spectrumname,title,nbrchannels,deltaTinit,deltaTfin);
     timespectra.push_back(localtimespectrum);
     spectrumname.Clear();
@@ -4306,17 +4654,22 @@ std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t 
   // Loading the TTree for reading the Data
   std::vector<TChain *> tab_chained_oak = experiment.GettheTChain();
   TChain *chained_oak = tab_chained_oak.at(0);
-  label_type index;
+  label_Rawtype index;
   tm_Rawtype tm;
-  nrj_type enrj,enrj2,enrj3,enrj4;
+  Double_t enrj, enrj2, enrj3, enrj4; //nrj_type enrj,enrj2,enrj3,enrj4;
   std::cout << FOREBLU << "Loading Tree ..." << std::endl;
   chained_oak -> SetBranchAddress("label",&index);   // Detector number
   chained_oak -> SetBranchAddress("time",&tm);       // Time of the hit
   chained_oak -> SetBranchAddress("nrj",&enrj);
   if(experiment.GetisQDC2()) chained_oak->SetBranchAddress ("nrj2", &enrj2);
-  if(experiment.GetisQDC3()) chained_oak->SetBranchAddress ("nrj3", &enrj3);
-  if(experiment.GetisQDC4()) chained_oak->SetBranchAddress ("nrj4", &enrj4);
+  //if(experiment.GetisQDC3()) chained_oak->SetBranchAddress ("nrj3", &enrj3);
+  //if(experiment.GetisQDC4()) chained_oak->SetBranchAddress ("nrj4", &enrj4);
   //chained_oak -> SetBranchAddress("pileup",&pileup); // Time of the hit
+  chained_oak->SetCacheSize(10000000);  // Set a cache size (e.g., 10 MB)
+  chained_oak->AddBranchToCache("label");
+  chained_oak->AddBranchToCache("time");
+  chained_oak->AddBranchToCache("nrj");
+  if (experiment.GetisQDC2()) chained_oak->AddBranchToCache("nrj2");
   std::cout << "Loaded .." << RESETTEXT << std::endl;
 
   // Another Timer
@@ -4327,10 +4680,14 @@ std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t 
   timer2.Start();
 
   // Energy windows
-  nrj_type E_ref_min = 1300;
-  nrj_type E_ref_max = 1360;
-  nrj_type E_det_min = 1140;
-  nrj_type E_det_max = 1200;
+  Double_t E_ref_min = 1270.;
+  Double_t E_ref_max = 1400.;
+  Double_t E_det_min = 1150.;
+  Double_t E_det_max = 1250.;
+  //nrj_type E_ref_min = 1290;
+  //nrj_type E_ref_max = 1370;
+  //nrj_type E_det_min = 1130;
+  //nrj_type E_det_max = 1210;
 
   //---------------------------------------------------------------------------//
   //                                                                           //
@@ -4360,55 +4717,75 @@ std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t 
     option::FontStyles{std::vector<FontStyle>{FontStyle::bold}}
   };
 
-  tm_type memorytm = 0;
 
   // I declare a hit collection that will be used for event reconstruction
   CHitCollection *coinc_windows = new CHitCollection();
   coinc_windows->SetCollectionTimeSize(deltaTfin-deltaTinit);
   int ReferenceLabel = experiment.GetReferenceDetector()->GetDetectorlabel();
+  Bool_t energycondition = false;
 
-  for(ULong64_t hitI=0; hitI < chainentries; hitI++)
-  {
-    if(hitI%percent==0) // Printing every 5 percent
-    {
-      bar.set_progress((int)((double)hitI/(double)chainentries*100.));
+  for (ULong64_t hitI = 0; hitI < chainentries; hitI++) {
+    if (hitI % percent == 0) { // Printing every 5 percent
+        bar.set_progress((int)((double)hitI / (double)chainentries * 100.));
     }
 
-    // Loading of the next entry to compare with the previous one
-    int hitexist = chained_oak -> GetEntry(hitI);
+    // Load the next entry
+    int hitexist = chained_oak->GetEntry(hitI);
 
-    if(hitexist > 0)
-    {
-      CHit *hit = new CHit(hitI);
-      if(!experiment.GetisQDC2()) hit->SetHit(index, tm, enrj, 1);
-      if(experiment.GetisQDC2())  hit->SetHit(index, tm, enrj, enrj2, 1);
-      if(experiment.GetisQDC3())  hit->SetHit(index, tm, enrj, enrj2, enrj3, 1);
-      if(experiment.GetisQDC4())  hit->SetHit(index, tm, enrj, enrj2, enrj4, 1);
+    if (hitexist > 0 && index < 29 && index > 19) {
+        CHit *hit = new CHit(hitI);
+        hit->SetHit(index, tm, enrj, 1);
+       //std::cout << "Hit # " << hitI << " : " << index << "\t" << tm << "\t" << enrj << std::endl;
+        //cout<< "Hit # " << hitI << endl;
+        // If the new hit is in the right time window, add it to the collection
+        if (coinc_windows->IsHitInside(hit)) {
+            coinc_windows->AddHit(hit);
+        } else {
+            // New hit out of time window
+            // Search for the reference detector in the time window
+            int Refdetector_pos = coinc_windows->IsReferenceDetectorIn(ReferenceLabel);
 
-      if(hitI > 450 && hitI < 460) hit->PrintHit();
+            if (Refdetector_pos >= 0 && coinc_windows->GetCollectionSize() > 1) {
+                // Loop through the hit collection to check energy conditions
+                for (int HitC = 0; HitC < coinc_windows->GetCollectionSize(); HitC++) {
+                    if (HitC != Refdetector_pos) {
+                        // Get the energy of the reference detector and the other detector
+                        Double_t ref_energy = (Double_t) coinc_windows->GetHit(Refdetector_pos).GetHitE1();
+                        Double_t det_energy = (Double_t) coinc_windows->GetHit(HitC).GetHitE1();
+                        //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
+                        // Check if the energy conditions are satisfied
+                        
+                        if ((ref_energy >= E_ref_min && ref_energy <= E_ref_max &&
+                          det_energy >= E_det_min && det_energy <= E_det_max) ||
+                          (ref_energy >= E_det_min && ref_energy <= E_det_max &&
+                          det_energy >= E_ref_min && det_energy <= E_ref_max)) {
+                            // Calculate the time difference
+                            deltaT = (double)((coinc_windows->GetHit(HitC).GetHitTime() -
+                                              coinc_windows->GetHit(Refdetector_pos).GetHitTime())/1000);
+                            //std::cout << "DeltaT = " << deltaT << "ns" << std::endl;
+                            //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
+                            int spectrumindex = experiment.GetLabel2Detnbrs(coinc_windows->GetHit(HitC).GetHitLabel());
+                            if (spectrumindex < timespectra.size()) {
+                              timespectra.at(spectrumindex)->Fill(deltaT);
+                            } 
+                            else {
+                                std::cerr << "spectrumindex = " << spectrumindex << ", timespectra.size() = " << timespectra.size() << std::endl;
+                                continue;
+                            }
+                            
+                            timematrix->Fill(coinc_windows->GetHit(HitC).GetHitLabel(), deltaT);
+                        }
+                        
+                    }
+                }
+            }
 
-      // If the new hit is in the right time window I add the hit to the collection
-      if(coinc_windows->IsHitInside(hit)) {coinc_windows->AddHit(hit);}
-
-
-      else
-      {
-        // New hit out of time window
-        // I search for the reference detector in the time window
-        int Refdetector_pos = coinc_windows->IsReferenceDetectorIn(ReferenceLabel);
-
-        if(Refdetector_pos >= 0 && coinc_windows->GetCollectionSize() > 1)
-        {
-          cout << endl << endl;
-          coinc_windows->PrintHitCollection();
+            // Clear the collection and add the last hit that was not added
+            coinc_windows->Clear();
+            coinc_windows->AddHit(hit);
         }
 
-        // If just one or that I have finished working with it I clear the collection and add the last hit that was not added
-        coinc_windows->Clear();
-        coinc_windows->AddHit(hit);
-      }
-
-      delete hit;
+        delete hit;
     }
   }
 
@@ -4439,7 +4816,7 @@ std::vector<TH1F*>  DrawTimeShifts_ECal(const CExperiment &experiment, Double_t 
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin,  TString filename)
+std::vector<TH1F*>  DrawTimeShifts_NOTECal(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin)
 {
   //Definition du germe pour le tirage aleatoire
   srand48(time(NULL));
@@ -4451,7 +4828,7 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
   Double_t deltaT(0);
   //Double_t reso;
   int nperim;
-  Int_t nbrchannels = (deltaTfin-deltaTinit)*20; //precision of 50 ps
+  Int_t nbrchannels = (deltaTfin-deltaTinit)*10; //* 20 for a precision of 50 ps
 
   //Declaration of all variables for names
   TString title;
@@ -4473,8 +4850,8 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
     if(experiment.GetDetector(sindex)->GetDetectorlabel()>highestdetlabel) highestdetlabel = experiment.GetDetectors().at(sindex)->GetDetectorlabel();
     title += " vs ";
     spectrumname +="vs";
-    title += experiment.GetReferenceDetector()->GetDetectorName();
-    spectrumname += experiment.GetReferenceDetector()->GetDetectorName();
+    title += experiment.GetReferenceDetector()->GetDetectorName();//title += experiment.GetReferenceDetector()->GetDetectorName();
+    spectrumname +=experiment.GetReferenceDetector()->GetDetectorName();//spectrumname += experiment.GetReferenceDetector()->GetDetectorName();
     localtimespectrum = new TH1F(spectrumname,title,nbrchannels,deltaTinit,deltaTfin);
     timespectra.push_back(localtimespectrum);
     spectrumname.Clear();
@@ -4487,20 +4864,34 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
 
   // Creation of the file to save all the data
   TString outputfilename = experiment.GetFileDirectory_OUT();
-  outputfilename += "Timespectra_all.root";
+  outputfilename += "NoEconditionTimespectra_all.root";
   TFile *outputfile = new TFile(outputfilename,"RECREATE");
 
   // Loading the TTree for reading the Data
   std::vector<TChain *> tab_chained_oak = experiment.GettheTChain();
   TChain *chained_oak = tab_chained_oak.at(0);
-  label_type index;
-  tm_Rawtype tm;
-  nrj_type enrj,enrj2,enrj3,enrj4;
-  std::cout << FOREBLU << "Loading Tree ..." << std::endl;
-  chained_oak -> SetBranchAddress("label",&index);   // Detector number
-  chained_oak -> SetBranchAddress("time",&tm);       // Time of the hit
+  label_Rawtype LABEL;
+  nrj_Rawtype NRJ;
+  nrj_Rawtype NRJ2;
+  tm_Rawtype TM;
 
+  double index;
+  Double_t tm;//tm_Rawtype tm;
+  Double_t enrj, enrj2, enrj3, enrj4; //nrj_type enrj,enrj2,enrj3,enrj4;
+  std::cout << FOREBLU << "Loading Tree ..." << std::endl;
+  chained_oak -> SetBranchAddress("label",&LABEL);   // Detector number
+  chained_oak -> SetBranchAddress("time",&TM);       // Time of the hit
+  chained_oak -> SetBranchAddress("nrj",&NRJ);
+  if(experiment.GetisQDC2()) chained_oak->SetBranchAddress ("nrj2", &NRJ2);
+  //if(experiment.GetisQDC3()) chained_oak->SetBranchAddress ("nrj3", &enrj3);
+  //if(experiment.GetisQDC4()) chained_oak->SetBranchAddress ("nrj4", &enrj4);
   //chained_oak -> SetBranchAddress("pileup",&pileup); // Time of the hit
+
+  index = (double)LABEL;
+  tm = (Double_t)TM;
+  enrj = (Double_t)NRJ;
+  enrj2 = (Double_t)NRJ2;
+
   std::cout << "Loaded .." << RESETTEXT << std::endl;
 
   // Another Timer
@@ -4509,6 +4900,16 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
   //Starting of the chronometer
   timer2.Reset();
   timer2.Start();
+
+  // Energy windows
+  Double_t E_ref_min = 1270.;
+  Double_t E_ref_max = 1400.;
+  Double_t E_det_min = 1150.;
+  Double_t E_det_max = 1250.;
+  //nrj_type E_ref_min = 1290;
+  //nrj_type E_ref_max = 1370;
+  //nrj_type E_det_min = 1130;
+  //nrj_type E_det_max = 1210;
 
   //---------------------------------------------------------------------------//
   //                                                                           //
@@ -4539,72 +4940,78 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
   };
 
   tm_type memorytm = 0;
-
+  
   // I declare a hit collection that will be used for event reconstruction
   CHitCollection *coinc_windows = new CHitCollection();
   coinc_windows->SetCollectionTimeSize(deltaTfin-deltaTinit);
   int ReferenceLabel = experiment.GetReferenceDetector()->GetDetectorlabel();
 
-  for(ULong64_t hitI=0; hitI < chainentries; hitI++)
-  {
-    if(hitI%percent==0) // Printing every 5 percent
-    {
-      bar.set_progress((int)((double)hitI/(double)chainentries*100.));
+  for (ULong64_t hitI = 0; hitI < chainentries; hitI++) {
+    if (hitI % percent == 0) { // Printing every 5 percent
+        bar.set_progress((int)((double)hitI / (double)chainentries * 100.));
     }
 
     // Loading of the next entry to compare with the previous one
     int hitexist = chained_oak -> GetEntry(hitI);
 
-    if(hitexist > 0)
-    {
-      CHit *hit = new CHit(hitI);
-      hit->SetHit(index, tm, 0, 1);
+    if (hitexist > 0 && index < 29 && index > 0) {
+        CHit *hit = new CHit(hitI);
+        hit->SetHit(index, tm, enrj, enrj2, 1);
+      //std::cout << "Hit # " << hitI << " : " << index << "\t" << tm << "\t" << enrj << std::endl;
+        //cout<< "Hit # " << hitI << endl;
+        // If the new hit is in the right time window, add it to the collection
+        if (coinc_windows->IsHitInside(hit)) {
+            coinc_windows->AddHit(hit);
+        } else {
+            // New hit out of time window
+            // Search for the reference detector in the time window
+            int Refdetector_pos = coinc_windows->IsReferenceDetectorIn(ReferenceLabel);
 
-      //if(hitI > 450 && hitI < 460) hit->PrintHit();
-
-      // If the new hit is in the right time window I add the hit to the collection
-      if(coinc_windows->IsHitInside(hit)) {coinc_windows->AddHit(hit);}
-
-
-      else
-      {
-        // New hit out of time window
-        // I search for the reference detector in the time window
-        int Refdetector_pos = coinc_windows->IsReferenceDetectorIn(ReferenceLabel);
-
-        if(Refdetector_pos >= 0 && coinc_windows->GetCollectionSize() > 1)
-        {
-          //cout << endl << endl;
-          //coinc_windows->PrintHitCollection();
-          // Now I loop on the hit collection to get all the time spectra
-          for(int HitC = 0; HitC < coinc_windows->GetCollectionSize(); HitC++)
-          {
-            if(HitC != Refdetector_pos)
-            {
-              // I calculate the time difference to Fill the time spectrum with
-                deltaT = (double)((Long64_t)coinc_windows->GetHit(HitC).GetHitTime() -(Long64_t)coinc_windows->GetHit(Refdetector_pos).GetHitTime())/1000.;
-
-                // I fill the correct time spectrum
-                int spectrumindex = experiment.GetLabel2Detnbrs(coinc_windows->GetHit(HitC).GetHitLabel());
-                //cout << coinc_windows->GetHit(HitC).GetHitLabel() << "\t" << spectrumindex << "\t" << deltaT << endl;
-                timespectra.at(spectrumindex)->Fill(deltaT);
-
-                // And the time matrix
-                timematrix->Fill(coinc_windows->GetHit(HitC).GetHitLabel(),deltaT);
+            if (Refdetector_pos >= 0 && coinc_windows->GetCollectionSize() > 1) {
+                // Loop through the hit collection to check energy conditions
+                for (int HitC = 0; HitC < coinc_windows->GetCollectionSize(); HitC++) {
+                    if (HitC != Refdetector_pos) {
+                        // Get the energy of the reference detector and the other detector
+                        Double_t ref_energy = (Double_t) coinc_windows->GetHit(Refdetector_pos).GetHitE1();
+                        Double_t det_energy = (Double_t) coinc_windows->GetHit(HitC).GetHitE1();
+                        //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
+                        // Calculate the time difference
+                        deltaT = (double)(coinc_windows->GetHit(HitC).GetHitTime() -
+                        coinc_windows->GetHit(Refdetector_pos).GetHitTime());
+                        // Check if the energy conditions are satisfied
+                    //     if ((ref_energy >= E_ref_min && ref_energy <= E_ref_max &&
+                    //         det_energy >= E_det_min && det_energy <= E_det_max) ||
+                    //         (ref_energy >= E_det_min && ref_energy <= E_det_max &&
+                    //         det_energy >= E_ref_min && det_energy <= E_ref_max)) {
+                    //         // Calculate the time difference
+                             deltaT = (double)(coinc_windows->GetHit(HitC).GetHitTime() -
+                                               coinc_windows->GetHit(Refdetector_pos).GetHitTime());
+                             //std::cout << "DeltaT = " << deltaT << "ns" << std::endl;
+                             //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
+                             int spectrumindex = experiment.GetLabel2Detnbrs(coinc_windows->GetHit(HitC).GetHitLabel());
+                             if (spectrumindex < timespectra.size()) {
+                               timespectra.at(spectrumindex)->Fill(deltaT);
+                             } 
+                             else {
+                                 std::cerr << "spectrumindex = " << spectrumindex << ", timespectra.size() = " << timespectra.size() << std::endl;
+                                 continue;
+                             }
+                            
+                             timematrix->Fill(coinc_windows->GetHit(HitC).GetHitLabel(), deltaT);
+                    //     }
+                        
+                     }
+                }
             }
-          }
 
+            // Clear the collection and add the last hit that was not added
+            coinc_windows->Clear();
+            coinc_windows->AddHit(hit);
         }
 
-        // If just one or that I have finished working with it I clear the collection and add the last hit that was not added
-        coinc_windows->Clear();
-        coinc_windows->AddHit(hit);
-      }
-
-      delete hit;
+        delete hit;
     }
   }
-
   delete coinc_windows;
 
   std::cout << endl << "Saving in " << outputfilename << std::endl;
@@ -4630,8 +5037,257 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
 
   return timespectra;
 }
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+std::vector<TH1F*>   DrawTimeShifts_fissionevents(const CExperiment &experiment,
+  Double_t deltaTinit,
+  Double_t deltaTfin)
+{
+  srand48(time(NULL));
+
+  // General setup for histograms
+  ULong64_t chainentries;
+  Double_t deltaT(0);
+  Int_t nbrchannels = (deltaTfin - deltaTinit) * 10; // e.g. 100 ps bins
+
+  // Create time spectra for each detector
+  int nbrofspectra = experiment.GetDetectors().size();
+  std::vector<TH1F*> timespectra;
+  int highestdetlabel(0);
+
+  for(int sindex = 0; sindex < nbrofspectra; sindex++)
+  {
+    TH1F* localtimespectrum;
+    TString title = "Time Spectrum of detector ";
+    TString spectrumname = "timespectrum";
+
+    title += experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname += experiment.GetDetector(sindex)->GetDetectorName();
+
+    int thisLabel = experiment.GetDetector(sindex)->GetDetectorlabel();
+    if(thisLabel > highestdetlabel) highestdetlabel = thisLabel;
+
+    title += " vs ";
+    spectrumname += "vs";
+    title += experiment.GetReferenceDetector()->GetDetectorName();
+    spectrumname += experiment.GetReferenceDetector()->GetDetectorName();
+
+    localtimespectrum = new TH1F(spectrumname, title, nbrchannels,
+    deltaTinit, deltaTfin);
+    timespectra.push_back(localtimespectrum);
+  }
+
+  // 2D matrix: x-axis = label, y-axis = deltaT
+  TH2F *timematrix = new TH2F("timealignementmatrix",
+  "Time spectra of all detectors",
+  highestdetlabel, 1, highestdetlabel,
+  nbrchannels, deltaTinit, deltaTfin);
+
+  // Output file
+  TString outputfilename = experiment.GetFileDirectory_OUT();
+  outputfilename += "P90_CathodeResolution.root";
+  TFile *outputfile = new TFile(outputfilename, "RECREATE");
+
+  // Prepare TChain reading
+  std::vector<TChain *> tab_chained_oak = experiment.GettheTChain();
+  TChain *chained_oak = tab_chained_oak.at(0);
+
+  label_Rawtype LABEL;
+  nrj_Rawtype NRJ, NRJ2;
+  tm_Rawtype  TM;
+  //TBranch *b_label, *b_time, *b_nrj, *b_nrj2;
+
+  // Additional local variables (used for reading/filling)
+  double index;
+  Double_t tm;
+  Double_t enrj, enrj2;
+  int d(0); // Counter for discarded coincidence windows
+  // Optimize TChain reading
+  //chained_oak->SetCacheSize(100 * 1024 * 1024); // 100MB cache
+  chained_oak->SetBranchStatus("*", 0);         // Disable all branches
+  chained_oak->SetBranchStatus("label", 1);
+  chained_oak->SetBranchStatus("time", 1);
+  chained_oak->SetBranchStatus("nrj", 1);
+  chained_oak->SetBranchStatus("nrj2", 1);
+
+  std::cout << FOREBLU << "Loading Tree ..." << std::endl;
+  chained_oak->SetBranchAddress("label", &LABEL); //, &b_label);
+  chained_oak->SetBranchAddress("time",  &TM);//,    &b_time);
+  chained_oak->SetBranchAddress("nrj",   &NRJ);//,   &b_nrj);
+  chained_oak->SetBranchAddress("nrj2", &NRJ2);//, &b_nrj2);
+  // Add branches to cache
+
+  // chained_oak->AddBranchToCache(b_label);
+  // chained_oak->AddBranchToCache(b_time);
+  // chained_oak->AddBranchToCache(b_nrj);
+  // chained_oak->AddBranchToCache(b_nrj2);
+
+
+  std::cout << "Loaded .." << RESETTEXT << std::endl;
+
+  // Start a timer
+  TStopwatch timer2;
+  timer2.Reset();
+  timer2.Start();
+
+  // Number of total hits
+  chainentries = chained_oak->GetEntries();
+  int percent = (int)(0.05 * chainentries);
+
+  std::cout << "Beginning of coincidences research" << std::endl;
+  std::cout << "On " << chainentries << " entries" << std::endl;
+
+  // A progress bar
+  using namespace indicators;
+  ProgressBar bar{
+  option::BarWidth{60},
+  option::Start{"["},
+  option::Fill{"="},
+  option::Lead{">"},
+  option::Remainder{"-"},
+  option::End{"]"},
+  option::PostfixText{"Reading"},
+  option::ShowElapsedTime{true},
+  option::ShowRemainingTime{true},
+  option::ForegroundColor{Color::grey},
+  option::FontStyles{std::vector<FontStyle>{FontStyle::bold}}
+  };
+
+  // Prepare a CHitCollection for the rolling time window
+  CHitCollection *coinc_windows = new CHitCollection();
+  coinc_windows->SetCollectionTimeSize(deltaTfin - deltaTinit);
+
+  // The reference
+  int ReferenceLabel = experiment.GetReferenceDetector()->GetDetectorlabel();
+
+  // The set of labels that define a "fission event"
+  // (change 4,8 to 3,7 or vice versa as needed)
+  std::vector<int> neededLabels = { ReferenceLabel, 1, 2, 6, 52,53};
+
+  // Main loop
+  for (ULong64_t hitI = 0; hitI < chainentries; hitI++)
+  {
+    if (hitI % percent == 0) {
+      bar.set_progress(static_cast<int>((static_cast<double>(hitI) / chainentries) * 100.0));
+    }
+
+    // Read the i-th entry
+    int hitexist = chained_oak->GetEntry(hitI);
+    if (hitexist <= 0) continue;
+
+    // Copy the read values into doubles if you like
+    index = (double)LABEL;
+    tm    = (Double_t)TM / 1000.; // Convert to ns
+    enrj  = (Double_t)NRJ;
+    enrj2 = (Double_t)NRJ2;
+
+    // We only consider labels in 1..28
+    if (index > 55) continue;
+
+    // Make a new CHit
+    CHit *hit = new CHit(hitI);
+    // The "1" in SetHit might be 'pileup' or 'anyFlag'—depends on your design
+    hit->SetHit(index, tm, enrj, enrj2, 1);
+
+    // If this new hit is within the old window, add it; else finalize the old window
+    if (coinc_windows->IsHitInside(hit)) {
+      coinc_windows->AddHit(hit);
+    }
+    else {
+      // The new hit is outside the old window -> finalize the old window first
+      int Refdetector_pos = coinc_windows->IsReferenceDetectorIn(ReferenceLabel);
+
+      // Only if the old window *has* the reference & enough hits, do we check further
+      if (Refdetector_pos >= 0 && coinc_windows->GetCollectionSize() > 6)
+      {
+        //cout<<FOREBLU<<"good window"<<endl;
+        // (A) Check if label 1 is duplicated
+        if (coinc_windows->CountLabel(1) > 1) {
+          //cout<<SetBOLD << SetForeRED<<"2 cathodes"<<endl;
+          
+          // discard entire window
+          coinc_windows->Clear();
+          //add a counter to count the number of discarded windows
+          d++;
+          // now start a new window with the current out-of-window hit
+          coinc_windows->AddHit(hit);
+          delete hit;
+          continue; // skip the rest
+        }
+
+        // (B) Check if all needed labels are present
+        bool fission = true;
+        for (int neededLab : neededLabels) {
+            if (!coinc_windows->HasLabel(neededLab)) {
+              fission = false;
+              break;
+            }
+          }
+
+          // If it's a valid fission event, we compute ∆t only between ref & label=1
+          if (fission) {
+            //cout<<SetBOLD << SetForeGRN<<"good fission event"<<endl;
+            // Indices of the reference and label=1
+            int label1Pos = coinc_windows->FindLabel(1);
+            //int labelpos7 = coinc_windows->FindLabel(7);
+            if (label1Pos >= 0) {
+              double refTime   = coinc_windows->GetHit(Refdetector_pos).GetHitTime();
+              double label1Time= coinc_windows->GetHit(label1Pos).GetHitTime();
+              //double label7Time= coinc_windows->GetHit(labelpos7).GetHitTime();
+
+              //I want the print in long double format
+              //std::cout << std::setprecision(20) << "Cathode Time: " << label1Time << std::endl;
+              //std::cout << std::setprecision(20) << "Anode: " << label7Time  << std::endl;
+              double deltaT    = label1Time - refTime;
+
+              // Fill the 1D histogram for label=1
+              int specIndex = experiment.GetLabel2Detnbrs(1);
+              if (specIndex >= 0 && specIndex < (int)timespectra.size()) {
+                timespectra[specIndex]->Fill(deltaT);
+              }
+
+            // Also fill the 2D matrix with (label=1, deltaT)
+            timematrix->Fill(1, deltaT);
+          }
+        }
+      } // end if (Refdetector_pos >= 0 ...)
+
+      // Clear out the old window and add the new out-of-window hit
+      coinc_windows->Clear();
+      coinc_windows->AddHit(hit);
+    }
+
+    // We’re done with this new CHit pointer for the iteration
+    delete hit;
+  }
+
+  // Done reading all hits; cleanup
+  delete coinc_windows;
+  std::cout << "Number of discarded coincidence windows: " << d << std::endl;
+  // Write out your histograms
+  std::cout << std::endl << "Saving in " << outputfilename << std::endl;
+  outputfile->cd();
+  for (int i = 0; i < (int)timespectra.size(); i++) {
+    timespectra[i]->Write();
+  }
+  timematrix->Write();
+  outputfile->Close();
+
+  std::cout << "Time spectra are saved " << std::endl;
+
+  // Stop the timer
+  timer2.Stop();
+  Double_t rtime2 = timer2.RealTime();
+  Double_t ctime2 = timer2.CpuTime();
+  std::cout << std::endl;
+  std::cout << "End of Time Shifts Calculations" << std::endl;
+  std::cout << "# RealTime=" << rtime2 << " seconds, CpuTime=" << ctime2 << " seconds" << std::endl;
+  std::cout << std::endl;
+
+  return timespectra;
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 
 int CalculateTimealignementShifts(const CExperiment &experiment, Bool_t isCalibrated)
 {
@@ -4646,11 +5302,11 @@ int CalculateTimealignementShifts(const CExperiment &experiment, Bool_t isCalibr
   TFile *spectrafile = new TFile(outputfilename,"READ");
   if(!spectrafile || spectrafile->IsZombie() || spectrafile->GetNkeys()==0){
     cout << "File" << outputfilename << " with time spectra do not exists; creating it ..." << endl;
-    Double_t maxtimewindow = 600.;
-    Double_t mintimewindow = -600.;
+    Double_t maxtimewindow = 20.;
+    Double_t mintimewindow = -20.;
     cout << "A time window of ["<< mintimewindow << ";" << maxtimewindow << "] ns will be used" << endl;
     if(!isCalibrated) TIMESpectra = DrawTimeShifts(experiment,mintimewindow,maxtimewindow,outputfilename); // Time window in ns
-    else TIMESpectra = DrawTimeShifts_ECal(experiment,mintimewindow,maxtimewindow);
+    else TIMESpectra = DrawTimeShifts(experiment,mintimewindow,maxtimewindow, outputfilename); // Time window in ns
     cout << "Number of spectra to analyse = " << TIMESpectra.size() << endl;
   }
   //NRJpectra = DrawAllEnergyUncalibratedSpectra(experiment);
@@ -4690,7 +5346,7 @@ int CalculateTimealignementShifts(const CExperiment &experiment, Bool_t isCalibr
   calibfilename +="deltaT.dat";
   cout << "The Calibration parameters will be saved in " << calibfilename << RESETTEXT<< endl;
   ofstream calibfile(calibfilename,ios::out);
-  calibfile.precision(4);
+  calibfile.precision(6);
 
   // Now I proceed to the Analysis of each spectrum
   int bouik = TIMESpectra.size();
@@ -4700,7 +5356,7 @@ int CalculateTimealignementShifts(const CExperiment &experiment, Bool_t isCalibr
   for(int sindex = 0; sindex < (int)bouik; sindex++)
   {
     // Checking on LaBr3 who are going to have best time resolution
-    Bool_t isLaBr = kFALSE;
+    Bool_t isLaBr = kTRUE;
     cout << endl << "Analysing spectrum #" << sindex+1 << "/" << bouik << " named " <<  TIMESpectra.at(sindex)->GetName() << endl;
     if(experiment.GetDetectors().at(sindex)->GetDetectorType() == "LaBr") isLaBr = kTRUE;
     cout << isLaBr << " " << TIMESpectra.at(sindex)->GetXaxis()->GetNbins()<< endl;
@@ -4716,15 +5372,168 @@ int CalculateTimealignementShifts(const CExperiment &experiment, Bool_t isCalibr
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+int TimeAlignator (const CExperiment &experiment, Bool_t isCalibrated)
+{
+  //Bool_t isCalibrated = kFALSE;
+  // Output file
+  //Definition du germe pour le tirage aleatoire
+  // Creating a ProgressBar which is nice in MT mode
+  using namespace indicators;
+  ProgressBar bar{
+    option::BarWidth{60},
+    option::Start{"["},
+    option::Fill{"="},
+    option::Lead{">"},
+    option::Remainder{"-"},
+    option::End{"]"},
+    option::PostfixText{"Reading"},
+    option::ShowElapsedTime{true},
+    option::ShowRemainingTime{true},
+    option::ForegroundColor{Color::grey},
+    option::FontStyles{std::vector<FontStyle>{FontStyle::bold}}
+  };
+  srand48(time(NULL));
 
+
+  ROOT::EnableThreadSafety();
+  ROOT::EnableImplicitMT(0);  // Disable ROOT's internal multithreading
+
+  // Declaration of my varables
+  label_Rawtype index;
+  tm_Rawtype tm;
+  Double_t enrj, enrj2;
+  Bool_t pileup = false;
+  // First I count the number of PARIS
+  int nbrparis=0;
+  for(int d=0; d < (int)experiment.GetDetectors().size();d++)
+  {
+    if(experiment.GetDetectors().at(d)->GetDetectorType() == "PARIS") nbrparis++;
+  }
+  cout << "Number of PARIS detectors = " << nbrparis << endl;
+  // The reference
+  int ReferenceLabel = experiment.GetReferenceDetector()->GetDetectorlabel();
+
+
+  //Creation of a new TTree to store the time calibration _TShift
+  TString inputfilename = experiment.GetDataFileNames().at(0);
+  cout<<inputfilename<<endl;
+  int it1 = inputfilename.Index(".root",5,1,inputfilename.kExact);
+  TString outputfilename = inputfilename(0,it1);
+  outputfilename += "_TShift.root";
+  TFile *outputfile = new TFile(outputfilename, "RECREATE");
+
+  // Declaration of the new TTree with the applied time shifts
+  TTree *sequoia = new TTree("DataTree","TShift");
+  sequoia->SetDirectory(outputfile);
+  // Declaration of Branches that will contain the data
+  sequoia->Branch ("label", &index);
+  sequoia->Branch ("nrj", &enrj);
+  sequoia->Branch ("nrj2", &enrj2);
+  sequoia->Branch ("time", &tm);
+  sequoia->Branch ("pileup",&pileup);
+  // Another Timer
+  TStopwatch localTimer;
+
+  //Starting of the chronometer
+  localTimer.Reset();
+  localTimer.Start();
+
+  // I read all the file of the TChain
+  int fileindex  = 0;
+  int filenumber =  experiment.GetDataFileNames().size();
+  //mutex forfilling;
+  for(auto &file : experiment.GetDataFileNames())
+  {
+    fileindex++;
+    std::cout << FOREBLU << "Loading Tree ..." << std::endl;
+    //PrintVector(experiment.GetDataFileNames());
+    bar.set_progress((int)((double)fileindex/(double)filenumber*100.));
+    // Defining a TTreeProcessor object to handle the TTree in a MT mode
+    //ROOT::TTreeProcessorMT TP(file, experiment.GetDataTreeName(), n_workers);
+    TFile *rootFile = TFile::Open(file.c_str(), "READ");  // Open ROOT file
+    TTree *tree = (TTree*)rootFile->Get(experiment.GetDataTreeName().c_str()); // for debug single thread mode
+    TTreeReader myReader(tree); // for debug single thread mode
+    // Scanning TTree
+    // Launch the parallel processing of the tree
+    //int threadnbr = 0;
+    //auto loop_and_fill = [&] (TTreeReader &myReader){
+    
+    TTreeReaderValue<lab_t> labelRV(myReader,"label");
+    TTreeReaderValue<nrj_t> QDC1RV(myReader,"nrj");
+    TTreeReaderValue<nrj_t> QDC2RV(myReader,"nrj2");
+    TTreeReaderValue<branchtime_t> TMRV(myReader,"time");
+
+    
+    //TTreeReaderValue<pu_type> PURV(myReader,"pileup");
+
+    ULong64_t hitnumber = 0;
+    //CHit *hit = new CHit(threadnbr++);
+    while(myReader.Next())
+    {
+        
+      //cout<<"1"<<endl;
+      lab_t label  = *labelRV;
+      nrj_t NRJ    = *QDC1RV;  // Short Gate
+      nrj_t NRJ2   = *QDC2RV;  // Long Gate
+      branchtime_t TIME = *TMRV;
+      // Copy the read values into doubles if you like
+      tm    = TIME;
+      index = label;
+      enrj  = NRJ;
+      enrj2 = NRJ2;
+     
+      //cout<<"2"<<endl;
+      // I define a new hit a fill in the information
+      //std::cout<<FORERED<<"time = "<<tm<<endl;
+      hitnumber++;//threadnbr++;
+
+      ULong64_t tm_shift = 0;
+      ULong64_t tm_shift_ref = 0;
+      if(label > 19 && label<29) // To make sure I only consider PARIS detectors GetDetector(Label2Detnbr[det_label])->GetTimeShift()
+      {
+        Double_t dtvalue = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs((int)label))->GetTimeShift();
+        tm_shift_ref = static_cast <ULong64_t> (experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(ReferenceLabel))->GetTimeShift() *1000);
+
+        TString refdetname = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs(ReferenceLabel))->GetDetectorName();
+        TString detname = experiment.GetDetectors().at(experiment.GetLabel2Detnbrs((int)label))->GetDetectorName();
+        if (dtvalue > 0)
+        {
+          tm_shift = static_cast <ULong64_t> (dtvalue * 1000);
+          //cout << "Time shift for " << label << " is " << tm_shift << " ps" << endl;
+          
+          //cout << "Time shift for " << ReferenceLabel << " is " << tm_shift_ref << " ps" << endl;
+          tm = tm - tm_shift + tm_shift_ref;
+        }
+        else
+        {
+          dtvalue = -dtvalue;
+          tm_shift = static_cast <ULong64_t> (dtvalue * 1000);
+          tm = tm + tm_shift + tm_shift_ref;
+          //cout << "Time shift for " << label << " is " << tm_shift << " ps" << endl;
+          //cout << "Time shift for " << ReferenceLabel << " is " << tm_shift_ref << " ps" << endl;
+        }
+        
+        
+      }
+      sequoia->Fill();
+      // Time ordering of the entires of sequoia
+
+    }
+    outputfile->cd();
+    sequoia->Write();
+    outputfile->Close();
+  }
+return 1;
+} 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 std::vector<Double_t> DeltaTmeasurer(TH1F *timespectrum, bool isqdc)
 {
   // Preparing the output vector
   std::vector<Double_t> pos_and_rez;
 
   // I prepare a peak width in advance
-  Double_t peakwidth = 20; // in ns
-  if(isqdc) peakwidth = 3; // in ns
+  Double_t peakwidth = 20.; // in ns
+  if(isqdc) peakwidth = 2.; // in ns
 
   // Useful variables
   int i=0;
@@ -4808,11 +5617,25 @@ std::vector<Double_t> DeltaTmeasurer(TH1F *timespectrum, bool isqdc)
       npeaks++;
     }
   }
+  else
+  {
+    std::cout << "Too many peaks found, please check the spectrum" << std::endl;
+    return pos_and_rez;
+  }
+  // -------------------------------------------------------------------
+  // decide which "time‑zero" value to export
+  // -------------------------------------------------------------------
   Double_t resof = reso[0];
-
-  if(isqdc) pos_and_rez.push_back(xpeaks[0]);//pos[0];
+  Double_t peakCenter;
+  
+  if (isqdc) {
+    //pos_and_rez.push_back(xpeaks[0]);//pos[0];
+    int maxBin = timespectrum->GetMaximumBin();                  // highest bin
+    peakCenter = timespectrum->GetBinCenter(maxBin); 
+    //peakCenter = xpeaks[0];
+    pos_and_rez.push_back(peakCenter);                                      // unchanged
+  } 
   else pos_and_rez.push_back(pos[0]);
-
   //std::cout << "DeltaT sent back " << pos_and_rez.at(0) << std::endl;
 
   delete[] source;
@@ -4856,6 +5679,223 @@ int CheckCoincidenceWindow(std::vector<tm_Rawtype> tab_memory_tm, Double_t delta
     }
   }
   return nperim;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+std::vector<TH1F*>  CheckTimeShifts(const CExperiment &experiment, Double_t deltaTinit, Double_t deltaTfin)
+{
+  //Definition du germe pour le tirage aleatoire
+  srand48(time(NULL));
+
+  //Declaration of all the variable used in the function
+  ULong64_t chainentries;
+  TString detname1;
+  TString detname2;
+  Double_t deltaT(0);
+  //Double_t reso;
+  int nperim;
+  Int_t nbrchannels = (deltaTfin-deltaTinit)*20; //* 20 for a precision of 50 ps
+
+  //Declaration of all variables for names
+  TString title;
+  TString spectrumname;
+
+  // Declaration of time spectra
+  int nbrofspectra = experiment.GetDetectors().size();
+  std::vector<TH1F*> timespectra;
+  TH2F *timematrix;
+  int highestdetlabel(0);
+
+  for(int sindex = 0; sindex < nbrofspectra; sindex++)
+  {
+    TH1F* localtimespectrum;
+    title = "Time Spectrum of detector ";
+    spectrumname = "timespectrum";
+    title += experiment.GetDetector(sindex)->GetDetectorName();
+    spectrumname +=experiment.GetDetector(sindex)->GetDetectorName();
+    if(experiment.GetDetector(sindex)->GetDetectorlabel()>highestdetlabel) highestdetlabel = experiment.GetDetectors().at(sindex)->GetDetectorlabel();
+    title += " vs ";
+    spectrumname +="vs";
+    title += experiment.GetReferenceDetector()->GetDetectorName();//title += experiment.GetReferenceDetector()->GetDetectorName();
+    spectrumname +=experiment.GetReferenceDetector()->GetDetectorName();//spectrumname += experiment.GetReferenceDetector()->GetDetectorName();
+    localtimespectrum = new TH1F(spectrumname,title,nbrchannels,deltaTinit,deltaTfin);
+    timespectra.push_back(localtimespectrum);
+    spectrumname.Clear();
+    title.Clear();
+  }
+
+
+  // I declare la Time matrix to check alignement later
+  timematrix = new TH2F("timealignementmatrix","Time spectra of all detectors",highestdetlabel,1,highestdetlabel,nbrchannels,deltaTinit,deltaTfin);
+
+  // Creation of the file to save all the data
+  TString outputfilename = experiment.GetFileDirectory_OUT();
+  outputfilename += "ShiftedTimespectra_all.root";
+  TFile *outputfile = new TFile(outputfilename,"RECREATE");
+
+  // Loading the TTree for reading the Data
+  std::vector<TChain *> tab_chained_oak = experiment.GettheTChain();
+  TChain *chained_oak = tab_chained_oak.at(0);
+  label_Rawtype index;
+  tm_Rawtype tm;
+  Double_t enrj, enrj2, enrj3, enrj4; //nrj_type enrj,enrj2,enrj3,enrj4;
+  std::cout << FOREBLU << "Loading Tree ..." << std::endl;
+  chained_oak -> SetBranchAddress("label",&index);   // Detector number
+  chained_oak -> SetBranchAddress("time",&tm);       // Time of the hit
+  chained_oak -> SetBranchAddress("nrj",&enrj);
+  if(experiment.GetisQDC2()) chained_oak->SetBranchAddress ("nrj2", &enrj2);
+  //if(experiment.GetisQDC3()) chained_oak->SetBranchAddress ("nrj3", &enrj3);
+  //if(experiment.GetisQDC4()) chained_oak->SetBranchAddress ("nrj4", &enrj4);
+  //chained_oak -> SetBranchAddress("pileup",&pileup); // Time of the hit
+  chained_oak->SetCacheSize(10000000);  // Set a cache size (e.g., 10 MB)
+  chained_oak->AddBranchToCache("label");
+  chained_oak->AddBranchToCache("time");
+  chained_oak->AddBranchToCache("nrj");
+  //chained_oak->AddBranchToCache("pileup");
+  if (experiment.GetisQDC2()) chained_oak->AddBranchToCache("nrj2");
+  std::cout << "Loaded .." << RESETTEXT << std::endl;
+
+  // Another Timer
+  TStopwatch timer2;
+
+  //Starting of the chronometer
+  timer2.Reset();
+  timer2.Start();
+
+  // Energy windows
+  Double_t E_ref_min = 1270.;
+  Double_t E_ref_max = 1400.;
+  Double_t E_det_min = 1150.;
+  Double_t E_det_max = 1250.;
+  //nrj_type E_ref_min = 1290;
+  //nrj_type E_ref_max = 1370;
+  //nrj_type E_det_min = 1130;
+  //nrj_type E_det_max = 1210;
+
+  //---------------------------------------------------------------------------//
+  //                                                                           //
+  //                    Coincidence reconstruction Algorithm                   //
+  //                                                                           //
+  //---------------------------------------------------------------------------//
+  // Determination of the number of event that have to be treated
+  chainentries = chained_oak -> GetEntries();
+  int percent = (int)(0.05*chainentries);
+
+  std::cout << "Beginning of coincidences research" << std::endl;
+  std::cout << "On " << chainentries << " entries" << std::endl;
+
+  // Creating a ProgressBar which is nice in MT mode
+  using namespace indicators;
+  ProgressBar bar{
+    option::BarWidth{60},
+    option::Start{"["},
+    option::Fill{"="},
+    option::Lead{">"},
+    option::Remainder{"-"},
+    option::End{"]"},
+    option::PostfixText{"Reading"},
+    option::ShowElapsedTime{true},
+    option::ShowRemainingTime{true},
+    option::ForegroundColor{Color::grey},
+    option::FontStyles{std::vector<FontStyle>{FontStyle::bold}}
+  };
+
+  Double_t memorytm = 0.;
+
+  // I declare a hit collection that will be used for event reconstruction
+  CHitCollection *coinc_windows = new CHitCollection();
+  coinc_windows->SetCollectionTimeSize(deltaTfin-deltaTinit);
+  int ReferenceLabel = experiment.GetReferenceDetector()->GetDetectorlabel();
+  Bool_t energycondition = false;
+  for (ULong64_t hitI = 0; hitI < chainentries; hitI++) {
+    if (hitI % percent == 0) { // Printing every 5 percent
+        bar.set_progress((int)((double)hitI / (double)chainentries * 100.));
+    }
+
+    // Load the next entry
+    int hitexist = chained_oak->GetEntry(hitI);
+
+    if (hitexist > 0 && index < 29 && index > 19) {
+        CHit *hit = new CHit(hitI);
+        hit->SetHit(index, tm, enrj, 1);
+       //std::cout << "Hit # " << hitI << " : " << index << "\t" << tm << "\t" << enrj << std::endl;
+        //cout<< "Hit # " << hitI << endl;
+        // If the new hit is in the right time window, add it to the collection
+        if (coinc_windows->IsHitInside(hit)) {
+            coinc_windows->AddHit(hit);
+        } else {
+            // New hit out of time window
+            // Search for the reference detector in the time window
+            int Refdetector_pos = coinc_windows->IsReferenceDetectorIn(ReferenceLabel);
+
+            if (Refdetector_pos >= 0 && coinc_windows->GetCollectionSize() > 1) {
+                // Loop through the hit collection to check energy conditions
+                for (int HitC = 0; HitC < coinc_windows->GetCollectionSize(); HitC++) {
+                    if (HitC != Refdetector_pos) {
+                        // Get the energy of the reference detector and the other detector
+                        Double_t ref_energy = (Double_t) coinc_windows->GetHit(Refdetector_pos).GetHitE1();
+                        Double_t det_energy = (Double_t) coinc_windows->GetHit(HitC).GetHitE1();
+                        //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
+                        // Check if the energy conditions are satisfied
+                        
+                        if ((ref_energy >= E_ref_min && ref_energy <= E_ref_max &&
+                          det_energy >= E_det_min && det_energy <= E_det_max) ||
+                          (ref_energy >= E_det_min && ref_energy <= E_det_max &&
+                          det_energy >= E_ref_min && det_energy <= E_ref_max)) {
+                            // Calculate the time difference
+                            deltaT = (double)((coinc_windows->GetHit(HitC).GetHitTime() -
+                                              coinc_windows->GetHit(Refdetector_pos).GetHitTime())/1000.);
+                            //std::cout << "DeltaT = " << deltaT << "ns" << std::endl;
+                            //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
+                            int spectrumindex = experiment.GetLabel2Detnbrs(coinc_windows->GetHit(HitC).GetHitLabel());
+                            if (spectrumindex < timespectra.size()) {
+                              timespectra.at(spectrumindex)->Fill(deltaT);
+                            } 
+                            else {
+                                std::cerr << "spectrumindex = " << spectrumindex << ", timespectra.size() = " << timespectra.size() << std::endl;
+                                continue;
+                            }
+                            
+                            timematrix->Fill(coinc_windows->GetHit(HitC).GetHitLabel(), deltaT);
+                        }
+                        
+                    }
+                }
+            }
+
+            // Clear the collection and add the last hit that was not added
+            coinc_windows->Clear();
+            coinc_windows->AddHit(hit);
+        }
+
+        delete hit;
+    }
+  }
+
+  delete coinc_windows;
+
+  std::cout << endl << "Saving in " << outputfilename << std::endl;
+  outputfile->cd();
+  for (int i=0; i< (int)timespectra.size();i++)
+  {
+    timespectra.at(i)->Write();
+  }
+  timematrix->Write();
+  outputfile->Close();
+
+  cout << "Time spectra are saved " << endl;
+
+
+  // Printing of chronometer measurement
+  timer2.Stop();
+  Double_t rtime2 = timer2.RealTime();
+  Double_t ctime2 = timer2.CpuTime();
+  std::cout << std::endl;
+  std::cout << "End of Time Shifts Calculations" << std::endl;
+  std::cout << "# RealTime=" << rtime2 << " seconds, CpuTime="<< ctime2 << " seconds" <<std::endl;
+  std::cout << std::endl;
+
+  return timespectra;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

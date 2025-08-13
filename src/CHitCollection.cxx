@@ -119,7 +119,36 @@ int CHitCollection::IsReferenceDetectorIn(int referencelabel)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
+// Count how many times 'label' appears in the collection
+int CHitCollection::CountLabel(int label) const
+{
+  int count = 0;
+  for (size_t i = 0; i < hitcollection.size(); i++) {
+    if (hitcollection[i].GetHitLabel() == label) {
+      count++;
+    }
+  }
+  return count;
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+// Check if 'label' is present at least once
+bool CHitCollection::HasLabel(int label) const
+{
+  // Just see if CountLabel is > 0
+  return (CountLabel(label) > 0);
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+// Return the index of the *first* CHit with that label, or -1 if none
+int CHitCollection::FindLabel(int label) const
+{
+  for (size_t i = 0; i < hitcollection.size(); i++) {
+    if (hitcollection[i].GetHitLabel() == label) {
+      return static_cast<int>(i);
+    }
+  }
+  return -1;
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 Int_t CHitCollection::GetModularMultiplicity(CExperiment *experiment)
 {
 

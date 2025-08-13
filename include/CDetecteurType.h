@@ -107,6 +107,7 @@ public:
   void SetRespower(Float_t respower);
   void SetCaliba(Float_t caliba);
   void SetCalibb(Float_t calibb);
+  void SetCaliba2(Float_t caliba2);
   void Print();
 
   // The Get Functions
@@ -140,6 +141,8 @@ public:
   Float_t GetCaliba() const {return caliba;};
   using CDetectors::GetCalibb;
   Float_t GetCalibb() const {return calibb;};
+  using CDetectors::GetCaliba2;
+  Float_t GetCaliba2() const {return caliba2;};
 
 
 public:

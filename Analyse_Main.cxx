@@ -21,9 +21,14 @@ using namespace std;
 //                                                             //
 //-------------------------------------------------------------//
 // Main part of the program
-int main()
+int main(int argc, char* argv[])
 {
+  if (argc < 2) {
+    std::cerr << "Usage: " << argv[0] << " <runlist>" << std::endl;
+    return 1;
+  }
 
+  
   // Creation of a time counter
   TStopwatch Configurationtimer;
   TStopwatch Analysistimer;
@@ -44,7 +49,8 @@ int main()
 
   // Name of the folder to find various parametrization Parameter_Files
   TString folder_name = "FROZEN/frozen/";//"FROZEN/Test/";//"nuball2/Calibrations/";//"FROZEN/PoC/";
-  TString Runlist_filename = "rootlist_premanip_60Co.dat";
+  const char* runlist = argv[1];
+  TString Runlist_filename = runlist;//"rootlist_premanip_60Co.dat";
   // Names of the calibration file list
   //"listerun_calib_NRJ_152Eu_endofexperiment.dat";
   //"listerun_AmBe_endofexperiment.dat";
@@ -68,7 +74,7 @@ int main()
   // kFALSE : one TChain
   // kTRUE : Several TChains sent to several threads. (useful to treat each file independantly)
   Bool_t isMultiChain = kFALSE;
-  if(isApplying_E_Calibration || isApplying_T_Calibration || isEventBuilding) isMultiChain = kTRUE;
+  //if(isApplying_E_Calibration || isApplying_T_Calibration || isEventBuilding) isMultiChain = kTRUE;
   Bool_t Run_process = kFALSE; // In case of multichain is the chain built per Run (kTRUE) or per File (kFALSE)
   if(isEventBuilding) Run_process = kTRUE;
   //Run_process = kFALSE; isMultiChain = kFALSE;// Ponctuellement pour les Tests
@@ -78,11 +84,43 @@ int main()
   TString PIDfilename    = "./PID/";PIDfilename += folder_name; PIDfilename += "sample.pid";
   TString PIDlistname = "./PID/";PIDlistname += folder_name; PIDlistname += "ID.dat";
   TString Typelistname = "./PID/";Typelistname += folder_name; Typelistname += "Type.dat";
-  TString PARIS_Angles = "./Parameter_Files/"; PARIS_Angles+=folder_name;PARIS_Angles+="PARIS_Angles.txt";
+  // Definition of the name of file containing the run list
+  TString listefilename = "./Parameter_Files/";listefilename += folder_name;
+  listefilename += Runlist_filename;
+  experiment->SetRUNlistname(listefilename);
+  // Open the runlist file.
+  std::ifstream runlist_file(listefilename.Data());
+  if (!runlist_file.is_open()) {
+    std::cerr << "Error opening runlist file: " << listefilename.Data() << std::endl;
+    return 1;
+  }
+
+  std::vector<std::string> fileEntries;
+  std::string line;
+  // Read the file line by line.
+  while (std::getline(runlist_file, line)) {
+    if (!line.empty()) {
+      fileEntries.push_back(line);
+    }
+  }
+  runlist_file.close();
+
+  // Check that there is at least a third entry.
+  if (fileEntries.size() < 4) {
+    std::cerr << "The runlist file does not contain enough entries." << std::endl;
+    return 1;
+  }
+
+  // The third entry (index 2) is taken as the PARIS_Angles file path.
+  TString PARIS_Angles(fileEntries[3].c_str());
+  experiment->SetPARISAngle_filename(PARIS_Angles);
+
+  std::cout << "PARIS_Angles file set to: " << PARIS_Angles.Data() << std::endl;
+  //TString PARIS_Angles = "./Parameter_Files/"; PARIS_Angles+=folder_name;PARIS_Angles+="PARIS_Angles.txt";
   experiment->SetPIDfilename(PIDfilename);
   experiment->SetPIDlistname(PIDlistname);
   experiment->SetTypelistname(Typelistname);
-  experiment->SetPARISAngle_filename(PARIS_Angles);
+  //experiment->SetPARISAngle_filename(PARIS_Angles);
 
   // Defining the detectors
   int check = experiment->SetNbrofdetectors(experiment->GetPIDfilename());
@@ -137,11 +175,7 @@ int main()
   //experiment->PrintLabel2Detnbrs();
 
   // Now I'm ready to look for the data
-  // Definition of the name of file containing the run list
-  TString listefilename = "./Parameter_Files/";listefilename += folder_name;
-  listefilename += Runlist_filename;
-  experiment->SetRUNlistname(listefilename);
-
+  
   // Now the experiment is set.
   // I should start the analysis
   // First I need to load the run I want to analyse.
@@ -180,30 +214,37 @@ int main()
   // First let's get the timing Right (I need eneryg calibrated spectrum for 60Co coinc)
   // I need to determine the time shift regarding the reference detector
   // Just to make sure I define the reference detector before any time manipulation in data
-  experiment->SetReferenceDetector(1);
+  experiment->SetReferenceDetector(22);
   if(isCalculating_T_Calibration)
   {
-    experiment->SetReferenceDetector(1);
-    //DrawTimeShifts(*experiment,-400.,400); // Begin/End of Time Window in ns
-    Bool_t isCalibrated = kFALSE;
+    std::cout<<FOREYEL<<SetBOLD<<"isCalculating_T_Calibration"<<endl;
+    experiment->SetReferenceDetector(22);
+    
+    Bool_t isCalibrated = kTRUE;
+    //DrawTimeShifts_ECal(*experiment,-200.,200.); // Begin/End of Time Window in ns
+    //DrawTimeShifts(*experiment,-20.,20., "filename"); // Begin/End of Time Window in ns
+    //DrawTimeShifts_fissionevents(*experiment,-800.,800.);
+
     check = CalculateTimealignementShifts(*experiment,isCalibrated);
-    if(check == 0)
+    /*if(check == 0)
     {
       cout << SetBOLD << SetForeRED << endl;
       cout << " Problem to read the Time calibration run properly" << endl;
       cout << " Check data file(s) " << endl,
       cout << RESETTEXT << endl;
       return 0;
-    }
+    }*/
   }
-/*
+
   // Then let's apply the time shifts (extracted from calibrated spectrum for 60Co coinc)
   if(isApplying_T_Calibration)
   {
+    std::cout<<FOREYEL<<SetBOLD<<"isApplying_T_Calibration"<<endl;
+    Bool_t isCalibrated = kTRUE;
     TString CalibrationFileName = experiment->GetTimeCalibration_filename();
     cout << "Using file " << CalibrationFileName << " to time align detectors" << endl;
-    check = experiment->LoadTimeCalibration(CalibrationFileName);
-    check = TimeAlignator(*experiment);
+    experiment->LoadTimeCalibration(CalibrationFileName);
+    check = TimeAlignator(*experiment, isCalibrated);
     if(check == 0)
     {
       cout << SetBOLD << SetForeRED << endl;
@@ -216,25 +257,27 @@ int main()
 
   if(isChecking_T_Calib)
   {
-    experiment->SetReferenceDetector(172);
+    std::cout<<FOREYEL<<SetBOLD<<"isChecking_T_Calib"<<endl;
+    experiment->SetReferenceDetector(22);
     //experiment->SetReferenceDetector(1);
-    //DrawTimeShifts(*experiment,-400.,400); // Begin/End of Time Window in ns
+    CheckTimeShifts(*experiment,-20.,20.); // Begin/End of Time Window in ns
     Bool_t isCalibrated = kFALSE;
-    check = CheckTimealignementShifts(*experiment,isCalibrated);
-    if(check == 0)
-    {
-      cout << SetBOLD << SetForeRED << endl;
-      cout << " Problem to read the Time calibration run properly" << endl;
-      cout << " Check data file(s) " << endl,
-      cout << RESETTEXT << endl;
-      return 0;
-    }
+    //check = CheckTimealignementShifts(*experiment,isCalibrated);
+    // if(check == 0)
+    // {
+    //   cout << SetBOLD << SetForeRED << endl;
+    //   cout << " Problem to read the Time calibration run properly" << endl;
+    //   cout << " Check data file(s) " << endl,
+    //   cout << RESETTEXT << endl;
+    //   return 0;
+    // }
   }
-*/
+
   // Generally I need to calibrate the data
   // First Let's plot all the calibration spectra
   if(isPlottingSpectra)
   {
+    std::cout<<FOREYEL<<SetBOLD<<"isPlottingSpectra"<<endl;
     // 1st step to get the PARIS Angles and "PSD" parameters
     // Make sure to run on 60Co source for this
     //check = DrawAllParisUncalibratedSpectra(*experiment);
@@ -251,7 +294,12 @@ int main()
 
     check = DrawAllParisCalibratedSpectra(*experiment);
 
+    //check =  DrawAllCalibrationSpectra(*experiment);
     // After Getting PARIS info, I can plot all the calibration spectra
+    //Create a Ecal tree
+
+    //check = ApplyMyEnergyCalibration(*experiment);
+    
     // Ideally a 60Co, 22Na, Cs, and AmBe+Ni run should be good for PARIS
     // 152Eu, 60Co, AmBe+Ni should be good for HPGe as it covers from 121 keV to ~ 9MeV
     //check = DrawAllCalibrationSpectra(*experiment);//DrawAllParisUncalibratedSpectra(*experiment);
@@ -268,6 +316,7 @@ int main()
   // Second let's get an energy calibration
   if(isCalculating_E_Calibration)
   {
+    std::cout<<SetBOLD<<FOREYEL<<"isCalculating_E_Calibration"<<endl;
     check = CalculateCalibrationCoefficients(*experiment,
                                    "Eu",    // Describe the source
                                    kFALSE,  // Calibrate BGO?
@@ -289,22 +338,24 @@ int main()
 
   if(isApplying_E_Calibration)
   {
-    TString CalibrationFileName = experiment->GetNRJCalibration_filename();
-    cout << "Using file " << CalibrationFileName << " to calibrate detectors" << endl;
+    std::cout<<FOREYEL<<SetBOLD<<"isApplying_E_Calibration"<<endl;
+    //TString CalibrationFileName = experiment->GetNRJCalibration_filename();
+    //cout << "Using file " << CalibrationFileName << " to calibrate detectors" << endl;
     //CalibrationFileName += "Calibrations/";
     //CalibrationFileName += "Calibrations_Calib_Ge.data";
-    check = experiment->LoadCalibration(CalibrationFileName);
-    if(check == 0)
-    {
-      cout << SetBOLD << SetForeRED << endl;
-      cout << " Problem to get the Calibration loaded properly" << endl;
-      cout << " Check data file(s) " << endl,
-      cout << RESETTEXT << endl;
-      return 0;
-    }
+    //check = experiment->LoadCalibration(CalibrationFileName);
+    //if(check == 0)
+    //{
+      //cout << SetBOLD << SetForeRED << endl;
+      //cout << " Problem to get the Calibration loaded properly" << endl;
+      //cout << " Check data file(s) " << endl,
+      //cout << RESETTEXT << endl;
+      //return 0;
+    //}
 
     // I Apply the Calibrations to the data
-    check = EnergyCalibrator(*experiment);
+    //check = EnergyCalibrator(*experiment);
+    check = ApplyMyEnergyCalibration(*experiment);
     if(check == 0)
     {
       cout << SetBOLD << SetForeRED << endl;
@@ -318,10 +369,12 @@ int main()
   // Verifying Calibration
   if(isChecking_E_Calib)
   {
+    std::cout<<FOREYEL<<SetBOLD<<"isChecking_E_Calib"<<endl;
+    check = DrawAllCalibrationSpectra(*experiment);
     //check = DrawAllParisCalibratedSpectra(*experiment);
-    check = DrawAllEnergyCalibratedSpectra(*experiment,0,2000,4000);
-    check = DrawOneDetectorTypeEnergyCalibratedSpectra(*experiment,"Ge",0,2000,4000);
-    check = DrawOneDetectorTypeEnergyCalibratedSpectra(*experiment,"PARIS",0,2000,4000);
+    //check = DrawAllEnergyCalibratedSpectra(*experiment,0,2000,4000);
+    //check = DrawOneDetectorTypeEnergyCalibratedSpectra(*experiment,"Ge",0,2000,4000);
+    //check = DrawOneDetectorTypeEnergyCalibratedSpectra(*experiment,"PARIS",0,2000,4000);
     // // Now let's check the quality on Calibration
     // check = CalculateResidues(*experiment,
     //                         "Co",    // Describe the source

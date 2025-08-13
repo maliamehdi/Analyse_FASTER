@@ -144,7 +144,7 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
   cout << "Now loading detectors informations : " << endl;
 
   std::vector<string> names;string name;
-  Float_t pos_labr, sigma_labr, pos_nai, sigma_nai,theta, cos, sin, tan, resA, respower, caliba, calibb;
+  Float_t pos_labr, sigma_labr, pos_nai, sigma_nai,theta, cos, sin, tan, resA, respower, caliba, calibb, caliba2;
   std::vector<Float_t> vec_pos_labr; std::vector<Float_t> vec_pos_nai;
   std::vector<Float_t> vec_sigma_labr; std::vector<Float_t> vec_sigma_nai;
   std::vector<Float_t> vec_theta;
@@ -159,6 +159,7 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
   Bool_t calibrating = true;
   std::vector<Float_t> vec_caliba;
   std::vector<Float_t> vec_calibb;
+  std::vector<Float_t> vec_caliba2;
 
   if(isPARISin)
   {
@@ -180,12 +181,12 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
 
       while(!PARISangleliste.eof())
       { if (resolution_binning== true && calibrating == true){
-        PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan >> resA >> respower >> caliba >> calibb;
+        PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan >> resA >> respower >> caliba >> calibb >> caliba2;
         names.push_back(name);vec_pos_labr.push_back(pos_labr);vec_sigma_labr.push_back(sigma_labr);vec_pos_nai.push_back(pos_nai);vec_sigma_nai.push_back(sigma_nai); vec_theta.push_back(theta); vec_theta_tan.push_back(tan); vec_resA.push_back(resA); vec_respower.push_back(respower);
-        vec_caliba.push_back(caliba); vec_calibb.push_back(calibb);
+        vec_caliba.push_back(caliba); vec_calibb.push_back(calibb); vec_caliba2.push_back(caliba2);
         }
         else{
-          PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan;
+          PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan>> resA >> respower >> caliba >> calibb >> caliba2;
           names.push_back(name);vec_pos_labr.push_back(pos_labr);vec_sigma_labr.push_back(sigma_labr);vec_pos_nai.push_back(pos_nai);vec_sigma_nai.push_back(sigma_nai); vec_theta.push_back(theta); vec_theta_tan.push_back(tan);
           //cout << "\t" << name << "\t" << pos_labr << "\t" << sigma_labr << "\t" << pos_nai << "\t" << sigma_nai << "\t" << theta << "\t" << cos << "\t" << sin << "\t" << tan << endl;
         }
@@ -347,12 +348,14 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
               temp_QDC->SetLaBrDiscriSigma(vec_sigma_labr.at(paris));
               temp_QDC->SetNaIDiscriPosition(vec_pos_nai.at(paris));
               temp_QDC->SetNaIDiscriSigma(vec_sigma_nai.at(paris));
-              if (resolution_binning && calibrating){
+              //if (resolution_binning && calibrating){
                 temp_QDC->SetResA(vec_resA.at(paris));
                 temp_QDC->SetRespower(vec_respower.at(paris));
                 temp_QDC->SetCaliba(vec_caliba.at(paris));
                 temp_QDC->SetCalibb(vec_calibb.at(paris));
-              }
+                temp_QDC->SetCaliba2(vec_caliba2.at(paris));
+                temp_QDC->SetCalib(0,caliba2,caliba,calibb);
+              //}
             }
           }
         }
@@ -582,8 +585,8 @@ int CExperiment::LoadTimeCalibration(TString CalibrationFileName)
   while(!Calibliste.eof())
   {
     Calibliste >> det_label >> dt >> rez;
-    GetDetector(Label2Detnbr[det_label])->SetTimeShift(dt*1000.);
-    //cout << "Det Label " << det_label << "\t"<< GetDetector(Label2Detnbr[det_label])->GetTimeShift() << endl;
+    GetDetector(Label2Detnbr[det_label])->SetTimeShift(dt);
+    cout << "Det Label " << det_label << "\t"<< GetDetector(Label2Detnbr[det_label])->GetTimeShift() << endl;
   }
 
   return 1;

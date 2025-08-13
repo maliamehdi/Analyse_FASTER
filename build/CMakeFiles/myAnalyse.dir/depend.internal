@@ -191,6 +191,7 @@ CMakeFiles/myAnalyse.dir/Analyse_Main.cxx.o
  /data/root/include/TMemFile.h
  /data/root/include/TMethodCall.h
  /data/root/include/TMonitor.h
+ /data/root/include/TMultiGraph.h
  /data/root/include/TNDArray.h
  /data/root/include/TNamed.h
  /data/root/include/TNotifyLink.h
@@ -211,6 +212,7 @@ CMakeFiles/myAnalyse.dir/Analyse_Main.cxx.o
  /data/root/include/TSocket.h
  /data/root/include/TSpectrum.h
  /data/root/include/TSpectrum2.h
+ /data/root/include/TSpline.h
  /data/root/include/TStatistic.h
  /data/root/include/TStopwatch.h
  /data/root/include/TStorage.h

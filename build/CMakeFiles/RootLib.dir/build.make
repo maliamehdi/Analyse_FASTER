@@ -122,9 +122,22 @@ CMakeFiles/RootLib.dir/src/._CExperiment.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RootLib.dir/src/._CExperiment.cxx.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /data/Malia/Analyse_FASTER/src/._CExperiment.cxx -o CMakeFiles/RootLib.dir/src/._CExperiment.cxx.s
 
+CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o: CMakeFiles/RootLib.dir/flags.make
+CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o: ../src/._CHitCollection.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o -c /data/Malia/Analyse_FASTER/src/._CHitCollection.cxx
+
+CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /data/Malia/Analyse_FASTER/src/._CHitCollection.cxx > CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.i
+
+CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /data/Malia/Analyse_FASTER/src/._CHitCollection.cxx -o CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.s
+
 CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o: ../src/CAnalyse.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o -c /data/Malia/Analyse_FASTER/src/CAnalyse.cxx
 
 CMakeFiles/RootLib.dir/src/CAnalyse.cxx.i: cmake_force
@@ -137,7 +150,7 @@ CMakeFiles/RootLib.dir/src/CAnalyse.cxx.s: cmake_force
 
 CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o: ../src/CDetecteurType.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o -c /data/Malia/Analyse_FASTER/src/CDetecteurType.cxx
 
 CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.i: cmake_force
@@ -150,7 +163,7 @@ CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.s: cmake_force
 
 CMakeFiles/RootLib.dir/src/CDetectors.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/src/CDetectors.cxx.o: ../src/CDetectors.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/RootLib.dir/src/CDetectors.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/RootLib.dir/src/CDetectors.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/CDetectors.cxx.o -c /data/Malia/Analyse_FASTER/src/CDetectors.cxx
 
 CMakeFiles/RootLib.dir/src/CDetectors.cxx.i: cmake_force
@@ -163,7 +176,7 @@ CMakeFiles/RootLib.dir/src/CDetectors.cxx.s: cmake_force
 
 CMakeFiles/RootLib.dir/src/CExperiment.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/src/CExperiment.cxx.o: ../src/CExperiment.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/RootLib.dir/src/CExperiment.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/RootLib.dir/src/CExperiment.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/CExperiment.cxx.o -c /data/Malia/Analyse_FASTER/src/CExperiment.cxx
 
 CMakeFiles/RootLib.dir/src/CExperiment.cxx.i: cmake_force
@@ -176,7 +189,7 @@ CMakeFiles/RootLib.dir/src/CExperiment.cxx.s: cmake_force
 
 CMakeFiles/RootLib.dir/src/CHit.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/src/CHit.cxx.o: ../src/CHit.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/RootLib.dir/src/CHit.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/RootLib.dir/src/CHit.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/CHit.cxx.o -c /data/Malia/Analyse_FASTER/src/CHit.cxx
 
 CMakeFiles/RootLib.dir/src/CHit.cxx.i: cmake_force
@@ -189,7 +202,7 @@ CMakeFiles/RootLib.dir/src/CHit.cxx.s: cmake_force
 
 CMakeFiles/RootLib.dir/src/CHitCollection.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/src/CHitCollection.cxx.o: ../src/CHitCollection.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/RootLib.dir/src/CHitCollection.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/RootLib.dir/src/CHitCollection.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/CHitCollection.cxx.o -c /data/Malia/Analyse_FASTER/src/CHitCollection.cxx
 
 CMakeFiles/RootLib.dir/src/CHitCollection.cxx.i: cmake_force
@@ -202,7 +215,7 @@ CMakeFiles/RootLib.dir/src/CHitCollection.cxx.s: cmake_force
 
 CMakeFiles/RootLib.dir/src/CTools.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/src/CTools.cxx.o: ../src/CTools.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/RootLib.dir/src/CTools.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/RootLib.dir/src/CTools.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/src/CTools.cxx.o -c /data/Malia/Analyse_FASTER/src/CTools.cxx
 
 CMakeFiles/RootLib.dir/src/CTools.cxx.i: cmake_force
@@ -215,7 +228,7 @@ CMakeFiles/RootLib.dir/src/CTools.cxx.s: cmake_force
 
 CMakeFiles/RootLib.dir/RootLibDict.cxx.o: CMakeFiles/RootLib.dir/flags.make
 CMakeFiles/RootLib.dir/RootLibDict.cxx.o: RootLibDict.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/RootLib.dir/RootLibDict.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/RootLib.dir/RootLibDict.cxx.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/RootLib.dir/RootLibDict.cxx.o -c /data/Malia/Analyse_FASTER/build/RootLibDict.cxx
 
 CMakeFiles/RootLib.dir/RootLibDict.cxx.i: cmake_force
@@ -232,6 +245,7 @@ RootLib_OBJECTS = \
 "CMakeFiles/RootLib.dir/src/._CDetecteurType.cxx.o" \
 "CMakeFiles/RootLib.dir/src/._CDetectors.cxx.o" \
 "CMakeFiles/RootLib.dir/src/._CExperiment.cxx.o" \
+"CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o" \
 "CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o" \
 "CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o" \
 "CMakeFiles/RootLib.dir/src/CDetectors.cxx.o" \
@@ -248,6 +262,7 @@ libRootLib.so: CMakeFiles/RootLib.dir/src/._CAnalyse.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/src/._CDetecteurType.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/src/._CDetectors.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/src/._CExperiment.cxx.o
+libRootLib.so: CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/src/CDetectors.cxx.o
@@ -258,7 +273,7 @@ libRootLib.so: CMakeFiles/RootLib.dir/src/CTools.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/RootLibDict.cxx.o
 libRootLib.so: CMakeFiles/RootLib.dir/build.make
 libRootLib.so: CMakeFiles/RootLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX shared library libRootLib.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/data/Malia/Analyse_FASTER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX shared library libRootLib.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RootLib.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -45,7 +45,7 @@ protected:
   Int_t maxch;
   Int_t nbrchannels;
   Int_t chargenbr;
-  Long64_t tm_shift;
+  Double_t tm_shift;
   Float_t period;
   Bool_t isReferenceDetector;
   Bool_t isbgo;
@@ -62,6 +62,7 @@ protected:
   Float_t respower;
   Float_t caliba;
   Float_t calibb;
+  Float_t caliba2;
   Bool_t  ispurenai;
 
 public:
@@ -104,6 +105,7 @@ public:
   Float_t GetRespower() const {return respower;};
   Float_t GetCaliba() const {return caliba;};
   Float_t GetCalibb() const {return calibb;};
+  Float_t GetCaliba2() const {return caliba2;};
   Double_t GetTimeShift() const {return tm_shift;};
   Double_t GetEnergy(Double_t NRJ);
   Double_t GetSecondaryEnergy(Double_t NRJ);

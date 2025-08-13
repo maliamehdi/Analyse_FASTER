@@ -124,6 +124,9 @@ void QDC::SetCaliba(Float_t caliba)
 void QDC::SetCalibb(Float_t calibb)
 {this->calibb = calibb;}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QDC::SetCaliba2(Float_t caliba2)
+{this->caliba2 = caliba2;}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QDC::Print( )
 {
   cout << "Print QDC informations : " << endl;

@@ -311,6 +311,33 @@ src/._CExperiment.cxx.s:
 	$(MAKE) -f CMakeFiles/RootLib.dir/build.make CMakeFiles/RootLib.dir/src/._CExperiment.cxx.s
 .PHONY : src/._CExperiment.cxx.s
 
+src/._CHitCollection.o: src/._CHitCollection.cxx.o
+
+.PHONY : src/._CHitCollection.o
+
+# target to build an object file
+src/._CHitCollection.cxx.o:
+	$(MAKE) -f CMakeFiles/RootLib.dir/build.make CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o
+.PHONY : src/._CHitCollection.cxx.o
+
+src/._CHitCollection.i: src/._CHitCollection.cxx.i
+
+.PHONY : src/._CHitCollection.i
+
+# target to preprocess a source file
+src/._CHitCollection.cxx.i:
+	$(MAKE) -f CMakeFiles/RootLib.dir/build.make CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.i
+.PHONY : src/._CHitCollection.cxx.i
+
+src/._CHitCollection.s: src/._CHitCollection.cxx.s
+
+.PHONY : src/._CHitCollection.s
+
+# target to generate assembly for a file
+src/._CHitCollection.cxx.s:
+	$(MAKE) -f CMakeFiles/RootLib.dir/build.make CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.s
+.PHONY : src/._CHitCollection.cxx.s
+
 src/CAnalyse.o: src/CAnalyse.cxx.o
 
 .PHONY : src/CAnalyse.o
@@ -529,6 +556,9 @@ help:
 	@echo "... src/._CExperiment.o"
 	@echo "... src/._CExperiment.i"
 	@echo "... src/._CExperiment.s"
+	@echo "... src/._CHitCollection.o"
+	@echo "... src/._CHitCollection.i"
+	@echo "... src/._CHitCollection.s"
 	@echo "... src/CAnalyse.o"
 	@echo "... src/CAnalyse.i"
 	@echo "... src/CAnalyse.s"

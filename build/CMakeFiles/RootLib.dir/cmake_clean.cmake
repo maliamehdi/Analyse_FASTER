@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/RootLib.dir/src/._CDetecteurType.cxx.o"
   "CMakeFiles/RootLib.dir/src/._CDetectors.cxx.o"
   "CMakeFiles/RootLib.dir/src/._CExperiment.cxx.o"
+  "CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o"
   "CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o"
   "CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o"
   "CMakeFiles/RootLib.dir/src/CDetectors.cxx.o"
