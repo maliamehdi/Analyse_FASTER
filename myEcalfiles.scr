@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# List of runlist arguments
+runlists=(
+  # 152 Eu
+  "listEcal_0305.dat"
+  "listEcal_1706.dat"
+  "listEcal_0107.dat"
+  "listEcal_1507.dat"
+  "listEcal_2607.dat"
+  "listEcal_0508.dat"
+  "listEcal_1608.dat"
+  "listEcal_2708.dat"
+  "listEcal_0309.dat"
+  "listEcal_2409.dat"
+  "listEcal_0210.dat"
+  "listEcal_0710.dat"
+  # 60Co
+  #"listEcalCo_0305.dat"
+  #"listEcalCo_2006.dat"
+  "listEcalCo_1507.dat"
+  "listEcalCo_2908.dat"
+  "listEcalCo_3108.dat"
+  "listEcalCo_0508.dat"
+  "listEcalCo_0309.dat"
+  "listEcalCo_0709.dat"
+  "listEcalCo_0309.dat"
+  "listEcalCo_1309.dat"
+  "listEcalCo_0710.dat"
+  # 137Cs
+  #"listEcalCs_0305.dat"
+  # Add more runlist files as needed
+)
+
+# Execute the Analyse_FASTER program with each runlist argument
+for runlist in "${runlists[@]}"; do
+  echo "Running Analyse_FASTER with ${runlist}"
+  ./myAnalyse "${runlist}"
+done

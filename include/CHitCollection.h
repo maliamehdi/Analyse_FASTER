@@ -54,8 +54,8 @@ public:
   Double_t averageenergy;
   Double_t totalenergy;
 
-  typename vector<CHit>::iterator it_hitcollection;
-  vector<CHit> hitcollection;
+  typename vector<CHit*>::iterator it_hitcollection;
+  vector<CHit*> hitcollection;
 
 // the Set functions
 public:
@@ -74,8 +74,8 @@ public:
   void DoABandCS(CExperiment *experiment);
 
 public:
-  void AddHit(CHit *hit){hitcollection.push_back(*hit);collectionsize++;};
-  CHit GetHit(int i){return hitcollection.at(i);}
+  void AddHit(CHit *hit){hitcollection.push_back(hit);collectionsize++;};
+  CHit GetHit(int i){return *(hitcollection.at(i));}
   Bool_t IsHitInside(CHit *hit);
   int IsReferenceDetectorIn(int referencelabel);
   int  CountLabel(int label) const;      // how many times does 'label' appear?

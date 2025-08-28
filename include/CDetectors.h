@@ -60,6 +60,8 @@ protected:
   Float_t nai_discri_sigma;
   Float_t resA;
   Float_t respower;
+  Float_t RawresA;
+  Float_t Rawrespower;
   Float_t caliba;
   Float_t calibb;
   Float_t caliba2;
@@ -103,6 +105,8 @@ public:
   Float_t GetResolution_pow() const {return res_pow;};
   Float_t GetResA() const {return resA;};
   Float_t GetRespower() const {return respower;};
+  Float_t GetRawResA() const {return RawresA;};
+  Float_t GetRawRespower() const {return Rawrespower;};
   Float_t GetCaliba() const {return caliba;};
   Float_t GetCalibb() const {return calibb;};
   Float_t GetCaliba2() const {return caliba2;};

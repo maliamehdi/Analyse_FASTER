@@ -1,0 +1,77 @@
+[
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/._CAnalyse.cxx.o -c /data/Malia/Analyse_FASTER/src/._CAnalyse.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/._CAnalyse.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/._CDetecteurType.cxx.o -c /data/Malia/Analyse_FASTER/src/._CDetecteurType.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/._CDetecteurType.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/._CDetectors.cxx.o -c /data/Malia/Analyse_FASTER/src/._CDetectors.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/._CDetectors.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/._CExperiment.cxx.o -c /data/Malia/Analyse_FASTER/src/._CExperiment.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/._CExperiment.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/._CHitCollection.cxx.o -c /data/Malia/Analyse_FASTER/src/._CHitCollection.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/._CHitCollection.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CAnalyse.cxx.o -c /data/Malia/Analyse_FASTER/src/CAnalyse.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CAnalyse.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CDetecteurType.cxx.o -c /data/Malia/Analyse_FASTER/src/CDetecteurType.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CDetecteurType.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CDetectors.cxx.o -c /data/Malia/Analyse_FASTER/src/CDetectors.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CDetectors.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CExperiment.cxx.o -c /data/Malia/Analyse_FASTER/src/CExperiment.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CExperiment.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CFissionEvent.cxx.o -c /data/Malia/Analyse_FASTER/src/CFissionEvent.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CFissionEvent.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CHit.cxx.o -c /data/Malia/Analyse_FASTER/src/CHit.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CHit.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CHitCollection.cxx.o -c /data/Malia/Analyse_FASTER/src/CHitCollection.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CHitCollection.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/src/CTools.cxx.o -c /data/Malia/Analyse_FASTER/src/CTools.cxx",
+  "file": "/data/Malia/Analyse_FASTER/src/CTools.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g -fPIC    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/RootLib.dir/RootLibDict.cxx.o -c /data/Malia/Analyse_FASTER/testing/RootLibDict.cxx",
+  "file": "/data/Malia/Analyse_FASTER/testing/RootLibDict.cxx"
+},
+{
+  "directory": "/data/Malia/Analyse_FASTER/testing",
+  "command": "/usr/bin/c++   -I/mnt/data/root/include -I/data/Malia/Analyse_FASTER -I/include -I/data/Malia/Analyse_FASTER/include  -Wall -Wextra  -std=c++17 -pipe -fsigned-char -pthread -g    -std=c++17 -pipe -fsigned-char -pthread -o CMakeFiles/myAnalyse.dir/Analyse_Main.cxx.o -c /data/Malia/Analyse_FASTER/Analyse_Main.cxx",
+  "file": "/data/Malia/Analyse_FASTER/Analyse_Main.cxx"
+}
+]

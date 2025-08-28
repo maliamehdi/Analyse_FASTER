@@ -120,15 +120,16 @@ Bool_t CDetectors::IsPureLaBr3(const Double_t PSD, const Double_t Qs,const Doubl
   Bool_t istheta_OK = false;
   double labr_discri_pos = GetLaBrDiscriPosition();
   double labr_discri_sigma = GetLaBrDiscriSigma();
-  double resA = GetResA();
-  double respower = GetRespower();
+  double RawresA = GetRawResA();
+  double Rawrespower = GetRawRespower();
+  double resolution = RawresA*TMath::Power(Qs,Rawrespower);
   Double_t REF = TMath::Abs(PSD-labr_discri_pos);
-  if(REF <= 2*labr_discri_sigma)  istheta_OK = true;
+  if(REF <= resolution)  istheta_OK = true;
   
   // Then I check the short charge variation (within the LaBr3 normal resolution 3%)
   Double_t localQs = QL*TMath::Tan(PSD);
   Bool_t isQs_OK = false;
-  if(TMath::Abs(localQs-Qs)/Qs < 3.e-2) isQs_OK=true;
+  if(TMath::Abs(localQs-Qs)/Qs < resolution) isQs_OK=true;
   // cout << endl << endl;
   // cout << "PSD = " << PSD << "; labr_discri_pos = " << labr_discri_pos << " and labr_discri_sigma = " << labr_discri_sigma << endl;
   // cout << "Qs = " << Qs << "; Ql = " << QL << endl;

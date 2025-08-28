@@ -60,14 +60,16 @@ int main(int argc, char* argv[])
   //"listerun_PARIS_Calibration.dat";//"listerun_CoandCs_endexperiment.dat";//"listerun_nearline.dat";//"listerun_calib_Time.dat";//"listerun_calib_NRJ.dat";
 
   // Some Boolean to know what I'm doing with Data
-  Bool_t isPlottingSpectra = kTRUE;
+  Bool_t isPlottingSpectra = kFALSE;
   Bool_t isCalculating_E_Calibration = kFALSE;
   Bool_t isApplying_E_Calibration = kFALSE;
+  Bool_t isApplying_E_Correction = kFALSE;
   Bool_t isChecking_E_Calib = kFALSE;
+  Bool_t isChecking_E_Correction = kFALSE;
   Bool_t isCalculating_T_Calibration = kFALSE;
   Bool_t isApplying_T_Calibration = kFALSE;
   Bool_t isChecking_T_Calib = kFALSE;
-  Bool_t isEventBuilding = kFALSE;
+  Bool_t isEventBuilding = kTRUE;
   Bool_t isEventAnalysing = kFALSE;
 
   // Multichain is for multithreading the data analysis
@@ -221,9 +223,9 @@ int main(int argc, char* argv[])
     experiment->SetReferenceDetector(22);
     
     Bool_t isCalibrated = kTRUE;
-    //DrawTimeShifts_ECal(*experiment,-200.,200.); // Begin/End of Time Window in ns
-    //DrawTimeShifts(*experiment,-20.,20., "filename"); // Begin/End of Time Window in ns
+    //DrawTimeShifts(*experiment,-800.,800., "filename"); // Begin/End of Time Window in ns
     //DrawTimeShifts_fissionevents(*experiment,-800.,800.);
+    //DrawTimeShifts_fissionevents_Calibrated(*experiment,-800.,800.);
 
     check = CalculateTimealignementShifts(*experiment,isCalibrated);
     /*if(check == 0)
@@ -244,24 +246,32 @@ int main(int argc, char* argv[])
     TString CalibrationFileName = experiment->GetTimeCalibration_filename();
     cout << "Using file " << CalibrationFileName << " to time align detectors" << endl;
     experiment->LoadTimeCalibration(CalibrationFileName);
-    check = TimeAlignator(*experiment, isCalibrated);
-    if(check == 0)
-    {
-      cout << SetBOLD << SetForeRED << endl;
-      cout << " Problem to read the Time calibration run properly" << endl;
-      cout << " Check data file(s) " << endl,
-      cout << RESETTEXT << endl;
-      return 0;
-    }
+    std::string ecal_file = TimeAlignator(*experiment, isCalibrated);
+    // 2️⃣ Générer le .dat associé
+    generate_dat_files_ECal_TShift(ecal_file);
+
+    
   }
 
   if(isChecking_T_Calib)
   {
+    // 2️⃣ Générer le .dat associé
+    // std::cout<<SetBOLD<<FOREYEL<<"generate tshift file lists"<<endl;
+    // TString inputfilename = experiment->GetDataFileNames().at(0);
+    // cout<<inputfilename<<endl;
+    // int it1 = inputfilename.Index(".root",5,1,inputfilename.kExact);
+    // TString outputfilename = inputfilename(0,it1);
+    // outputfilename += "_TShift.root";
+    // generate_dat_files_ECal_TShift(std::string(outputfilename.Data()).c_str());
+
     std::cout<<FOREYEL<<SetBOLD<<"isChecking_T_Calib"<<endl;
     experiment->SetReferenceDetector(22);
     //experiment->SetReferenceDetector(1);
-    CheckTimeShifts(*experiment,-20.,20.); // Begin/End of Time Window in ns
-    Bool_t isCalibrated = kFALSE;
+
+    DrawTimeShifts_fissionevents_Calibrated(*experiment,-800.,800.);
+    
+    //CheckTimeShifts(*experiment,-20.,20.); // Begin/End of Time Window in ns
+    Bool_t isCalibrated = kTRUE;
     //check = CheckTimealignementShifts(*experiment,isCalibrated);
     // if(check == 0)
     // {
@@ -283,7 +293,7 @@ int main(int argc, char* argv[])
     //check = DrawAllParisUncalibratedSpectra(*experiment);
     
     // If the function before has been used to determine the PARIS rotation angles then you can run the following on your calibration data
-    //check = DrawAllParisUncalibratedSpectra_with_rotation(*experiment);
+    check = DrawAllParisUncalibratedSpectra_with_rotation(*experiment);
     //TO apply calibration as well
     //TString CalibrationFileName = experiment->GetNRJCalibration_filename();
     //cout << "Using file " << CalibrationFileName << " to calibrate detectors" << endl;
@@ -292,7 +302,7 @@ int main(int argc, char* argv[])
     //experiment->LoadCalibration(CalibrationFileName);
 
 
-    check = DrawAllParisCalibratedSpectra(*experiment);
+    //check = DrawAllParisCalibratedSpectra(*experiment);
 
     //check =  DrawAllCalibrationSpectra(*experiment);
     // After Getting PARIS info, I can plot all the calibration spectra
@@ -355,15 +365,33 @@ int main(int argc, char* argv[])
 
     // I Apply the Calibrations to the data
     //check = EnergyCalibrator(*experiment);
-    check = ApplyMyEnergyCalibration(*experiment);
-    if(check == 0)
-    {
-      cout << SetBOLD << SetForeRED << endl;
-      cout << " Problem to apply the Calibration properly" << endl;
-      cout << " Check data file(s) " << endl,
-      cout << RESETTEXT << endl;
-      return 0;
-    }
+    std::string ecal_file = ApplyMyEnergyCalibration(*experiment);
+    // 2️⃣ Générer le .dat associé
+    //generate_dat_files_Ecal(ecal_file);
+  }
+  
+  if(isApplying_E_Correction)
+  {
+    std::cout<<FOREYEL<<SetBOLD<<"isApplying_E_Correction"<<endl;
+    //TString CalibrationFileName = experiment->GetNRJCalibration_filename();
+    //cout << "Using file " << CalibrationFileName << " to calibrate detectors" << endl;
+    //CalibrationFileName += "Calibrations/";
+    //CalibrationFileName += "Calibrations_Calib_Ge.data";
+    //check = experiment->LoadCalibration(CalibrationFileName);
+    //if(check == 0)
+    //{
+      //cout << SetBOLD << SetForeRED << endl;
+      //cout << " Problem to get the Calibration loaded properly" << endl;
+      //cout << " Check data file(s) " << endl,
+      //cout << RESETTEXT << endl;
+      //return 0;
+    //}
+
+    // I Apply the Calibrations to the data
+    //check = EnergyCalibrator(*experiment);
+    std::string CORR_file = ApplyMyCorrection(*experiment);
+    // 2️⃣ Générer le .dat associé
+    generate_dat_files_CORR(CORR_file);
   }
   
   // Verifying Calibration
@@ -391,24 +419,47 @@ int main(int argc, char* argv[])
     }
   }
 
-
-/*
-  // Now I reconstruct physics events
-  if(isEventBuilding)
+    // Verifying Calibration
+  if(isChecking_E_Correction)
   {
-    // Now let's check the quality on Calibration
-    //check = ICBuilder(*experiment,650.); // time is given in ns
-    check = GammaCoinc(*experiment,60.,2);
+    std::cout<<FOREYEL<<SetBOLD<<"isChecking_E_Calib"<<endl;
+    check = DrawAllCorrectedCalibrationSpectra(*experiment);
+    //check = DrawAllParisCalibratedSpectra(*experiment);
+    //check = DrawAllEnergyCalibratedSpectra(*experiment,0,2000,4000);
+    //check = DrawOneDetectorTypeEnergyCalibratedSpectra(*experiment,"Ge",0,2000,4000);
+    //check = DrawOneDetectorTypeEnergyCalibratedSpectra(*experiment,"PARIS",0,2000,4000);
+    // // Now let's check the quality on Calibration
+    // check = CalculateResidues(*experiment,
+    //                         "Co",    // Describe the source
+    //                         kFALSE,  // Calibrate BGO?
+    //                         kTRUE,   // Calibrate Ge?
+    //                         kFALSE);  // Calibrate LaBr?
     if(check == 0)
     {
       cout << SetBOLD << SetForeRED << endl;
-      cout << " Problem to do the event building" << endl;
-      cout << " Check data file(s) and or reconstruction " << endl,
+      cout << " Problem to read the Calibrated calibration run properly" << endl;
+      cout << " Check data file(s) " << endl,
       cout << RESETTEXT << endl;
       return 0;
     }
   }
 
+
+
+  // Now I reconstruct physics events
+  if(isEventBuilding)
+  {
+    std::cout<<SetBOLD<<FOREYEL<<"is Event Building"<<endl;
+
+    FissionEventReconstruction(*experiment,-3,4., 150000.); //penser à rajouter la fenêtre de coinc neutrons en argument aussi
+    
+    //BISFissionEventReconstruction(*experiment,-800.,800., 300000.); //penser à rajouter la fenêtre de coinc neutrons en argument aussi
+    // Now let's check the quality on Calibration
+    //check = ICBuilder(*experiment,650.); // time is given in ns
+    //check = GammaCoinc(*experiment,60.,2);
+   
+  }
+/*
   // Now I read the final data
   if(isEventAnalysing)
   {

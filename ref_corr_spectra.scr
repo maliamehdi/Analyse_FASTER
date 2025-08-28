@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Nombre maximum de jobs en parallèle
+MAX_JOBS=8
+
+# Liste des fichiers runlist
+runlists=(
+    "ref_0309_corr.dat"
+    "ref_1608_corr.dat"
+    "ref_2607_corr.dat"
+    # ... tu peux en mettre plus
+)
+
+# Fonction pour attendre si trop de jobs sont lancés
+wait_for_jobs() {
+    while [ "$(jobs -r | wc -l)" -ge "$MAX_JOBS" ]; do
+        sleep 0.5
+    done
+}
+
+# Boucle d’exécution
+for runlist in "${runlists[@]}"; do
+    wait_for_jobs
+    echo "Lancement de ./myAnalyse ${runlist}..."
+    ./myAnalyse "$runlist" &
+done
+
+# Attendre que tous les jobs restants finissent
+wait
+
+echo "✅ Tous les traitements sont terminés."

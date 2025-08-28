@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# List of runlist arguments
+runlists=(
+  # 152 Eu
+  "listcalib_0305.dat"
+  "listcalib_1706.dat"
+  "listcalib_0107.dat"
+  "listcalib_1507.dat"
+  "listcalib_2607.dat"
+  "listcalib_0508.dat"
+  "listcalib_1608.dat"
+  "listcalib_2708.dat"
+  "listcalib_0309.dat"
+  "listcalib_2409.dat"
+  "listcalib_0210.dat"
+  "listcalib_0710.dat"
+  # 60Co
+  "listcalibCo_0305.dat"
+  "listcalibCo_2006.dat"
+  "listcalibCo_1507.dat"
+  "listcalibCo_2908.dat"
+  "listcalibCo_3108.dat"
+  "listcalibCo_0508.dat"
+  "listcalibCo_0309.dat"
+  "listcalibCo_0709.dat"
+  "listcalibCo_0309.dat"
+  "listcalibCo_1309.dat"
+  "listcalibCo_0710.dat"
+  "listcalibCo_2509.dat"
+  # 137Cs
+  "listcalibCs_0305.dat"
+  # Add more runlist files as needed
+)
+
+# Execute the Analyse_FASTER program with each runlist argument
+for runlist in "${runlists[@]}"; do
+  echo "Running Analyse_FASTER with ${runlist}"
+  ./myAnalyse "${runlist}"
+done

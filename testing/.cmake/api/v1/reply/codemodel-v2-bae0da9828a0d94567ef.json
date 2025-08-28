@@ -1,0 +1,77 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Analyse",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "RootLib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RootLib-Debug-076450b2c8a3f86e4752.json",
+					"name" : "RootLib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RootLibDict::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RootLibDict-Debug-2598e1bf75babf244ac3.json",
+					"name" : "RootLibDict",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "myAnalyse::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-myAnalyse-Debug-877c831d78558fceb0b6.json",
+					"name" : "myAnalyse",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/data/Malia/Analyse_FASTER/testing",
+		"source" : "/data/Malia/Analyse_FASTER"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

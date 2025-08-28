@@ -41,6 +41,10 @@ math.h
 -
 map
 -
+unordered_map
+-
+array
+-
 numeric
 -
 thread
@@ -60,6 +64,8 @@ chrono
 tuple
 -
 random
+-
+filesystem
 -
 TROOT.h
 -
@@ -155,6 +161,10 @@ TSpectrum2.h
 ../include/TSpectrum2.h
 TF2.h
 ../include/TF2.h
+TTreeIndex.h
+../include/TTreeIndex.h
+regex
+-
 
 ../include/CDetecteurType.h
 CDetectors.h
@@ -3086,6 +3096,10 @@ vector
 utility
 -
 
+/data/root/include/TTreeIndex.h
+TVirtualIndex.h
+/data/root/include/TVirtualIndex.h
+
 /data/root/include/TTreeReader.h
 TTree.h
 /data/root/include/TTree.h
@@ -3173,6 +3187,10 @@ TMethodCall.h
 /data/root/include/TMethodCall.h
 Foption.h
 /data/root/include/Foption.h
+
+/data/root/include/TVirtualIndex.h
+TNamed.h
+/data/root/include/TNamed.h
 
 /data/root/include/TVirtualIsAProxy.h
 

@@ -118,6 +118,13 @@ void QDC::SetResA(Float_t resA)
 void QDC::SetRespower(Float_t respower)
 {this->respower = respower;}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QDC::SetRawResA(Float_t RawresA)
+{this->RawresA = RawresA;}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QDC::SetRawRespower(Float_t Rawrespower)
+{this->Rawrespower = Rawrespower;}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QDC::SetCaliba(Float_t caliba)
 {this->caliba = caliba;}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -184,13 +191,13 @@ Bool_t QDC::IsPureLaBr3(const Double_t PSD, const Double_t Qs,const Double_t QL)
   double labr_discri_pos = GetLaBrDiscriPosition();
   double labr_discri_sigma = GetLaBrDiscriSigma();
   double QSref = QL*tan(labr_discri_pos);
-  double resA = GetResA();
-  double respower = GetRespower();
+  double resA = GetRawResA();
+  double respower = GetRawRespower();
   Double_t REF = TMath::Abs(PSD-labr_discri_pos);
   //if(REF <= 2.35*labr_discri_sigma)  istheta_OK = true;
   
   // I calculate the resolution for this charge
-  //double resolution = GetDetectorResolution(Qs);
+  double resolution = RawresA*TMath::Power(Qs,Rawrespower);
   //This is only valid for PARIS305
   //double resolution = QDC::CeBrqdcResolution(Qs);
   
@@ -199,7 +206,7 @@ Bool_t QDC::IsPureLaBr3(const Double_t PSD, const Double_t Qs,const Double_t QL)
   double ordinate_inf = -1500.;
   
   // I need to calculate the slope of the upper cut line
-  double Qsmax =  QL*tan(labr_discri_pos+2.35*labr_discri_sigma);//QSref+resolution*QSref+ordinate_sup;
+  double Qsmax = QSref+resolution*QSref;//+ordinate_sup; //QL*tan(labr_discri_pos+2.35*labr_discri_sigma);//QSref+resolution*QSref+ordinate_sup;
   double slopemax = (Qsmax)/QL;
   double thetamax = TMath::ATan(Qsmax/QL);
   
@@ -208,7 +215,7 @@ Bool_t QDC::IsPureLaBr3(const Double_t PSD, const Double_t Qs,const Double_t QL)
   //if(Qs <= (Qsmax+ordinate_sup) ) isQs_inf_O_sup = true;
   
   // I do the same for the lower line
-  double Qsmin = QL*tan(labr_discri_pos-2.35*labr_discri_sigma);//(QSref-resolution*QSref)+ordinate_inf;
+  double Qsmin = (QSref-resolution*QSref);//QL*tan(labr_discri_pos-2.35*labr_discri_sigma);+ordinate_inf
   double slopemin = (Qsmin)/QL;
   double thetamin = TMath::ATan(Qsmin/QL);
   //if(Qs >= (slopemin*QL+ordinate_inf) ) isQs_sup_O_inf = true;

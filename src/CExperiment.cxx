@@ -144,7 +144,7 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
   cout << "Now loading detectors informations : " << endl;
 
   std::vector<string> names;string name;
-  Float_t pos_labr, sigma_labr, pos_nai, sigma_nai,theta, cos, sin, tan, resA, respower, caliba, calibb, caliba2;
+  Float_t pos_labr, sigma_labr, pos_nai, sigma_nai,theta, cos, sin, tan, resA, respower, caliba, calibb, caliba2, RawresA,Rawrespower;
   std::vector<Float_t> vec_pos_labr; std::vector<Float_t> vec_pos_nai;
   std::vector<Float_t> vec_sigma_labr; std::vector<Float_t> vec_sigma_nai;
   std::vector<Float_t> vec_theta;
@@ -154,6 +154,8 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
   Bool_t resolution_binning = true;
   std::vector<Float_t> vec_resA;
   std::vector<Float_t> vec_respower;
+  std::vector<Float_t> vec_RawresA;
+  std::vector<Float_t> vec_Rawrespower;
 
   //To apply energy calibration
   Bool_t calibrating = true;
@@ -181,12 +183,12 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
 
       while(!PARISangleliste.eof())
       { if (resolution_binning== true && calibrating == true){
-        PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan >> resA >> respower >> caliba >> calibb >> caliba2;
+        PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan >> resA >> respower >> caliba >> calibb >> caliba2 >> RawresA >> Rawrespower;
         names.push_back(name);vec_pos_labr.push_back(pos_labr);vec_sigma_labr.push_back(sigma_labr);vec_pos_nai.push_back(pos_nai);vec_sigma_nai.push_back(sigma_nai); vec_theta.push_back(theta); vec_theta_tan.push_back(tan); vec_resA.push_back(resA); vec_respower.push_back(respower);
-        vec_caliba.push_back(caliba); vec_calibb.push_back(calibb); vec_caliba2.push_back(caliba2);
+        vec_caliba.push_back(caliba); vec_calibb.push_back(calibb); vec_caliba2.push_back(caliba2), vec_RawresA.push_back(RawresA); vec_Rawrespower.push_back(Rawrespower);
         }
         else{
-          PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan>> resA >> respower >> caliba >> calibb >> caliba2;
+          PARISangleliste >> name >> pos_labr >> sigma_labr >> pos_nai >> sigma_nai >> theta >> cos >> sin >> tan>> resA >> respower >> caliba >> calibb >> caliba2 >> RawresA >> Rawrespower;
           names.push_back(name);vec_pos_labr.push_back(pos_labr);vec_sigma_labr.push_back(sigma_labr);vec_pos_nai.push_back(pos_nai);vec_sigma_nai.push_back(sigma_nai); vec_theta.push_back(theta); vec_theta_tan.push_back(tan);
           //cout << "\t" << name << "\t" << pos_labr << "\t" << sigma_labr << "\t" << pos_nai << "\t" << sigma_nai << "\t" << theta << "\t" << cos << "\t" << sin << "\t" << tan << endl;
         }
@@ -351,6 +353,8 @@ int CExperiment::SetDetectors( const TString inputfilename, const TString output
               //if (resolution_binning && calibrating){
                 temp_QDC->SetResA(vec_resA.at(paris));
                 temp_QDC->SetRespower(vec_respower.at(paris));
+                temp_QDC->SetRawResA(vec_RawresA.at(paris));
+                temp_QDC->SetRawRespower(vec_Rawrespower.at(paris));
                 temp_QDC->SetCaliba(vec_caliba.at(paris));
                 temp_QDC->SetCalibb(vec_calibb.at(paris));
                 temp_QDC->SetCaliba2(vec_caliba2.at(paris));
