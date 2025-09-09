@@ -111,7 +111,11 @@
         "valarray": "cpp",
         "DataAlignement.C": "cpp",
         "Calib_2PARIS50_Ql_allpeaks_NRJ.C": "cpp",
-        "DataAlignementV2.C": "cpp"
+        "DataAlignementV2.C": "cpp",
+        "sumpromptevents.C": "cpp",
+        "canvas_GLOBAL_mult_0_3_grid4.C": "cpp",
+        "Spectraprofiler.C": "cpp",
+        "MaliaDataAlignement.C": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/gcc",
     "git.ignoreLimitWarning": true

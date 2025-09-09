@@ -98,6 +98,7 @@
 #include "TF2.h"
 #include "TTreeIndex.h"
 #include <regex>
+#include <array>
 // I call the other classes from the analyse program
 class CExperiment;
 class CDetectors;

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Nombre maximum de jobs en parallèle
-MAX_JOBS=20
+MAX_JOBS=10
 
 # List of runlist arguments
 runlists=(

@@ -64,12 +64,12 @@ int main(int argc, char* argv[])
   Bool_t isCalculating_E_Calibration = kFALSE;
   Bool_t isApplying_E_Calibration = kFALSE;
   Bool_t isApplying_E_Correction = kFALSE;
-  Bool_t isChecking_E_Calib = kFALSE;
+  Bool_t isChecking_E_Calib = kTRUE;
   Bool_t isChecking_E_Correction = kFALSE;
   Bool_t isCalculating_T_Calibration = kFALSE;
   Bool_t isApplying_T_Calibration = kFALSE;
   Bool_t isChecking_T_Calib = kFALSE;
-  Bool_t isEventBuilding = kTRUE;
+  Bool_t isEventBuilding = kFALSE;
   Bool_t isEventAnalysing = kFALSE;
 
   // Multichain is for multithreading the data analysis
@@ -451,7 +451,7 @@ int main(int argc, char* argv[])
   {
     std::cout<<SetBOLD<<FOREYEL<<"is Event Building"<<endl;
 
-    FissionEventReconstruction(*experiment,-3,4., 150000.); //penser à rajouter la fenêtre de coinc neutrons en argument aussi
+    FissionEventReconstruction(*experiment,-100,800., 150000.); //penser à rajouter la fenêtre de coinc neutrons en argument aussi
     
     //BISFissionEventReconstruction(*experiment,-800.,800., 300000.); //penser à rajouter la fenêtre de coinc neutrons en argument aussi
     // Now let's check the quality on Calibration
