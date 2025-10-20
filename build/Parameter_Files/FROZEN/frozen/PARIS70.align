@@ -1,939 +1,939 @@
  {89, coeffs 0 1.009  scale 1.0125}
+ {87, coeffs 0 1  scale 1.005}
  {88, coeffs 0 0.9955  scale 0.995}
  {86, coeffs 0 1.0045  scale 1.0075}
- {87, coeffs -0.5 1  scale 0.9575}
  {85, coeffs 0 1.0045  scale 1.005}
  {84, coeffs 0 0.991  scale 0.9925}
+ {83, coeffs 0 1.0045  scale 1.0075}
+ {82, coeffs 0 1.009  scale 1.01}
+ {81, coeffs 0 0.9955  scale 0.9975}
+ {80, coeffs 0 1.0045  scale 1.0075}
  {79, coeffs 0 1.009  scale 1.01}
  {78, coeffs 0 1.009  scale 1.01}
- {83, coeffs 0 1.0045  scale 1.0075}
- {81, coeffs 0 0.9955  scale 0.995}
- {82, coeffs 0 1.009  scale 1.01}
- {68, coeffs 0.5 1  scale 1.0475}
- {75, coeffs 0 1.009  scale 1.01}
- {63, coeffs 0 0.9955  scale 0.9975}
- {66, coeffs -0.5 1  scale 0.955}
- {80, coeffs -0.5 1.009  scale 0.965}
- {72, coeffs 0.5 1  scale 1.0475}
- {74, coeffs 0 0.9955  scale 0.9975}
- {76, coeffs 0.5 1  scale 1.0475}
  {77, coeffs 0 1.0045  scale 1.005}
+ {76, coeffs 0 1.0135  scale 1.015}
+ {75, coeffs 0 1.009  scale 1.01}
+ {74, coeffs 0 0.9955  scale 0.9975}
  {73, coeffs 0 1.0045  scale 1.005}
- {70, coeffs 0 0.991  scale 0.9925}
- {67, coeffs 0 1.0045  scale 1.005}
+ {72, coeffs 0 1.0135  scale 1.0175}
  {71, coeffs 0 1.009  scale 1.01}
+ {70, coeffs 0 0.991  scale 0.9925}
  {69, coeffs 0 0.9955  scale 0.995}
+ {68, coeffs 0 1.0135  scale 1.015}
+ {67, coeffs 0 1.0045  scale 1.005}
+ {66, coeffs 0 0.9865  scale 0.9875}
  {65, coeffs 0 0.991  scale 0.9925}
- {64, coeffs 0.5 1  scale 1.0475}
- {62, coeffs 0 0.9865  scale 0.9875}
+ {64, coeffs 0 1.0135  scale 1.0175}
+ {63, coeffs 0 0.9955  scale 0.9975}
  {61, coeffs 0 0.991  scale 0.9925}
+ {62, coeffs 0 0.9865  scale 0.99}
  {35, coeffs 0 0.9955  scale 0.9975}
  {31, coeffs 0 0.9955  scale 0.9975}
- {134, coeffs 0 0.9955  scale 0.995}
- {126, coeffs 0 0.9955  scale 0.995}
- {24, coeffs 0 1.0045  scale 1.005}
+ {24, coeffs 0 1.0045  scale 1.0075}
  {23, coeffs 0 1.0045  scale 1.005}
+ {134, coeffs 0 0.9955  scale 0.995}
  {129, coeffs 0 0.9955  scale 0.995}
+ {128, coeffs 0 1  scale 1}
+ {127, coeffs 0 0.9955  scale 0.995}
+ {126, coeffs 0 0.9955  scale 0.995}
+ {125, coeffs 0 0.9955  scale 0.995}
  {124, coeffs 0 1.0045  scale 1.005}
  {123, coeffs 0 0.9955  scale 0.995}
  {122, coeffs 0 1.0045  scale 1.005}
- {110, coeffs 0 1.0045  scale 1.005}
- {111, coeffs 0 1.0045  scale 1.005}
  {121, coeffs 0 1.0045  scale 1.005}
- {128, coeffs 0 1  scale 1}
- {127, coeffs 0 0.9955  scale 0.995}
- {125, coeffs 0 0.9955  scale 0.995}
- {113, coeffs 0 1.0045  scale 1.005}
- {115, coeffs 0 1.0045  scale 1.005}
- {117, coeffs 0.5 1  scale 1.0475}
- {116, coeffs 0 1.009  scale 1.01}
  {11, coeffs 0 0.982  scale 0.98}
+ {117, coeffs 0 1  scale 1.005}
+ {116, coeffs 0 1.009  scale 1.01}
+ {115, coeffs 0 1.0045  scale 1.005}
  {114, coeffs 0 1.0045  scale 1.005}
+ {113, coeffs 0 1.0045  scale 1.005}
  {112, coeffs 0 1.0045  scale 1.005}
- {105, coeffs 0 0.9955  scale 0.9975}
- {107, coeffs 0 0.9955  scale 0.995}
- {103, coeffs 0 0.991  scale 0.99}
- {998, coeffs 0.5 0.9775  scale 1.0275}
- {101, coeffs 0 0.9955  scale 0.995}
- {982, coeffs -0.5 1  scale 0.955}
- {108, coeffs 0 0.9955  scale 0.995}
- {987, coeffs 0 0.9865  scale 0.99}
- {106, coeffs 0 0.9955  scale 0.995}
- {104, coeffs 0 0.9955  scale 0.995}
+ {111, coeffs 0 1.0045  scale 1.005}
+ {110, coeffs 0 1.0045  scale 1.005}
  {109, coeffs 0 1.0045  scale 1.005}
- {995, coeffs 0 0.991  scale 0.995}
- {996, coeffs 0 0.991  scale 0.995}
- {102, coeffs 0 0.9955  scale 0.9925}
- {100, coeffs 0 0.9955  scale 0.9925}
- {992, coeffs 0 0.991  scale 0.9925}
+ {108, coeffs 0 0.9955  scale 0.995}
+ {107, coeffs 0 0.9955  scale 0.995}
+ {106, coeffs 0 0.9955  scale 0.995}
+ {105, coeffs 0 0.9955  scale 0.9975}
+ {104, coeffs 0 0.9955  scale 0.995}
+ {103, coeffs 0 0.991  scale 0.99}
+ {102, coeffs 0 0.9955  scale 0.995}
+ {101, coeffs 0 0.9955  scale 0.995}
+ {100, coeffs 0 0.9955  scale 0.995}
  {999, coeffs 0 0.9955  scale 0.9975}
- {991, coeffs -0.5 1  scale 0.955}
- {984, coeffs 0 0.991  scale 0.9925}
- {997, coeffs 0.5 0.9865  scale 1.04}
- {994, coeffs 0 0.991  scale 0.9925}
- {986, coeffs 0 0.991  scale 0.995}
- {983, coeffs 0 0.991  scale 0.9925}
- {988, coeffs 0.5 0.9775  scale 1.0275}
- {985, coeffs 0 0.991  scale 0.9925}
- {990, coeffs 0 0.9955  scale 0.9975}
- {977, coeffs 0 0.9955  scale 0.9975}
+ {998, coeffs 0 0.991  scale 0.995}
+ {997, coeffs 0 0.991  scale 0.9975}
+ {996, coeffs 0 0.991  scale 0.995}
+ {995, coeffs 0 0.991  scale 0.995}
+ {994, coeffs 0 0.991  scale 0.995}
  {993, coeffs 0 0.991  scale 0.995}
+ {992, coeffs 0 0.991  scale 0.9925}
+ {991, coeffs 0 0.982  scale 0.985}
+ {990, coeffs 0 0.9955  scale 0.9975}
  {989, coeffs 0 0.9955  scale 1}
+ {988, coeffs 0 0.991  scale 0.995}
+ {987, coeffs 0 0.991  scale 0.995}
+ {986, coeffs 0 0.991  scale 0.995}
+ {985, coeffs 0 0.991  scale 0.9925}
+ {984, coeffs 0 0.991  scale 0.9925}
+ {983, coeffs 0 0.9865  scale 0.9875}
+ {982, coeffs 0 0.9865  scale 0.9875}
  {981, coeffs 0 0.9955  scale 1}
- {960, coeffs 0 0.982  scale 0.985}
- {979, coeffs 0 1.0045  scale 1.0075}
- {978, coeffs 0 0.9955  scale 1}
- {973, coeffs 0 0.991  scale 0.995}
  {980, coeffs 0 0.9955  scale 0.9975}
- {958, coeffs 0 0.973  scale 0.9725}
+ {979, coeffs 0 0.9955  scale 0.9975}
+ {978, coeffs 0 0.9955  scale 1}
+ {977, coeffs 0 0.9955  scale 0.9975}
+ {976, coeffs 0 0.991  scale 0.9925}
  {975, coeffs 0 0.991  scale 0.995}
  {974, coeffs 0 0.991  scale 0.9925}
- {946, coeffs 0 0.9865  scale 0.9875}
- {964, coeffs 0 0.9955  scale 1}
- {976, coeffs 0 0.991  scale 0.9925}
- {972, coeffs 0.5 0.9775  scale 1.03}
- {967, coeffs 0 0.9955  scale 1}
- {962, coeffs 0 0.9865  scale 0.9875}
+ {973, coeffs 0 0.991  scale 0.995}
+ {972, coeffs 0 0.982  scale 0.9875}
+ {970, coeffs 0 0.9865  scale 0.9875}
  {968, coeffs 0 0.9955  scale 1}
- {969, coeffs -0.5 1  scale 0.9525}
- {952, coeffs 0 0.991  scale 0.995}
- {970, coeffs -0.5 1  scale 0.955}
+ {969, coeffs 0 0.9955  scale 1.005}
+ {967, coeffs 0 0.991  scale 0.995}
+ {965, coeffs 0 1.0045  scale 1.0075}
  {966, coeffs 0 1.0045  scale 1.0075}
- {965, coeffs 0 0.9955  scale 0.9975}
- {957, coeffs 0 0.9865  scale 0.9875}
- {954, coeffs -0.5 1  scale 0.9575}
- {961, coeffs -0.5 1  scale 0.955}
+ {964, coeffs 0 0.9955  scale 1}
  {963, coeffs 0 0.9955  scale 1}
- {944, coeffs 0 0.991  scale 0.9925}
- {945, coeffs 0 0.991  scale 0.9925}
- {942, coeffs -0.5 1  scale 0.96}
- {940, coeffs 0 0.9955  scale 0.9975}
- {953, coeffs -0.5 1  scale 0.9575}
- {955, coeffs 0 0.9955  scale 0.9975}
+ {962, coeffs 0 0.9865  scale 0.9875}
+ {961, coeffs 0 0.982  scale 0.9825}
+ {960, coeffs 0 0.982  scale 0.985}
  {959, coeffs 0 0.9775  scale 0.9775}
+ {958, coeffs 0 0.982  scale 0.9825}
+ {957, coeffs 0 0.9865  scale 0.9875}
  {956, coeffs 0 0.9865  scale 0.99}
- {939, coeffs 0 0.9955  scale 1}
+ {955, coeffs 0 0.9955  scale 1}
+ {954, coeffs 0 0.9865  scale 0.99}
+ {953, coeffs 0 1  scale 1.005}
+ {952, coeffs 0 0.991  scale 0.995}
  {951, coeffs 0 0.991  scale 0.995}
- {943, coeffs 0 0.991  scale 0.9925}
- {937, coeffs 0 0.9955  scale 1}
- {950, coeffs -0.5 1  scale 0.955}
- {949, coeffs -0.5 1  scale 0.955}
+ {950, coeffs 0 0.9865  scale 0.9875}
+ {949, coeffs 0 0.9865  scale 0.9875}
  {948, coeffs 0 0.982  scale 0.9825}
  {947, coeffs 0 0.9865  scale 0.9875}
- {941, coeffs 0 0.9955  scale 1}
- {932, coeffs 0 0.9865  scale 0.99}
- {930, coeffs 0 1.0045  scale 1.0075}
+ {946, coeffs 0 0.9865  scale 0.9875}
+ {945, coeffs 0 0.991  scale 0.9925}
+ {944, coeffs 0 0.991  scale 0.9925}
+ {943, coeffs 0 0.991  scale 0.9925}
+ {942, coeffs 0 1  scale 1.005}
+ {941, coeffs 0 0.9865  scale 0.99}
+ {940, coeffs 0 0.9955  scale 0.9975}
+ {939, coeffs 0 0.9955  scale 1}
  {938, coeffs 0 0.9955  scale 0.9975}
- {931, coeffs 0 0.9955  scale 1}
+ {937, coeffs 0 0.9955  scale 0.9975}
+ {936, coeffs 0 0.9955  scale 1}
+ {935, coeffs 0 0.991  scale 0.9925}
  {934, coeffs 0 0.991  scale 0.9925}
- {936, coeffs -0.5 1  scale 0.955}
- {913, coeffs 0.5 1  scale 1.0475}
- {935, coeffs 0.5 0.9775  scale 1.0275}
- {933, coeffs 0 0.9865  scale 0.99}
- {928, coeffs 0 1.0045  scale 1.0075}
- {909, coeffs 0 0.9955  scale 0.9975}
- {918, coeffs 0 0.9955  scale 0.9975}
- {922, coeffs 0 0.991  scale 0.995}
- {914, coeffs 0.5 1  scale 1.0475}
+ {933, coeffs 0 0.991  scale 0.995}
+ {932, coeffs 0 0.9865  scale 0.99}
+ {931, coeffs 0 0.9955  scale 0.9975}
+ {930, coeffs 0 1.0045  scale 1.0075}
+ {928, coeffs 0 1.0045  scale 1.005}
+ {929, coeffs 0 1  scale 0.9925}
+ {927, coeffs 0 1.009  scale 1.01}
  {926, coeffs 0 0.991  scale 0.9925}
- {911, coeffs 0.5 0.991  scale 1.0425}
- {927, coeffs 0.5 0.9865  scale 1.0375}
- {919, coeffs 0.5 0.982  scale 1.0325}
- {910, coeffs 0 0.9955  scale 1}
- {929, coeffs -0.5 1  scale 0.95}
+ {925, coeffs 0 0.9955  scale 0.9975}
  {924, coeffs 0 0.9955  scale 0.9975}
  {923, coeffs 0 0.9955  scale 0.995}
- {908, coeffs 0 0.9955  scale 1}
- {925, coeffs 0 0.9955  scale 0.9975}
- {907, coeffs 0.5 1  scale 1.0475}
- {916, coeffs 0.5 1  scale 1.0475}
- {920, coeffs 0 0.991  scale 0.995}
+ {922, coeffs 0 0.991  scale 0.995}
  {921, coeffs 0 0.991  scale 0.995}
- {915, coeffs 0.5 1  scale 1.0475}
- {912, coeffs 0.5 1  scale 1.0475}
- {917, coeffs 0.5 1  scale 1.0475}
- {874, coeffs 0 0.9955  scale 0.9975}
- {887, coeffs 0.5 1  scale 1.0475}
- {899, coeffs 0.5 1  scale 1.0475}
- {881, coeffs 0 0.991  scale 0.9925}
- {905, coeffs 0.5 1  scale 1.0475}
- {904, coeffs 0.5 1  scale 1.0475}
- {901, coeffs 0.5 1  scale 1.0475}
- {886, coeffs 0.5 1  scale 1.0475}
- {898, coeffs 0.5 1  scale 1.0475}
- {885, coeffs 0.5 1  scale 1.0475}
- {897, coeffs 0.5 1  scale 1.0475}
- {903, coeffs 0.5 1  scale 1.0475}
+ {920, coeffs 0 0.991  scale 0.995}
+ {919, coeffs 0 0.991  scale 0.995}
+ {918, coeffs 0 0.9955  scale 0.9975}
+ {917, coeffs 0 1.0045  scale 1.0075}
+ {916, coeffs 0 1.0135  scale 1.015}
+ {915, coeffs 0 1.009  scale 1.01}
+ {914, coeffs 0 1.0135  scale 1.015}
+ {913, coeffs 0 1.009  scale 1.01}
+ {912, coeffs 0 1.0045  scale 1.0075}
+ {911, coeffs 0 1.0045  scale 1.0075}
+ {910, coeffs 0 0.9955  scale 1}
+ {909, coeffs 0 0.9955  scale 0.9975}
+ {908, coeffs 0 0.9955  scale 1}
+ {907, coeffs 0 1.009  scale 1.0125}
+ {905, coeffs 0 1.0045  scale 1.0075}
+ {904, coeffs 0 1.018  scale 1.02}
+ {903, coeffs 0 1.0225  scale 1.025}
+ {901, coeffs 0 1.0135  scale 1.015}
+ {899, coeffs 0 1.009  scale 1.0125}
+ {898, coeffs 0 1.009  scale 1.01}
+ {897, coeffs 0 1.0045  scale 1.0075}
+ {896, coeffs 0 0.991  scale 0.9975}
+ {889, coeffs 0 1.018  scale 1.02}
+ {888, coeffs 0 1.0135  scale 1.015}
+ {887, coeffs 0 1.018  scale 1.02}
+ {886, coeffs 0 1.009  scale 1.0125}
+ {885, coeffs 0 1.0045  scale 1.0075}
  {884, coeffs 0 0.9955  scale 0.9975}
- {888, coeffs 0.5 1  scale 1.0475}
- {875, coeffs 0 0.991  scale 0.9925}
- {889, coeffs 0.5 1  scale 1.0475}
- {896, coeffs 0.5 0.9865  scale 1.0375}
- {883, coeffs 0 0.9955  scale 0.9975}
- {865, coeffs 0.5 1  scale 1.0475}
- {880, coeffs 0.5 0.9775  scale 1.0275}
- {871, coeffs 0 0.9955  scale 0.9975}
- {877, coeffs -0.5 1  scale 0.955}
  {882, coeffs 0 0.9955  scale 1}
+ {883, coeffs 0 0.9955  scale 0.9975}
+ {881, coeffs 0 0.991  scale 0.9925}
+ {880, coeffs 0 0.991  scale 0.9925}
+ {877, coeffs 0 0.991  scale 0.995}
  {876, coeffs 0 0.9955  scale 0.9975}
- {858, coeffs 0 0.9955  scale 0.9975}
- {866, coeffs 0.5 1  scale 1.0475}
- {868, coeffs 0 1.0045  scale 1.0075}
- {862, coeffs 0.5 1  scale 1.0475}
+ {875, coeffs 0 0.991  scale 0.9925}
+ {874, coeffs 0 0.9955  scale 0.9975}
  {873, coeffs 0 0.9955  scale 0.995}
- {870, coeffs 0 1.009  scale 1.01}
  {872, coeffs 0 0.9955  scale 0.9975}
- {867, coeffs 0.5 1  scale 1.0475}
- {850, coeffs 0 0.9955  scale 0.995}
- {863, coeffs 0.5 1  scale 1.0475}
+ {871, coeffs 0 0.9955  scale 0.9975}
+ {870, coeffs 0 1.009  scale 1.01}
  {869, coeffs 0 1.0045  scale 1.0075}
- {848, coeffs 0 0.9955  scale 0.9975}
- {864, coeffs 0.5 1  scale 1.0475}
- {847, coeffs 0 0.9955  scale 0.9975}
- {852, coeffs 0 0.9955  scale 0.9975}
- {851, coeffs 0 1.0045  scale 1.0075}
+ {868, coeffs 0 1.0045  scale 1.0075}
+ {867, coeffs 0 1.009  scale 1.01}
+ {866, coeffs 0 1.0225  scale 1.025}
+ {865, coeffs 0 1.018  scale 1.02}
+ {864, coeffs 0 1.018  scale 1.02}
+ {863, coeffs 0 1.0135  scale 1.015}
+ {862, coeffs 0 1.0135  scale 1.015}
+ {861, coeffs 0 1.009  scale 1.0125}
  {860, coeffs 0 1.0045  scale 1.0075}
  {859, coeffs 0 0.9955  scale 0.9975}
- {861, coeffs 0.5 1  scale 1.0475}
- {843, coeffs 0.5 1  scale 1.0475}
- {844, coeffs 0 1.0045  scale 1.0075}
- {855, coeffs 0 1.0045  scale 1.0075}
- {846, coeffs 0 0.9955  scale 0.9975}
+ {858, coeffs 0 0.9955  scale 0.9975}
  {857, coeffs 0 0.9955  scale 0.9975}
  {856, coeffs 0 1.0045  scale 1.0075}
- {854, coeffs 0 1.0045  scale 1.0075}
- {845, coeffs 0 0.9955  scale 0.9975}
+ {855, coeffs 0 1.0045  scale 1.0075}
+ {854, coeffs 0 1.009  scale 1.01}
  {853, coeffs 0 1.0045  scale 1.0075}
- {841, coeffs 0.5 1  scale 1.0475}
+ {852, coeffs 0 0.9955  scale 0.9975}
+ {851, coeffs 0 1.0045  scale 1.0075}
+ {850, coeffs 0 0.9955  scale 0.995}
  {849, coeffs 0 0.9955  scale 0.995}
- {832, coeffs 0 0.9955  scale 0.9975}
- {840, coeffs 0.5 1  scale 1.0475}
+ {848, coeffs 0 0.9955  scale 0.9975}
+ {847, coeffs 0 0.9955  scale 0.9975}
+ {846, coeffs 0 0.9955  scale 0.9975}
+ {845, coeffs 0 0.9955  scale 0.9975}
+ {844, coeffs 0 1.0045  scale 1.0075}
+ {843, coeffs 0 1.009  scale 1.01}
+ {842, coeffs 0 1.009  scale 1.01}
+ {841, coeffs 0 1.009  scale 1.01}
+ {840, coeffs 0 1.0045  scale 1.0075}
  {839, coeffs 0 1.0045  scale 1.0075}
- {833, coeffs 0 0.9955  scale 0.9975}
- {835, coeffs 0 0.9955  scale 0.9975}
- {831, coeffs 0 0.9955  scale 0.9975}
- {842, coeffs 0.5 1  scale 1.0475}
- {815, coeffs 0 1.0045  scale 1.0075}
- {826, coeffs 0 0.9955  scale 0.9975}
- {822, coeffs 0 0.9955  scale 1}
- {830, coeffs 0 0.9955  scale 0.9975}
- {836, coeffs 0 0.9955  scale 0.995}
  {838, coeffs 0 1.0045  scale 1.0075}
- {828, coeffs 0 1.0045  scale 1.0075}
- {837, coeffs 0 0.9955  scale 0.995}
+ {837, coeffs 0 1.0045  scale 1.0075}
+ {836, coeffs 0 0.9955  scale 0.995}
+ {835, coeffs 0 0.9955  scale 0.995}
  {834, coeffs 0 0.9955  scale 0.9975}
- {819, coeffs 0 1.0045  scale 1.0075}
- {827, coeffs 0 0.9955  scale 0.9975}
+ {833, coeffs 0 0.9955  scale 0.9975}
+ {832, coeffs 0 0.9955  scale 0.9975}
+ {831, coeffs 0 0.9955  scale 0.9975}
  {829, coeffs 0 0.9955  scale 0.9975}
- {818, coeffs 0 1.0045  scale 1.005}
- {823, coeffs 0 0.9955  scale 0.9975}
+ {830, coeffs 0 0.9955  scale 0.9975}
+ {828, coeffs 0 1.0045  scale 1.0075}
+ {827, coeffs 0 0.9955  scale 0.9975}
+ {826, coeffs 0 0.9955  scale 0.9975}
  {825, coeffs 0 0.9955  scale 0.9975}
  {824, coeffs 0 0.9955  scale 0.9975}
- {814, coeffs 0 0.9955  scale 0.9975}
- {816, coeffs 0 1.0045  scale 1.0075}
- {805, coeffs 0 1.009  scale 1.01}
- {820, coeffs 0 0.9955  scale 0.9975}
+ {823, coeffs 0 0.991  scale 0.9925}
+ {822, coeffs 0 0.9955  scale 1}
  {821, coeffs 0 0.9955  scale 0.9975}
- {801, coeffs 0 1.0045  scale 1.0075}
- {810, coeffs 0 0.9955  scale 0.995}
- {811, coeffs 0 0.9955  scale 0.9975}
- {809, coeffs 0 0.9955  scale 0.9975}
- {817, coeffs 0 0.9955  scale 0.9975}
- {807, coeffs -0.5 1  scale 0.955}
+ {820, coeffs 0 0.9955  scale 0.9975}
+ {819, coeffs 0 1.0045  scale 1.0075}
+ {818, coeffs 0 1.0045  scale 1.005}
+ {817, coeffs 0 1.0045  scale 1.0075}
+ {816, coeffs 0 1.0045  scale 1.0075}
+ {815, coeffs 0 1.0045  scale 1.0075}
+ {814, coeffs 0 0.9955  scale 0.9975}
  {813, coeffs 0 0.9955  scale 0.9975}
  {812, coeffs 0 0.9955  scale 0.9975}
- {803, coeffs 0 1.0045  scale 1.0075}
- {797, coeffs 0 1.0045  scale 1.005}
- {804, coeffs 0 1.0045  scale 1.0075}
- {798, coeffs 0 0.9955  scale 0.9975}
- {793, coeffs 0.5 1  scale 1.0475}
- {806, coeffs 0.5 1  scale 1.0475}
+ {811, coeffs 0 0.9955  scale 0.9975}
+ {810, coeffs 0 0.9955  scale 0.995}
+ {809, coeffs 0 0.9955  scale 0.9975}
  {808, coeffs 0 0.9955  scale 0.9975}
+ {807, coeffs 0 0.9955  scale 1}
+ {806, coeffs 0 1  scale 1.005}
+ {805, coeffs 0 1.009  scale 1.01}
+ {804, coeffs 0 1.0045  scale 1.0075}
+ {803, coeffs 0 1.0045  scale 1.0075}
  {802, coeffs 0 1.0045  scale 1.0075}
- {790, coeffs 0 1.009  scale 1.01}
- {794, coeffs 0.5 1  scale 1.0475}
+ {801, coeffs 0 1.009  scale 1.01}
  {800, coeffs 0 1.0045  scale 1.0075}
- {795, coeffs 0.5 1  scale 1.0475}
- {791, coeffs 0.5 1  scale 1.0475}
- {785, coeffs 0 1.0045  scale 1.0075}
  {799, coeffs 0 0.9955  scale 0.9975}
- {792, coeffs 0.5 1  scale 1.0475}
+ {798, coeffs 0 0.9955  scale 0.9975}
+ {797, coeffs 0 1.0045  scale 1.0075}
  {796, coeffs 0 1.0045  scale 1.0075}
+ {795, coeffs 0 1.009  scale 1.01}
+ {794, coeffs 0 1.0135  scale 1.015}
+ {793, coeffs 0 1.0135  scale 1.015}
+ {792, coeffs 0 1.0135  scale 1.015}
+ {791, coeffs 0 1.009  scale 1.01}
+ {790, coeffs 0 1.009  scale 1.01}
+ {789, coeffs 0 1.009  scale 1.01}
+ {788, coeffs 0 1.009  scale 1.01}
  {787, coeffs 0 1.0045  scale 1.0075}
  {786, coeffs 0 1.0045  scale 1.0075}
- {783, coeffs 0.5 1  scale 1.0475}
- {782, coeffs 0.5 1  scale 1.0475}
- {788, coeffs 0 1.009  scale 1.01}
+ {785, coeffs 0 1.0045  scale 1.0075}
+ {784, coeffs 0 1.009  scale 1.01}
+ {783, coeffs 0 1.0045  scale 1.01}
+ {782, coeffs 0 1.0045  scale 1.01}
+ {781, coeffs 0 1.009  scale 1.0125}
+ {780, coeffs 0 1.0045  scale 1.0075}
  {779, coeffs 0 1.0045  scale 1.0075}
- {789, coeffs 0 1.009  scale 1.01}
- {780, coeffs 0.5 0.991  scale 1.0425}
- {781, coeffs 0.5 1  scale 1.0475}
- {774, coeffs 0 0.991  scale 0.9925}
  {778, coeffs 0 1.0045  scale 1.005}
- {762, coeffs 0 1.0045  scale 1.005}
- {784, coeffs 0.5 0.991  scale 1.0425}
- {755, coeffs 0 1.0045  scale 1.0075}
- {763, coeffs -0.5 1  scale 0.955}
  {777, coeffs 0 1.0045  scale 1.0075}
- {775, coeffs 0 1.0045  scale 1.0075}
- {760, coeffs 0 1.009  scale 1.01}
- {761, coeffs 0 1.0045  scale 1.005}
- {756, coeffs 0 1.0045  scale 1.0075}
- {747, coeffs 0 0.9955  scale 0.9975}
- {757, coeffs 0 1.0045  scale 1.0075}
  {776, coeffs 0 1.009  scale 1.01}
- {749, coeffs 0 0.9955  scale 0.9975}
- {754, coeffs 0 0.9955  scale 0.9975}
- {734, coeffs 0 0.9955  scale 0.9975}
- {735, coeffs 0.5 1  scale 1.0475}
+ {775, coeffs 0 1.0045  scale 1.0075}
+ {774, coeffs 0 0.991  scale 0.9925}
+ {763, coeffs 0 1.009  scale 1.0125}
+ {762, coeffs 0 1.0045  scale 1.0075}
+ {761, coeffs 0 1.0045  scale 1.005}
+ {760, coeffs 0 1.0045  scale 1.0075}
  {759, coeffs 0 1.0045  scale 1.0075}
- {740, coeffs -0.5 1  scale 0.9575}
  {758, coeffs 0 1.0045  scale 1.005}
- {744, coeffs -0.5 1  scale 0.955}
- {750, coeffs 0 1.0045  scale 1.005}
- {743, coeffs -0.5 1  scale 0.9525}
- {751, coeffs 0.5 0.991  scale 1.04}
- {753, coeffs 0 0.991  scale 0.9925}
- {745, coeffs 0 0.991  scale 0.995}
- {746, coeffs 0 0.9955  scale 0.9975}
- {733, coeffs 0 0.9955  scale 0.9975}
+ {757, coeffs 0 1.0045  scale 1.0075}
+ {756, coeffs 0 0.9955  scale 0.9975}
+ {755, coeffs 0 1.0045  scale 1.0075}
+ {754, coeffs 0 0.9955  scale 0.9975}
+ {753, coeffs 0 0.9955  scale 0.9975}
  {752, coeffs 0 1.0045  scale 1.0075}
+ {751, coeffs 0 1.0135  scale 1.015}
+ {750, coeffs 0 1.0045  scale 1.005}
+ {749, coeffs 0 0.9955  scale 0.9975}
  {748, coeffs 0 0.9955  scale 0.995}
- {728, coeffs 0 0.991  scale 0.99}
- {731, coeffs 0 0.9955  scale 0.9975}
- {742, coeffs -0.5 1  scale 0.955}
- {727, coeffs -0.5 1  scale 0.955}
- {729, coeffs 0 0.991  scale 0.9925}
- {698, coeffs -0.5 1  scale 0.955}
- {741, coeffs -0.5 1  scale 0.9525}
+ {747, coeffs 0 0.9955  scale 0.9975}
+ {746, coeffs 0 0.9955  scale 0.9975}
+ {745, coeffs 0 0.991  scale 0.995}
+ {744, coeffs 0 0.9865  scale 0.9875}
+ {743, coeffs 0 0.9865  scale 0.985}
+ {742, coeffs 0 0.9775  scale 0.9775}
+ {741, coeffs 0 0.973  scale 0.97}
+ {740, coeffs 0 1  scale 1.0075}
+ {735, coeffs 0 1.009  scale 1.015}
+ {734, coeffs 0 0.9955  scale 0.9975}
+ {733, coeffs 0 0.9955  scale 0.995}
  {732, coeffs 0 0.991  scale 0.9925}
- {725, coeffs 0.5 1  scale 1.0475}
- {687, coeffs 0 0.9955  scale 0.9975}
+ {731, coeffs 0 0.9955  scale 0.9975}
  {730, coeffs 0 0.991  scale 0.9925}
- {692, coeffs -0.5 0.991  scale 0.95}
- {697, coeffs 0 0.9955  scale 0.9975}
+ {729, coeffs 0 0.991  scale 0.9925}
+ {728, coeffs 0 0.991  scale 0.9925}
+ {727, coeffs 0 0.9955  scale 0.9975}
  {726, coeffs 0 0.9955  scale 0.9975}
- {694, coeffs 0 0.982  scale 0.98}
- {691, coeffs 0 0.9685  scale 0.9675}
- {693, coeffs 0 0.982  scale 0.9825}
- {676, coeffs -0.5 1  scale 0.955}
- {667, coeffs 0 0.9955  scale 0.9975}
+ {725, coeffs 0 1  scale 1.005}
+ {698, coeffs 0 0.9865  scale 0.99}
+ {697, coeffs 0 0.9955  scale 0.9975}
  {696, coeffs 0 0.9865  scale 0.9875}
  {695, coeffs 0 0.9865  scale 0.985}
- {681, coeffs 0 0.991  scale 0.9925}
- {686, coeffs -0.5 1  scale 0.9575}
- {653, coeffs 0 0.991  scale 0.9925}
+ {694, coeffs 0 0.982  scale 0.98}
+ {693, coeffs 0 0.982  scale 0.9825}
+ {692, coeffs 0 0.973  scale 0.9725}
+ {691, coeffs 0 0.9685  scale 0.9675}
  {690, coeffs 0 0.973  scale 0.9725}
- {682, coeffs -0.5 1  scale 0.9575}
  {689, coeffs 0 0.982  scale 0.985}
- {688, coeffs -0.5 1  scale 0.955}
+ {688, coeffs 0 0.9865  scale 0.9875}
+ {687, coeffs 0 0.9955  scale 0.9975}
+ {686, coeffs 0 1  scale 1}
+ {682, coeffs 0 1  scale 1.005}
+ {681, coeffs 0 0.991  scale 0.9925}
  {680, coeffs 0 0.9865  scale 0.99}
  {679, coeffs 0 0.982  scale 0.98}
- {662, coeffs 0 0.982  scale 0.98}
+ {678, coeffs 0 0.9775  scale 0.9775}
  {677, coeffs 0 0.9775  scale 0.9775}
- {664, coeffs -0.5 1  scale 0.955}
- {678, coeffs -0.5 1  scale 0.955}
- {669, coeffs 0 1.0045  scale 1.0075}
+ {676, coeffs 0 0.9865  scale 0.9875}
  {675, coeffs 0 0.991  scale 0.9925}
- {663, coeffs 0 0.982  scale 0.98}
- {651, coeffs 0 0.991  scale 0.995}
+ {674, coeffs 0 1  scale 1.0025}
+ {672, coeffs 0 1.0045  scale 1.005}
+ {671, coeffs 0 1  scale 1.0025}
+ {670, coeffs 0 1  scale 1.0025}
+ {669, coeffs 0 1.0045  scale 1.0075}
  {668, coeffs 0 0.9955  scale 0.9975}
- {674, coeffs -0.5 1  scale 0.96}
+ {667, coeffs 0 0.9955  scale 0.9975}
  {666, coeffs 0 0.991  scale 0.9925}
- {661, coeffs 0 0.9865  scale 0.985}
- {657, coeffs 0.5 1  scale 1.0475}
+ {662, coeffs 0 0.982  scale 0.98}
  {665, coeffs 0 0.9865  scale 0.9875}
- {671, coeffs 0.5 1  scale 1.0475}
- {256, coeffs 0 1.009  scale 1.0125}
- {257, coeffs -0.5 1  scale 0.9525}
- {259, coeffs 0 1.0045  scale 1.0075}
+ {664, coeffs 0 0.982  scale 0.9825}
+ {663, coeffs 0 0.982  scale 0.98}
+ {661, coeffs 0 0.9865  scale 0.985}
+ {660, coeffs 0 0.9955  scale 1}
+ {259, coeffs 0 0.9955  scale 0.9975}
  {258, coeffs 0 1.0045  scale 1.0075}
+ {257, coeffs 0 1  scale 0.9975}
+ {256, coeffs 0 1.009  scale 1.0125}
  {254, coeffs 0 1.0045  scale 1.0075}
  {242, coeffs 0 1.009  scale 1.01}
  {241, coeffs 0 1.0045  scale 1.0075}
- {202, coeffs 0 1.0045  scale 1.0075}
- {188, coeffs 0.5 1  scale 1.0475}
+ {201, coeffs 0 1.009  scale 1.0125}
  {228, coeffs 0 0.9955  scale 0.9975}
  {227, coeffs 0 1.0045  scale 1.0075}
- {204, coeffs 0 0.9955  scale 0.995}
- {206, coeffs 0 0.9955  scale 0.9975}
- {194, coeffs 0 0.9955  scale 0.9975}
  {207, coeffs 0 1  scale 1.0025}
- {198, coeffs 0.5 1  scale 1.0475}
- {196, coeffs 0 1.0045  scale 1.0075}
- {205, coeffs -0.5 1  scale 0.955}
- {187, coeffs 0.5 1  scale 1.0475}
- {192, coeffs 0 0.9955  scale 0.9975}
- {201, coeffs 0.5 1  scale 1.0475}
- {189, coeffs 0 1.0045  scale 1.0075}
- {184, coeffs 0.5 0.991  scale 1.04}
- {183, coeffs 0 1.0045  scale 1.0075}
+ {206, coeffs 0 0.9955  scale 0.9975}
+ {205, coeffs 0 1.009  scale 1.0125}
+ {204, coeffs 0 0.9955  scale 0.995}
+ {202, coeffs 0 1.0045  scale 1.0075}
  {200, coeffs 0 1  scale 1.0025}
- {191, coeffs 0 0.9955  scale 0.9975}
+ {198, coeffs 0 1.009  scale 1.01}
  {197, coeffs 0 1.0045  scale 1.0075}
- {186, coeffs 0.5 1  scale 1.0475}
+ {196, coeffs 0 1.0045  scale 1.0075}
  {195, coeffs 0 1.0045  scale 1.0075}
- {179, coeffs 0.5 1  scale 1.0475}
- {185, coeffs 0 1.009  scale 1.01}
+ {194, coeffs 0 0.9955  scale 0.995}
  {193, coeffs 0 0.9955  scale 0.9975}
- {178, coeffs 0.5 1  scale 1.0475}
+ {192, coeffs 0 0.9955  scale 0.9975}
+ {191, coeffs 0 0.9955  scale 0.9975}
  {190, coeffs 0 1.0045  scale 1.005}
- {182, coeffs 0 1.0045  scale 1.005}
- {181, coeffs -0.5 1.018  scale 0.975}
+ {189, coeffs 0 1.0045  scale 1.0075}
+ {188, coeffs 0 1.0135  scale 1.015}
+ {187, coeffs 0 1.009  scale 1.01}
+ {186, coeffs 0 1.009  scale 1.01}
+ {185, coeffs 0 1.009  scale 1.01}
+ {184, coeffs 0 1.009  scale 1.0125}
+ {183, coeffs 0 1.009  scale 1.01}
+ {182, coeffs 0 1.009  scale 1.01}
+ {181, coeffs 0 1.0135  scale 1.015}
  {171, coeffs 0 1.0045  scale 1.005}
- {176, coeffs 0 1.0045  scale 1.005}
- {180, coeffs 0 1.0045  scale 1.0075}
- {160, coeffs 0 0.9955  scale 0.9975}
- {169, coeffs 0 1.0045  scale 1.0075}
- {174, coeffs 0 1.0045  scale 1.005}
+ {180, coeffs 0 1.009  scale 1.01}
+ {178, coeffs 0 0.9955  scale 1}
+ {179, coeffs 0 0.9955  scale 0.9975}
  {177, coeffs 0 1.0045  scale 1.0075}
- {150, coeffs 0.5 0.9865  scale 1.035}
- {172, coeffs 0 0.9955  scale 0.9975}
- {154, coeffs -0.5 1  scale 0.955}
- {164, coeffs 0.5 1  scale 1.0475}
- {162, coeffs 0 1.009  scale 1.01}
- {173, coeffs 0 1.009  scale 1.01}
+ {176, coeffs 0 1.0045  scale 1.005}
  {175, coeffs 0 1.0045  scale 1.005}
- {163, coeffs 0 1.0045  scale 1.005}
- {168, coeffs -0.5 1  scale 0.9575}
+ {174, coeffs 0 1.0045  scale 1.005}
+ {173, coeffs 0 1.009  scale 1.01}
+ {172, coeffs 0 0.9955  scale 0.9975}
  {170, coeffs 0 0.9955  scale 0.995}
- {158, coeffs 0 1.0045  scale 1.0075}
+ {168, coeffs 0 1  scale 1.0025}
+ {169, coeffs 0 0.9955  scale 0.995}
  {165, coeffs 0 1.0045  scale 1.0075}
+ {164, coeffs 0 1  scale 1}
+ {163, coeffs 0 1.0045  scale 1.005}
+ {162, coeffs 0 1.009  scale 1.01}
  {161, coeffs 0 0.9955  scale 0.995}
- {148, coeffs -0.5 1.0135  scale 0.97}
- {153, coeffs 0 0.9955  scale 0.9975}
- {156, coeffs 0 0.9955  scale 0.995}
- {152, coeffs -0.5 1  scale 0.955}
- {151, coeffs 0 0.9955  scale 0.9975}
+ {160, coeffs 0 0.9955  scale 0.9975}
+ {159, coeffs 0 0.9955  scale 0.9975}
+ {158, coeffs 0 1.0045  scale 1.0075}
  {157, coeffs 0 0.9955  scale 0.9975}
- {155, coeffs -0.5 1  scale 0.9575}
- {142, coeffs 0 0.9955  scale 0.995}
- {159, coeffs 0.5 0.982  scale 1.0325}
- {147, coeffs 0.5 1  scale 1.0475}
- {145, coeffs 0 0.9955  scale 0.9975}
- {149, coeffs -0.5 1  scale 0.9575}
- {143, coeffs 0 0.9955  scale 0.9975}
+ {156, coeffs 0 0.9955  scale 0.995}
+ {154, coeffs 0 0.9955  scale 0.9975}
+ {155, coeffs 0 0.991  scale 0.995}
+ {153, coeffs 0 0.9955  scale 0.9975}
+ {152, coeffs 0 1  scale 0.9975}
+ {151, coeffs 0 1.0045  scale 1.005}
+ {150, coeffs 0 1  scale 1.0025}
+ {149, coeffs 0 1  scale 1}
+ {148, coeffs 0 0.9865  scale 0.9875}
+ {147, coeffs 0 1.009  scale 1.0125}
  {146, coeffs 0 1.0045  scale 1.0075}
- {47, coeffs 0 1.0045  scale 1.005}
- {1156, coeffs 0.5 1  scale 1.0475}
+ {145, coeffs 0 0.9955  scale 0.9975}
  {144, coeffs 0 0.9955  scale 0.9975}
- {55, coeffs 0 0.9955  scale 0.995}
- {1164, coeffs 0.5 1  scale 1.0475}
+ {143, coeffs 0 0.9955  scale 0.9975}
+ {142, coeffs 0 0.9955  scale 0.995}
  {141, coeffs 0 0.9955  scale 0.9975}
- {60, coeffs 0.5 1  scale 1.0475}
- {1169, coeffs 0.5 1  scale 1.0475}
- {57, coeffs -0.5 1  scale 0.955}
- {1166, coeffs 0.5 1  scale 1.0475}
- {51, coeffs 0 0.9865  scale 0.9875}
- {1160, coeffs 0.5 1  scale 1.0475}
- {46, coeffs 0 1.009  scale 1.01}
- {1155, coeffs 0.5 1  scale 1.0475}
- {58, coeffs -0.5 1  scale 0.955}
- {1167, coeffs 0.5 1  scale 1.0475}
- {139, coeffs -0.5 1  scale 0.9575}
+ {60, coeffs 0 1.009  scale 1.0125}
+ {1169, coeffs 0 1.018  scale 1.0225}
+ {140, coeffs 0 0.991  scale 0.99}
+ {59, coeffs 0 1.0045  scale 1.005}
+ {1168, coeffs 0 1.0135  scale 1.015}
+ {57, coeffs 0 0.991  scale 0.9925}
+ {1166, coeffs 0 1.009  scale 1.01}
+ {139, coeffs 0 1  scale 1.0025}
+ {58, coeffs 0 0.991  scale 0.9925}
+ {1167, coeffs 0 1.0135  scale 1.015}
+ {56, coeffs 0 1.009  scale 1.0125}
+ {1165, coeffs 0 1.018  scale 1.02}
+ {55, coeffs 0 0.9955  scale 0.995}
+ {1164, coeffs 0 1.009  scale 1.0125}
  {54, coeffs 0 0.991  scale 0.9925}
- {1163, coeffs 0.5 1  scale 1.0475}
- {1058, coeffs 0.5 1  scale 1.0475}
- {517, coeffs 0.5 1  scale 1.0475}
- {1056, coeffs 0.5 1  scale 1.0475}
- {515, coeffs 0.5 1  scale 1.0475}
- {280, coeffs 0.5 1  scale 1.0475}
- {1051, coeffs 0.5 1  scale 1.0475}
- {510, coeffs 0 0.9955  scale 0.995}
- {1071, coeffs 0 0.9955  scale 0.9975}
- {530, coeffs 0 1.0135  scale 1.015}
- {1057, coeffs 0.5 1  scale 1.0475}
- {516, coeffs 0.5 1  scale 1.0475}
- {1055, coeffs 0.5 1  scale 1.0475}
- {514, coeffs 0.5 1  scale 1.0475}
- {279, coeffs 0 1.009  scale 1.01}
- {1050, coeffs 0.5 1  scale 1.0475}
- {509, coeffs 0 1.0045  scale 1.0075}
+ {1163, coeffs 0 1.0135  scale 1.02}
+ {53, coeffs 0 1.009  scale 1.0125}
+ {1162, coeffs 0 1.0045  scale 1.01}
+ {1055, coeffs 0 1.018  scale 1.02}
+ {514, coeffs 0 1.009  scale 1.0125}
+ {1058, coeffs 0 1.0135  scale 1.015}
+ {517, coeffs 0 1.009  scale 1.01}
+ {1057, coeffs 0 1.0135  scale 1.015}
+ {516, coeffs 0 1.009  scale 1.01}
+ {1056, coeffs 0 1.0135  scale 1.015}
+ {515, coeffs 0 1.009  scale 1.01}
+ {283, coeffs 0 1.0045  scale 1.0075}
+ {1054, coeffs 0 1.0225  scale 1.025}
+ {513, coeffs 0 1.009  scale 1.01}
  {282, coeffs 0 0.9955  scale 0.9975}
- {1053, coeffs 0.5 1.009  scale 1.0475}
+ {1053, coeffs 0 1.027  scale 1.03}
  {512, coeffs 0 1.0045  scale 1.0075}
- {277, coeffs 0.5 1  scale 1.0475}
- {1048, coeffs 0.5 1  scale 1.0475}
- {507, coeffs 0.5 1  scale 1.0475}
- {1049, coeffs 0.5 1  scale 1.0475}
- {508, coeffs 0 1.009  scale 1.01}
- {269, coeffs 0 1.009  scale 1.01}
- {1040, coeffs 0.5 1  scale 1.0475}
- {499, coeffs 0 0.9865  scale 0.9875}
- {1079, coeffs 0 1.009  scale 1.01}
- {538, coeffs -0.5 1  scale 0.96}
- {249, coeffs 0 1.0045  scale 1.0075}
- {1020, coeffs 0 1.009  scale 1.01}
- {38, coeffs 0 1.0045  scale 1.005}
- {1147, coeffs 0 1.0045  scale 1.005}
- {244, coeffs 0 1.0045  scale 1.0075}
- {1015, coeffs -0.5 1  scale 0.955}
- {474, coeffs 0.5 1  scale 1.0475}
- {33, coeffs 0 1.009  scale 1.01}
- {1142, coeffs 0 1.0135  scale 1.015}
+ {281, coeffs 0 1  scale 1}
+ {1052, coeffs 0 1.0225  scale 1.025}
+ {511, coeffs 0 0.9955  scale 0.9975}
+ {280, coeffs 0 1.009  scale 1.01}
+ {1051, coeffs 0 1.0225  scale 1.025}
+ {510, coeffs 0 0.9955  scale 0.995}
+ {279, coeffs 0 1.009  scale 1.01}
+ {1050, coeffs 0 1.0225  scale 1.025}
+ {509, coeffs 0 1.0045  scale 1.0075}
+ {277, coeffs 0 1.009  scale 1.01}
+ {1048, coeffs 0 1.018  scale 1.02}
+ {507, coeffs 0 1  scale 1.005}
+ {278, coeffs 0 1.009  scale 1.0125}
+ {1049, coeffs 0 1.0225  scale 1.025}
+ {508, coeffs 0 1.0045  scale 1.0075}
+ {276, coeffs 0 1.0135  scale 1.015}
+ {1047, coeffs 0 1.0135  scale 1.015}
+ {506, coeffs 0 1.0135  scale 1.0175}
+ {275, coeffs 0 1.0135  scale 1.015}
+ {1046, coeffs 0 1.009  scale 1.01}
+ {505, coeffs 0 1.009  scale 1.01}
  {274, coeffs 0 1.0045  scale 1.0075}
- {1045, coeffs 0.5 1  scale 1.0475}
- {504, coeffs 0 1.009  scale 1.01}
- {289, coeffs 0.5 1  scale 1.0475}
- {1060, coeffs 0.5 1  scale 1.0475}
- {519, coeffs 0.5 1  scale 1.0475}
- {230, coeffs 0 0.991  scale 0.9925}
- {1001, coeffs 0 0.991  scale 0.995}
- {460, coeffs 0.5 1  scale 1.0475}
- {19, coeffs 0 0.982  scale 0.98}
- {1128, coeffs 0.5 1  scale 1.0475}
- {587, coeffs 0 1.009  scale 1.01}
+ {1045, coeffs 0 1.0045  scale 1.0075}
+ {504, coeffs 0 1.0045  scale 1.005}
+ {273, coeffs 0 1.009  scale 1.01}
+ {1044, coeffs 0 1.0045  scale 1.0075}
+ {503, coeffs 0 1.0045  scale 1.0075}
+ {270, coeffs 0 1.0045  scale 1.0075}
+ {1041, coeffs 0 1.018  scale 1.02}
+ {500, coeffs 0 0.991  scale 0.995}
+ {271, coeffs 0 1.009  scale 1.01}
+ {1042, coeffs 0 1.0135  scale 1.015}
+ {501, coeffs 0 0.9865  scale 0.9875}
+ {272, coeffs 0 1.0045  scale 1.0075}
+ {1043, coeffs 0 1.009  scale 1.01}
+ {502, coeffs 0 0.991  scale 0.9925}
+ {269, coeffs 0 1.009  scale 1.01}
+ {1040, coeffs 0 1.0135  scale 1.015}
+ {499, coeffs 0 0.9865  scale 0.99}
  {268, coeffs 0 1.0045  scale 1.0075}
- {1039, coeffs 0.5 1  scale 1.0475}
+ {1039, coeffs 0 1.0135  scale 1.015}
  {498, coeffs 0 0.982  scale 0.9825}
- {252, coeffs 0.5 1  scale 1.0475}
- {1023, coeffs 0 1.0045  scale 1.0075}
- {41, coeffs 0 1.0045  scale 1.005}
- {1150, coeffs 0 1.009  scale 1.01}
- {233, coeffs -0.5 1  scale 0.9575}
- {1004, coeffs 0 1.0045  scale 1.0075}
- {463, coeffs 0.5 1  scale 1.0475}
- {22, coeffs -0.5 1  scale 0.955}
- {1131, coeffs 0.5 1  scale 1.0475}
- {590, coeffs 0.5 1  scale 1.0475}
+ {267, coeffs 0 1  scale 1.0025}
+ {1038, coeffs 0 1.009  scale 1.01}
+ {497, coeffs 0 0.9865  scale 0.9875}
+ {266, coeffs 0 1.0045  scale 1.0075}
+ {1037, coeffs 0 1.0045  scale 1.0075}
+ {496, coeffs 0 0.9955  scale 1}
+ {265, coeffs 0 1.0045  scale 1.0075}
+ {1036, coeffs 0 1.0045  scale 1.005}
+ {495, coeffs 0 1  scale 1.0025}
+ {250, coeffs 0 1.009  scale 1.01}
+ {1021, coeffs 0 1.0045  scale 1.005}
  {239, coeffs 0 1.0045  scale 1.005}
  {1010, coeffs 0 0.9955  scale 1}
  {469, coeffs 0 0.9955  scale 0.995}
- {28, coeffs -0.5 1  scale 0.95}
- {1137, coeffs 0.5 0.9865  scale 1.0375}
- {596, coeffs 0.5 1  scale 1.0475}
- {253, coeffs 0 1.009  scale 1.01}
- {1024, coeffs 0 1.0045  scale 1.0075}
- {42, coeffs 0 1.009  scale 1.01}
- {1151, coeffs 0 1.009  scale 1.01}
- {251, coeffs 0 1.009  scale 1.01}
- {1022, coeffs 0 1.009  scale 1.01}
- {40, coeffs 0 0.9955  scale 0.9975}
- {1149, coeffs 0 1.0045  scale 1.005}
- {264, coeffs 0 1.0045  scale 1.005}
- {1035, coeffs 0 1.0045  scale 1.0075}
- {53, coeffs 0 1.009  scale 1.0125}
- {1162, coeffs 0.5 0.9865  scale 1.04}
- {263, coeffs 0 1.0045  scale 1.0075}
- {1034, coeffs 0 1.0045  scale 1.005}
- {52, coeffs 0 0.9955  scale 0.995}
- {1161, coeffs 0.5 0.9955  scale 1.0475}
- {250, coeffs 0 1.009  scale 1.01}
- {1021, coeffs 0 1.0045  scale 1.005}
- {237, coeffs 0 1.0045  scale 1.005}
- {1008, coeffs 0 1.0045  scale 1.0075}
- {467, coeffs 0.5 1  scale 1.0475}
- {26, coeffs 0 0.991  scale 0.9925}
- {1135, coeffs 0.5 1  scale 1.0475}
- {594, coeffs 0.5 1  scale 1.0475}
- {266, coeffs 0 1.009  scale 1.0125}
- {1037, coeffs 0 1.0045  scale 1.0075}
- {496, coeffs 0 0.9955  scale 1}
- {236, coeffs 0 1.0045  scale 1.0075}
- {1007, coeffs 0.5 0.982  scale 1.0325}
- {466, coeffs 0.5 1  scale 1.0475}
- {25, coeffs -0.5 1  scale 0.955}
- {1134, coeffs 0.5 1  scale 1.0475}
- {593, coeffs 0.5 1  scale 1.0475}
- {265, coeffs 0 1.0045  scale 1.0075}
- {1036, coeffs 0 1.009  scale 1.01}
- {495, coeffs -0.5 1  scale 0.9575}
- {262, coeffs 0 1.009  scale 1.01}
- {1033, coeffs -0.5 1  scale 0.9575}
- {240, coeffs -8.5 1.7965  scale 0.955}
+ {28, coeffs 0 0.9955  scale 0.9825}
+ {1137, coeffs 0 1.0045  scale 1.0075}
+ {596, coeffs 0 1.009  scale 1.01}
+ {240, coeffs -18 1.8775  scale 0.95}
  {1011, coeffs 0 0.9955  scale 0.9975}
  {470, coeffs 0 0.9955  scale 0.995}
- {29, coeffs -0.5 1.0135  scale 0.97}
- {1138, coeffs 0.5 1  scale 1.0475}
- {597, coeffs 0.5 1  scale 1.0475}
- {260, coeffs 0 1.0045  scale 1.0075}
- {1031, coeffs 0 1.0045  scale 1.0075}
- {49, coeffs 0.5 1  scale 1.0475}
- {1158, coeffs 0.5 1  scale 1.0475}
- {231, coeffs 0 0.9955  scale 1}
- {1002, coeffs 0 0.991  scale 0.995}
- {461, coeffs 0.5 1  scale 1.0475}
- {20, coeffs -0.5 1  scale 0.955}
- {1129, coeffs 0.5 1  scale 1.0475}
- {588, coeffs 0 1.009  scale 1.01}
- {1062, coeffs 0.5 1  scale 1.0475}
+ {29, coeffs 0 0.991  scale 0.9925}
+ {1138, coeffs 0 1.009  scale 1.0125}
+ {597, coeffs 0 1.009  scale 1.0125}
+ {238, coeffs 0 1.009  scale 1.01}
+ {1009, coeffs 0 1.0045  scale 1.0075}
+ {468, coeffs 0 1.009  scale 1.0125}
+ {1148, coeffs 0 1.0045  scale 1.0075}
+ {120, coeffs 1 0  scale 1}
+ {27, coeffs 0 1.0045  scale 1.005}
+ {1136, coeffs 0 1.0045  scale 1.0075}
+ {595, coeffs 0 1.0225  scale 1.025}
+ {236, coeffs 0 1.0045  scale 1.0075}
+ {1007, coeffs 0 0.9955  scale 1.0025}
+ {466, coeffs 0 1.009  scale 1.0125}
+ {25, coeffs 0 1  scale 1}
+ {1134, coeffs 0 1.009  scale 1.0125}
+ {593, coeffs 0 1.0225  scale 1.025}
+ {263, coeffs 0 1.0045  scale 1.0075}
+ {1034, coeffs 0 1.0045  scale 1.0075}
+ {52, coeffs 0 0.9955  scale 0.9975}
+ {1161, coeffs 0 1.009  scale 1.0125}
+ {237, coeffs 0 1.0045  scale 1.005}
+ {1008, coeffs 0 1.0045  scale 1.0075}
+ {467, coeffs 0 1.0135  scale 1.015}
+ {26, coeffs 0 0.991  scale 0.9925}
+ {1135, coeffs 0 1.0045  scale 1.0075}
+ {594, coeffs 0 1  scale 1.005}
+ {1065, coeffs 0 1.009  scale 1.01}
+ {235, coeffs 0 0.9955  scale 0.9975}
+ {1006, coeffs 0 1.0045  scale 1.0075}
+ {465, coeffs 0 1  scale 1.005}
+ {264, coeffs 0 1.0045  scale 1.005}
+ {1035, coeffs 0 1.0045  scale 1.0075}
+ {1062, coeffs 0 1.009  scale 1.01}
  {232, coeffs 0 0.9955  scale 0.995}
- {1003, coeffs 0 1.0045  scale 1.0075}
- {462, coeffs 0.5 1  scale 1.0475}
- {21, coeffs -0.5 1  scale 0.955}
- {1130, coeffs 0.5 1  scale 1.0475}
+ {1003, coeffs 0 0.9955  scale 0.9975}
+ {462, coeffs 0 1.0135  scale 1.015}
+ {21, coeffs 0 1  scale 1.005}
+ {1130, coeffs 0 1.018  scale 1.02}
  {589, coeffs 0 1.0135  scale 1.015}
  {261, coeffs 0 1.0045  scale 1.0075}
  {1032, coeffs 0 1.0045  scale 1.0075}
- {50, coeffs 0 1.009  scale 1.0125}
- {1159, coeffs 0.5 1  scale 1.0475}
- {272, coeffs 0 1.0045  scale 1.0075}
- {1043, coeffs 0.5 1  scale 1.0475}
- {502, coeffs -0.5 1  scale 0.955}
- {1073, coeffs 0 1.0045  scale 1.0075}
- {532, coeffs 0.5 1  scale 1.0475}
- {243, coeffs 0 1.0045  scale 1.005}
- {1014, coeffs -0.5 1  scale 0.955}
- {473, coeffs 0.5 1  scale 1.0475}
- {32, coeffs 0 1.009  scale 1.01}
- {1141, coeffs 0 1.009  scale 1.01}
- {246, coeffs 0 1.0045  scale 1.005}
- {1017, coeffs 0 1.0045  scale 1.005}
- {275, coeffs 0.5 1  scale 1.0475}
- {1046, coeffs 0.5 1  scale 1.0475}
- {505, coeffs 0 1.009  scale 1.01}
- {1064, coeffs 0.5 1  scale 1.0475}
- {234, coeffs -0.5 1  scale 0.955}
+ {50, coeffs 0 1.0045  scale 1.0075}
+ {1159, coeffs 0 1.009  scale 1.0125}
+ {1061, coeffs 0 1.0045  scale 1.0075}
+ {231, coeffs 0 0.9955  scale 1}
+ {1002, coeffs 0 0.991  scale 0.995}
+ {461, coeffs 0 1.018  scale 1.02}
+ {20, coeffs 0 0.991  scale 0.99}
+ {1129, coeffs 0 1.0225  scale 1.025}
+ {588, coeffs 0 1.009  scale 1.01}
+ {260, coeffs 0 1.0045  scale 1.0075}
+ {1031, coeffs 0 1.0045  scale 1.0075}
+ {49, coeffs 0 1.009  scale 1.0125}
+ {1158, coeffs 0 1.009  scale 1.0125}
+ {1059, coeffs 0 1.009  scale 1.01}
+ {229, coeffs 0 0.9955  scale 0.9975}
+ {1000, coeffs 0 0.9865  scale 0.9925}
+ {459, coeffs 0 1.0045  scale 1.0075}
+ {18, coeffs 0 0.9865  scale 0.9875}
+ {1127, coeffs 0 1.018  scale 1.02}
+ {586, coeffs 0 1.0045  scale 1.005}
+ {1060, coeffs 0 1.0135  scale 1.015}
+ {519, coeffs 0 1.0135  scale 1.015}
+ {230, coeffs 0 0.991  scale 0.9925}
+ {1001, coeffs 0 0.991  scale 0.995}
+ {460, coeffs 0 1.009  scale 1.01}
+ {19, coeffs 0 0.982  scale 0.98}
+ {1128, coeffs 0 1.0225  scale 1.025}
+ {587, coeffs 0 1.009  scale 1.01}
+ {233, coeffs 0 1  scale 1.005}
+ {1004, coeffs 0 0.9955  scale 1}
+ {463, coeffs 0 1.0225  scale 1.025}
+ {22, coeffs 0 0.9955  scale 0.995}
+ {1131, coeffs 0 1.0225  scale 1.0275}
+ {590, coeffs 0 1.0135  scale 1.015}
+ {262, coeffs 0 1.009  scale 1.01}
+ {1033, coeffs 0 1  scale 1.005}
+ {51, coeffs 0 0.9865  scale 0.9875}
+ {1160, coeffs 0 1.009  scale 1.0125}
+ {1064, coeffs 0 1.0045  scale 1.0075}
+ {234, coeffs 0 1  scale 1.005}
  {1005, coeffs 0 1.0045  scale 1.0075}
- {464, coeffs 0.5 1  scale 1.0475}
- {1148, coeffs 0 1.0045  scale 1.0075}
- {120, coeffs 1 0  scale 1}
- {238, coeffs 0 1.009  scale 1.01}
- {1009, coeffs 0 1.0045  scale 1.0075}
- {468, coeffs 0 1.0045  scale 1.0075}
- {27, coeffs 0 1.0045  scale 1.005}
- {1136, coeffs 0.5 1  scale 1.0475}
- {595, coeffs 0.5 1  scale 1.0475}
- {1078, coeffs 0.5 1  scale 1.0475}
+ {464, coeffs 0 1.018  scale 1.02}
  {248, coeffs 0 1.009  scale 1.01}
- {1019, coeffs 0 1.0045  scale 1.005}
+ {1019, coeffs 0 1.009  scale 1.01}
  {37, coeffs 0 0.9955  scale 0.9975}
  {1146, coeffs 0 1.0045  scale 1.0075}
- {267, coeffs 0.5 1  scale 1.0475}
- {1038, coeffs 0.5 1  scale 1.0475}
- {497, coeffs -0.5 1  scale 0.955}
- {56, coeffs -0.5 1  scale 0.955}
- {1165, coeffs 0.5 1  scale 1.0475}
- {1068, coeffs 0 1.0045  scale 1.0075}
- {527, coeffs -0.5 1.0135  scale 0.97}
- {273, coeffs 0.5 1  scale 1.0475}
- {1044, coeffs 0.5 1  scale 1.0475}
- {503, coeffs 0 1.0045  scale 1.0075}
+ {243, coeffs 0 1.0045  scale 1.005}
+ {1014, coeffs 0 0.991  scale 0.995}
+ {473, coeffs 0 1.009  scale 1.01}
+ {32, coeffs 0 1.009  scale 1.01}
+ {1141, coeffs 0 1.009  scale 1.01}
+ {244, coeffs 0 1.0045  scale 1.0075}
+ {1015, coeffs 0 0.9955  scale 0.9975}
+ {474, coeffs 0 1.009  scale 1.01}
+ {33, coeffs 0 1.009  scale 1.01}
+ {1142, coeffs 0 1.0135  scale 1.015}
+ {246, coeffs 0 1.0045  scale 1.005}
+ {1017, coeffs 0 1.0045  scale 1.005}
+ {245, coeffs 0 1.0045  scale 1.0075}
+ {1016, coeffs 0 0.9955  scale 0.9975}
+ {475, coeffs 0 1.0135  scale 1.015}
+ {34, coeffs 0 1.0045  scale 1.0075}
+ {1143, coeffs 0 1.0135  scale 1.015}
+ {247, coeffs 0 1  scale 1}
+ {1018, coeffs 0 1.0045  scale 1.005}
+ {1145, coeffs 0 1.009  scale 1.01}
+ {249, coeffs 0 1.0045  scale 1.0075}
+ {1020, coeffs 0 1.009  scale 1.01}
+ {38, coeffs 0 1.0045  scale 1.005}
+ {1147, coeffs 0 1.0045  scale 1.0075}
+ {251, coeffs 0 1.009  scale 1.01}
+ {1022, coeffs 0 1.009  scale 1.01}
+ {40, coeffs 0 0.9955  scale 0.995}
+ {1149, coeffs 0 1.0045  scale 1.005}
+ {253, coeffs 0 1.009  scale 1.01}
+ {1024, coeffs 0 1.0045  scale 1.0075}
+ {42, coeffs 0 1.0045  scale 1.0075}
+ {1151, coeffs 0 1.009  scale 1.01}
+ {252, coeffs 0 1.009  scale 1.01}
+ {1023, coeffs 0 1.0045  scale 1.0075}
+ {41, coeffs 0 1.0045  scale 1.005}
+ {1150, coeffs 0 1.009  scale 1.01}
  {255, coeffs 0 1.0045  scale 1.005}
  {1026, coeffs 0 0.9955  scale 0.9975}
  {44, coeffs 0 1.0045  scale 1.005}
- {1153, coeffs 0.5 1  scale 1.0475}
- {247, coeffs 0.5 1  scale 1.0475}
- {1018, coeffs 0 1.0045  scale 1.005}
- {1145, coeffs 0 1.009  scale 1.01}
- {229, coeffs 0 0.9955  scale 0.9975}
- {1000, coeffs -0.5 1  scale 0.96}
- {459, coeffs 0 1.0045  scale 1.0075}
- {18, coeffs 0 0.9865  scale 0.9875}
- {1127, coeffs 0.5 1  scale 1.0475}
- {586, coeffs 0 1.0045  scale 1.005}
- {245, coeffs 0 1.0045  scale 1.0075}
- {1016, coeffs 0 0.9955  scale 0.9975}
- {475, coeffs 0.5 1  scale 1.0475}
- {34, coeffs 0 0.9955  scale 0.9975}
- {1143, coeffs 0.5 1  scale 1.0475}
- {271, coeffs 0 1.0045  scale 1.0075}
- {1042, coeffs 0.5 1  scale 1.0475}
- {501, coeffs -0.5 1  scale 0.955}
- {270, coeffs 0 1.0045  scale 1.0075}
- {1041, coeffs 0.5 1  scale 1.0475}
- {500, coeffs 0 0.9955  scale 1}
- {140, coeffs -0.5 1  scale 0.9525}
- {59, coeffs 0 1.0045  scale 1.005}
- {1168, coeffs 0.5 1  scale 1.0475}
- {1065, coeffs 0.5 1  scale 1.0475}
- {235, coeffs 0.5 0.982  scale 1.0325}
- {1006, coeffs 0 0.9955  scale 1}
- {465, coeffs 0.5 1  scale 1.0475}
- {1085, coeffs 0.5 1  scale 1.0475}
- {544, coeffs 0 0.9955  scale 0.9975}
- {1061, coeffs 0.5 1  scale 1.0475}
- {1082, coeffs 0 0.9955  scale 0.9975}
- {541, coeffs -0.5 1  scale 0.955}
- {276, coeffs 0.5 1  scale 1.0475}
- {1047, coeffs 0.5 1  scale 1.0475}
- {506, coeffs 0.5 1  scale 1.0475}
- {281, coeffs 0.5 1  scale 1.0475}
- {1052, coeffs 0.5 1  scale 1.0475}
- {511, coeffs 0 0.9955  scale 0.9975}
- {1077, coeffs 0 1.009  scale 1.01}
- {536, coeffs 0 0.9955  scale 0.9975}
- {1054, coeffs 0.5 1  scale 1.0475}
- {513, coeffs 0 1.009  scale 1.01}
- {1066, coeffs 0.5 1  scale 1.0475}
- {525, coeffs -0.5 1  scale 0.9575}
- {288, coeffs 0 1.009  scale 1.01}
- {1059, coeffs 0.5 1  scale 1.0475}
- {1087, coeffs 0.5 1  scale 1.0475}
- {546, coeffs 0 0.9955  scale 1}
- {1080, coeffs 0 1.0045  scale 1.0075}
- {1107, coeffs 0.5 1  scale 1.0475}
- {1084, coeffs 0 1.0045  scale 1.0075}
- {543, coeffs -0.5 1  scale 0.955}
+ {1153, coeffs 0 1.0045  scale 1.0075}
+ {1066, coeffs 0 1  scale 0.995}
+ {525, coeffs 0 1  scale 1.0025}
+ {1067, coeffs 0 1.0045  scale 1.0075}
+ {526, coeffs 0 0.9955  scale 0.9975}
+ {1070, coeffs 0 0.9955  scale 0.9975}
+ {1068, coeffs 0 0.9955  scale 1}
+ {527, coeffs 0 1.009  scale 1.0125}
+ {1071, coeffs 0 0.9955  scale 0.9975}
+ {530, coeffs 0 1.0135  scale 1.015}
+ {1073, coeffs 0 1.0045  scale 1.0075}
+ {532, coeffs 0 1.0135  scale 1.015}
  {1075, coeffs 0 1.0045  scale 1.0075}
  {534, coeffs 0 1.009  scale 1.01}
- {1067, coeffs 0 1.0045  scale 1.005}
- {526, coeffs 0 0.9955  scale 0.9975}
- {1076, coeffs 0.5 1  scale 1.0475}
- {1108, coeffs 0 1.0045  scale 1.0075}
- {1070, coeffs 0 0.9955  scale 0.9975}
- {1089, coeffs 0.5 1  scale 1.0475}
+ {1076, coeffs 0 1.0135  scale 1.015}
+ {1077, coeffs 0 1.009  scale 1.01}
+ {536, coeffs 0 0.9955  scale 1}
+ {1078, coeffs 0 1.009  scale 1.01}
+ {1079, coeffs 0 1.009  scale 1.01}
+ {538, coeffs 0 0.9865  scale 1.02}
+ {1080, coeffs 0 1.0045  scale 1.0075}
+ {1082, coeffs 0 0.9955  scale 0.9975}
+ {541, coeffs 0 0.9865  scale 0.9875}
+ {1084, coeffs 0 1.0045  scale 1.0075}
+ {543, coeffs 0 0.9865  scale 0.9875}
+ {1087, coeffs 0 1.009  scale 1.01}
+ {546, coeffs 0 0.9955  scale 1}
+ {1085, coeffs 0 1.009  scale 1.01}
+ {544, coeffs 0 0.9955  scale 0.9975}
+ {1096, coeffs 0 1.0045  scale 1.0075}
+ {555, coeffs 0 0.9955  scale 1.0025}
+ {1089, coeffs 0 1.0045  scale 1.0075}
  {548, coeffs 0 0.9955  scale 0.9975}
+ {1107, coeffs 0 1  scale 1.0025}
  {1109, coeffs 0 1.0045  scale 1.0075}
- {1096, coeffs 0 1.0045  scale 1.005}
- {555, coeffs 0.5 1  scale 1.0475}
- {3, coeffs -0.5 1  scale 0.955}
- {1112, coeffs 0.5 1  scale 1.0475}
- {571, coeffs 0.5 1  scale 1.0475}
- {4, coeffs 0 0.9955  scale 0.995}
- {1113, coeffs 0.5 1  scale 1.0475}
- {572, coeffs 0 1.0045  scale 1.0075}
- {5, coeffs -0.5 1  scale 0.955}
- {1114, coeffs 0.5 1  scale 1.0475}
- {573, coeffs 0.5 0.982  scale 1.0325}
- {6, coeffs 0 0.9955  scale 0.9975}
- {1115, coeffs 0.5 1  scale 1.0475}
- {574, coeffs 0 1.0045  scale 1.005}
+ {1110, coeffs 0 1.0045  scale 1.0075}
+ {569, coeffs 0 1.0135  scale 1.0175}
  {2, coeffs 0 0.9955  scale 0.995}
- {1111, coeffs 0.5 1  scale 1.0475}
- {570, coeffs 0 1.0135  scale 1.015}
- {15, coeffs -0.5 1  scale 0.955}
- {1124, coeffs 0.5 1  scale 1.0475}
- {583, coeffs 0.5 1  scale 1.0475}
+ {1111, coeffs 0 1.009  scale 1.01}
+ {570, coeffs 0 1.009  scale 1.01}
+ {3, coeffs 0 0.991  scale 0.9925}
+ {1112, coeffs 0 1.0135  scale 1.015}
+ {571, coeffs 0 1.0045  scale 1.0075}
+ {4, coeffs 0 0.9955  scale 0.995}
+ {1113, coeffs 0 1.018  scale 1.02}
+ {572, coeffs 0 1.0045  scale 1.0075}
+ {5, coeffs 0 0.9865  scale 0.985}
+ {1114, coeffs 0 1.018  scale 1.02}
+ {573, coeffs 0 0.9865  scale 0.99}
  {7, coeffs 0 0.9955  scale 0.995}
- {1116, coeffs 0.5 1  scale 1.0475}
- {575, coeffs 0.5 1  scale 1.0475}
+ {1116, coeffs 0 1.0225  scale 1.025}
+ {575, coeffs 0 1.0045  scale 1.0075}
+ {6, coeffs 0 0.9955  scale 0.9975}
+ {1115, coeffs 0 1.018  scale 1.02}
+ {574, coeffs 0 1.0045  scale 1.005}
  {8, coeffs 0 0.991  scale 0.99}
- {1117, coeffs 0.5 1  scale 1.0475}
- {576, coeffs 0.5 1  scale 1.0475}
+ {1117, coeffs 0 1.018  scale 1.02}
+ {576, coeffs 0 1.0135  scale 1.015}
+ {1108, coeffs 0 1.0045  scale 1.0075}
  {9, coeffs 0 0.982  scale 0.98}
- {1118, coeffs 0.5 1  scale 1.0475}
- {577, coeffs 0.5 1  scale 1.0475}
- {13, coeffs 0 0.991  scale 0.99}
- {1122, coeffs 0 1.0045  scale 1.0075}
- {581, coeffs 0.5 1  scale 1.0475}
+ {1118, coeffs 0 1.009  scale 1.01}
+ {577, coeffs 0 1.018  scale 1.02}
  {10, coeffs 0 0.991  scale 0.99}
  {1119, coeffs 0 1.0045  scale 1.005}
- {578, coeffs 0.5 1  scale 1.0475}
- {17, coeffs -0.5 1  scale 0.9575}
- {1126, coeffs 0.5 1  scale 1.0475}
- {585, coeffs 0 1.009  scale 1.01}
+ {578, coeffs 0 1.0135  scale 1.015}
+ {12, coeffs 0 0.982  scale 0.9825}
+ {1121, coeffs 0 1.0045  scale 1.01}
+ {580, coeffs 0 1.018  scale 1.02}
+ {13, coeffs 0 0.991  scale 0.9925}
+ {1122, coeffs 0 1.0045  scale 1.005}
+ {581, coeffs 0 1.0135  scale 1.0175}
  {14, coeffs 0 0.991  scale 0.99}
- {1123, coeffs 0.5 1  scale 1.0475}
- {582, coeffs 0.5 1  scale 1.0475}
- {30, coeffs 0 0.9955  scale 0.9975}
- {1139, coeffs 0 1.0045  scale 1.005}
- {598, coeffs 0.5 1  scale 1.0475}
- {12, coeffs -0.5 1  scale 0.955}
- {1121, coeffs -0.5 1  scale 0.955}
- {580, coeffs 0.5 1  scale 1.0475}
- {1110, coeffs 0 1.0045  scale 1.0075}
- {569, coeffs 0.5 1  scale 1.0475}
+ {1123, coeffs 0 1.009  scale 1.01}
+ {582, coeffs 0 1  scale 1.005}
+ {17, coeffs 0 1  scale 1.005}
+ {1126, coeffs 0 1.0135  scale 1.015}
+ {585, coeffs 0 1.009  scale 1.01}
  {16, coeffs 0 1.0045  scale 1.005}
- {1125, coeffs 0.5 1  scale 1.0475}
- {584, coeffs 0 1.0045  scale 1.0075}
- {48, coeffs 0 1.009  scale 1.01}
- {1157, coeffs 0.5 1  scale 1.0475}
- {45, coeffs 0 1.0045  scale 1.005}
- {1154, coeffs 0.5 1  scale 1.0475}
+ {1125, coeffs 0 1.0135  scale 1.015}
+ {584, coeffs 0 1.0045  scale 1.005}
+ {15, coeffs 0 0.9955  scale 0.9975}
+ {1124, coeffs 0 1.0135  scale 1.015}
+ {583, coeffs 0 1.0045  scale 1.0075}
+ {30, coeffs 0 0.9955  scale 1}
+ {1139, coeffs 0 1.0045  scale 1.005}
+ {598, coeffs 0 1.009  scale 1.01}
  {43, coeffs 0 0.9955  scale 0.9975}
- {1152, coeffs 0.5 1  scale 1.0475}
- {286, coeffs 0 1.009  scale 1.01}
- {292, coeffs 0 1.0045  scale 1.0075}
- {290, coeffs 0.5 1  scale 1.0475}
- {291, coeffs 0 1.009  scale 1.01}
- {283, coeffs 0.5 0.991  scale 1.04}
- {285, coeffs 0 1.009  scale 1.01}
- {278, coeffs 0.5 1  scale 1.0475}
- {293, coeffs 0.5 1  scale 1.0475}
+ {1152, coeffs 0 1.009  scale 1.01}
+ {48, coeffs 0 1.009  scale 1.01}
+ {1157, coeffs 0 1  scale 0.995}
+ {45, coeffs 0 1.0045  scale 1.005}
+ {1154, coeffs 0 1.009  scale 1.01}
+ {46, coeffs 0 1.009  scale 1.01}
+ {1155, coeffs 0 1.009  scale 1.01}
+ {47, coeffs 0 1.0045  scale 1.005}
+ {1156, coeffs 0 1.0135  scale 1.0175}
  {284, coeffs 0 1.009  scale 1.01}
- {298, coeffs 0 1.0045  scale 1.0075}
- {305, coeffs 0.5 1  scale 1.0475}
- {303, coeffs 0.5 1  scale 1.0475}
- {302, coeffs 0.5 1  scale 1.0475}
- {297, coeffs 0 1.0045  scale 1.0075}
- {299, coeffs 0.5 0.9865  scale 1.0375}
- {300, coeffs 0.5 0.9865  scale 1.0375}
- {307, coeffs 0.5 1  scale 1.0475}
- {306, coeffs 0.5 1  scale 1.0475}
- {308, coeffs 0.5 1  scale 1.0475}
- {310, coeffs 0.5 1  scale 1.0475}
- {309, coeffs 0.5 1  scale 1.0475}
- {314, coeffs 0.5 1  scale 1.0475}
- {304, coeffs 0.5 1  scale 1.0475}
- {318, coeffs 0.5 1  scale 1.0475}
- {311, coeffs 0.5 1  scale 1.0475}
+ {285, coeffs 0 1.009  scale 1.01}
+ {286, coeffs 0 1.009  scale 1.01}
  {287, coeffs 0 1.009  scale 1.01}
- {316, coeffs 0.5 1  scale 1.0475}
- {301, coeffs 0.5 0.991  scale 1.0425}
- {319, coeffs 0.5 1  scale 1.0475}
- {335, coeffs 0.5 1  scale 1.04}
- {315, coeffs 0.5 1  scale 1.0475}
- {322, coeffs 0.5 1  scale 1.0475}
- {325, coeffs 0 0.991  scale 0.995}
- {320, coeffs 0.5 1  scale 1.0475}
- {321, coeffs 0.5 1  scale 1.0475}
- {329, coeffs 0.5 1  scale 1.0475}
- {312, coeffs 0.5 1  scale 1.0475}
- {313, coeffs 0.5 1  scale 1.0475}
- {317, coeffs 0.5 1  scale 1.0475}
- {326, coeffs 0 1  scale 1.0025}
- {331, coeffs 0.5 1  scale 1.0475}
- {324, coeffs 0.5 0.982  scale 1.0325}
- {327, coeffs 0.5 0.9865  scale 1.0375}
- {332, coeffs 0.5 1  scale 1.0475}
- {330, coeffs 0.5 1  scale 1.0475}
+ {288, coeffs 0 1.009  scale 1.01}
+ {290, coeffs 0 1.009  scale 1.01}
+ {291, coeffs 0 1.009  scale 1.01}
+ {292, coeffs 0 1.009  scale 1.01}
+ {293, coeffs 0 1.0045  scale 1.01}
+ {297, coeffs 0 0.9955  scale 1}
+ {298, coeffs 0 1.0045  scale 1.0075}
+ {289, coeffs 0 1.0045  scale 1.0075}
+ {300, coeffs 0 1.009  scale 1.0125}
+ {299, coeffs 0 0.9955  scale 1}
+ {301, coeffs 0 0.9955  scale 1}
+ {302, coeffs 0 0.9955  scale 1}
+ {303, coeffs 0 1.0045  scale 1.0075}
+ {304, coeffs 0 1.0045  scale 1.0075}
+ {305, coeffs 0 1.0045  scale 1.0075}
+ {306, coeffs 0 1.009  scale 1.0125}
+ {307, coeffs 0 1.0135  scale 1.0175}
+ {309, coeffs 0 1.009  scale 1.01}
+ {310, coeffs 0 1.009  scale 1.01}
+ {311, coeffs 0 1.009  scale 1.01}
+ {308, coeffs 0 1  scale 1.005}
+ {312, coeffs 0 1.009  scale 1.01}
+ {313, coeffs 0 1.0135  scale 1.015}
+ {314, coeffs 0 1.009  scale 1.01}
+ {316, coeffs 0 1.009  scale 1.01}
+ {315, coeffs 0 1.009  scale 1.0125}
+ {317, coeffs 0 1.0135  scale 1.015}
+ {318, coeffs 0 1.0225  scale 1.025}
+ {319, coeffs 0 1.0225  scale 1.025}
+ {320, coeffs 0 1.018  scale 1.02}
+ {322, coeffs 0 1.009  scale 1.0125}
  {323, coeffs 0 1.0045  scale 1.0075}
- {334, coeffs 0.5 1  scale 1.0475}
- {328, coeffs 0.5 0.991  scale 1.0425}
- {333, coeffs 0.5 1  scale 1.0475}
+ {324, coeffs 0 0.9955  scale 1}
+ {325, coeffs 0 0.991  scale 0.995}
+ {326, coeffs 0 1  scale 1.0025}
+ {327, coeffs 0 0.991  scale 0.9925}
+ {328, coeffs 0 1.0045  scale 1.0075}
+ {329, coeffs 0 1.0045  scale 1.0075}
+ {330, coeffs 0 1.0135  scale 1.015}
+ {321, coeffs 0 1.0135  scale 1.015}
+ {335, coeffs 0 0.9955  scale 0.995}
+ {331, coeffs 0 1.0135  scale 1.015}
+ {332, coeffs 0 1.0135  scale 1.015}
+ {333, coeffs 0 1.018  scale 1.02}
+ {334, coeffs 0 1.0135  scale 1.015}
+ {336, coeffs 0 1  scale 1}
  {337, coeffs 0 0.9955  scale 1}
- {336, coeffs 0.5 1  scale 1.0475}
- {340, coeffs -0.5 1  scale 0.955}
  {339, coeffs 0 0.9865  scale 0.985}
- {342, coeffs -0.5 1  scale 0.955}
- {344, coeffs -0.5 1  scale 0.9525}
- {346, coeffs -0.5 1  scale 0.955}
- {361, coeffs -0.5 1  scale 0.955}
- {362, coeffs -0.5 1  scale 0.955}
- {363, coeffs -0.5 1  scale 0.955}
- {343, coeffs -0.5 1  scale 0.955}
- {369, coeffs 0 0.982  scale 0.9825}
- {367, coeffs 0 0.982  scale 0.9825}
- {368, coeffs -0.5 1  scale 0.955}
- {373, coeffs -0.5 1  scale 0.955}
- {370, coeffs -0.5 1  scale 0.955}
- {365, coeffs -0.5 1  scale 0.955}
- {338, coeffs -0.5 1  scale 0.955}
- {377, coeffs -0.5 1  scale 0.955}
- {364, coeffs -0.5 1  scale 0.955}
- {341, coeffs -0.5 1  scale 0.9525}
- {381, coeffs -0.5 1  scale 0.9575}
- {374, coeffs -0.5 1  scale 0.96}
- {375, coeffs -0.5 1  scale 0.955}
- {371, coeffs 0 0.982  scale 0.9825}
- {372, coeffs -0.5 1  scale 0.955}
- {376, coeffs -0.5 1  scale 0.955}
+ {338, coeffs 0 0.991  scale 0.995}
+ {340, coeffs 0 0.9865  scale 0.9875}
+ {341, coeffs 0 0.9865  scale 0.985}
+ {342, coeffs 0 0.982  scale 0.9825}
+ {343, coeffs 0 0.982  scale 0.9825}
+ {344, coeffs 0 0.982  scale 0.98}
  {345, coeffs 0 0.9865  scale 0.9875}
- {379, coeffs -0.5 1  scale 0.955}
- {378, coeffs 0 0.9775  scale 0.98}
+ {346, coeffs 0 0.9865  scale 0.99}
+ {361, coeffs 0 1  scale 1.005}
+ {362, coeffs 0 0.982  scale 0.9825}
+ {363, coeffs 0 0.982  scale 0.9825}
+ {365, coeffs 0 0.982  scale 0.9825}
  {366, coeffs 0 0.982  scale 0.9825}
- {392, coeffs 0 0.982  scale 0.9825}
- {388, coeffs -0.5 1  scale 0.96}
- {395, coeffs -0.5 1  scale 0.955}
- {393, coeffs 0 0.9865  scale 0.99}
- {399, coeffs -0.5 1  scale 0.955}
- {398, coeffs -0.5 1  scale 0.955}
- {397, coeffs -0.5 1  scale 0.955}
- {391, coeffs 0 0.982  scale 0.9825}
- {402, coeffs -0.5 1  scale 0.955}
+ {367, coeffs 0 0.982  scale 0.9825}
+ {368, coeffs 0 0.9775  scale 0.9775}
+ {369, coeffs 0 0.982  scale 0.9825}
+ {370, coeffs 0 0.982  scale 0.9825}
+ {371, coeffs 0 0.982  scale 0.985}
+ {372, coeffs 0 0.9865  scale 0.9875}
+ {373, coeffs 0 0.9865  scale 0.9875}
+ {364, coeffs 0 0.9775  scale 0.9775}
+ {374, coeffs 0 1  scale 1}
+ {375, coeffs 0 0.9865  scale 0.9875}
+ {376, coeffs 0 0.982  scale 0.9825}
+ {377, coeffs 0 0.982  scale 0.985}
+ {378, coeffs 0 0.9775  scale 0.98}
+ {379, coeffs 0 0.982  scale 0.985}
  {380, coeffs 0 0.982  scale 0.9825}
- {389, coeffs -0.5 1  scale 0.955}
- {405, coeffs 0 0.9865  scale 0.9875}
- {400, coeffs -0.5 1  scale 0.9575}
- {390, coeffs 0 0.9865  scale 0.9875}
- {403, coeffs -0.5 1  scale 0.955}
- {401, coeffs -0.5 1  scale 0.955}
- {404, coeffs 0 0.9865  scale 0.9875}
- {410, coeffs -0.5 1  scale 0.955}
- {415, coeffs -0.5 1  scale 0.9525}
- {414, coeffs 0 1  scale 1.0025}
+ {381, coeffs 0 0.964  scale 0.9675}
+ {388, coeffs 0 1  scale 1.0025}
+ {389, coeffs 0 0.982  scale 0.985}
+ {390, coeffs 0 0.9865  scale 0.99}
+ {391, coeffs 0 0.982  scale 0.9825}
+ {392, coeffs 0 0.982  scale 0.985}
+ {393, coeffs 0 0.9865  scale 0.99}
  {394, coeffs 0 0.982  scale 0.9825}
- {408, coeffs -0.5 1  scale 0.955}
- {409, coeffs -0.5 1  scale 0.955}
- {396, coeffs -0.5 1  scale 0.955}
- {416, coeffs -0.5 1  scale 0.955}
- {406, coeffs -0.5 1  scale 0.955}
+ {395, coeffs 0 0.982  scale 0.9825}
+ {396, coeffs 0 0.991  scale 0.9925}
+ {397, coeffs 0 0.9865  scale 0.9875}
+ {398, coeffs 0 0.991  scale 0.9925}
+ {400, coeffs 0 1  scale 1.0025}
+ {401, coeffs 0 0.9865  scale 0.99}
+ {402, coeffs 0 0.991  scale 0.995}
+ {403, coeffs 0 0.9865  scale 0.9875}
+ {404, coeffs 0 0.9865  scale 0.9875}
+ {405, coeffs 0 0.9865  scale 0.9875}
+ {406, coeffs 0 0.9865  scale 0.99}
+ {407, coeffs 0 0.9865  scale 0.9875}
+ {408, coeffs 0 0.9865  scale 0.9875}
+ {399, coeffs 0 0.9865  scale 0.9875}
+ {409, coeffs 0 0.9865  scale 0.9875}
+ {410, coeffs 0 0.9865  scale 0.9875}
+ {414, coeffs 0 1  scale 1.0025}
+ {415, coeffs 0 0.9775  scale 0.975}
+ {416, coeffs 0 0.991  scale 0.9925}
+ {417, coeffs 0 0.991  scale 0.9925}
+ {418, coeffs 0 0.9865  scale 0.99}
+ {419, coeffs 0 0.9955  scale 0.9975}
  {420, coeffs 0 0.9955  scale 1}
- {426, coeffs 0.5 1  scale 1.0475}
- {417, coeffs -0.5 1  scale 0.955}
- {407, coeffs -0.5 1  scale 0.955}
- {418, coeffs -0.5 1  scale 0.955}
- {419, coeffs -0.5 1  scale 0.955}
- {421, coeffs 0.5 1  scale 1.0475}
- {425, coeffs 0.5 1  scale 1.0475}
- {424, coeffs 0.5 1  scale 1.0475}
- {423, coeffs 0.5 1  scale 1.0475}
+ {422, coeffs 0 1.0135  scale 1.015}
+ {421, coeffs 0 1.0135  scale 1.015}
+ {423, coeffs 0 1.0135  scale 1.015}
+ {424, coeffs 0 1.0225  scale 1.025}
+ {425, coeffs 0 1.027  scale 1.03}
+ {426, coeffs 0 1.0135  scale 1.015}
+ {427, coeffs 0 1.009  scale 1.01}
  {428, coeffs 0 1.0045  scale 1.0075}
- {422, coeffs 0.5 1  scale 1.0475}
- {427, coeffs 0.5 1  scale 1.0475}
- {431, coeffs 0 0.9955  scale 1}
- {433, coeffs 0 0.9955  scale 0.9975}
- {430, coeffs 0 0.991  scale 0.99}
- {434, coeffs 0 1.0045  scale 1.0075}
- {432, coeffs -0.5 1  scale 0.9525}
- {435, coeffs 0 1.0045  scale 1.005}
- {439, coeffs 0.5 1  scale 1.0475}
- {437, coeffs 0.5 1  scale 1.0475}
- {444, coeffs 0 1.0045  scale 1.0075}
- {445, coeffs 0 1.0045  scale 1.0075}
- {438, coeffs 0.5 1  scale 1.0475}
- {440, coeffs 0.5 1  scale 1.0475}
- {446, coeffs 0.5 1  scale 1.0475}
  {429, coeffs 0 1  scale 1.0025}
- {448, coeffs 0.5 1  scale 1.0475}
+ {430, coeffs 0 0.991  scale 0.99}
+ {431, coeffs 0 0.991  scale 0.995}
+ {433, coeffs 0 0.9955  scale 0.9975}
+ {434, coeffs 0 1.0045  scale 1.0075}
+ {435, coeffs 0 1.0045  scale 1.005}
+ {436, coeffs 0 1.009  scale 1.01}
+ {437, coeffs 0 1.0135  scale 1.015}
+ {438, coeffs 0 1.0135  scale 1.015}
+ {439, coeffs 0 1  scale 1.005}
+ {440, coeffs 0 1.009  scale 1.0125}
+ {432, coeffs 0 0.9955  scale 0.9925}
  {441, coeffs 0 1.009  scale 1.01}
- {453, coeffs 0.5 1  scale 1.0475}
- {447, coeffs 0.5 1  scale 1.0475}
- {449, coeffs 0.5 1  scale 1.0475}
+ {442, coeffs 0 1.0045  scale 1.0075}
+ {443, coeffs 0 0.991  scale 0.99}
+ {444, coeffs 0 0.9955  scale 0.9975}
+ {445, coeffs 0 1.0045  scale 1.0075}
+ {446, coeffs 0 1.009  scale 1.01}
+ {447, coeffs 0 1.0135  scale 1.015}
+ {448, coeffs 0 1.018  scale 1.02}
+ {449, coeffs 0 1.018  scale 1.02}
+ {451, coeffs 0 1.0225  scale 1.025}
+ {450, coeffs 0 1.0225  scale 1.025}
+ {452, coeffs 0 1.0225  scale 1.025}
+ {453, coeffs 0 1  scale 1.0025}
  {454, coeffs 0 1.009  scale 1.01}
  {455, coeffs 0 0.9955  scale 0.995}
- {451, coeffs 0.5 1  scale 1.0475}
- {436, coeffs 0 1.009  scale 1.01}
- {458, coeffs 0 0.9955  scale 0.9975}
- {442, coeffs 0 1.0045  scale 1.0075}
- {443, coeffs -0.5 1  scale 0.9525}
- {457, coeffs 0 0.991  scale 0.99}
- {472, coeffs 0 1.0045  scale 1.0075}
- {450, coeffs 0.5 1  scale 1.0475}
  {456, coeffs 0 0.9955  scale 0.995}
+ {457, coeffs 0 0.9955  scale 0.995}
+ {458, coeffs 0 0.9955  scale 0.9975}
  {471, coeffs 0 1.0045  scale 1.0075}
- {452, coeffs 0.5 1  scale 1.0475}
- {528, coeffs 0.5 1  scale 1.0475}
- {542, coeffs -0.5 1  scale 0.955}
+ {472, coeffs 0 1.0045  scale 1.0075}
+ {528, coeffs 0 1.009  scale 1.0125}
+ {531, coeffs 0 1.0135  scale 1.015}
+ {542, coeffs 0 0.991  scale 0.9925}
  {545, coeffs 0 0.991  scale 0.9925}
  {547, coeffs 0 0.9955  scale 1}
  {549, coeffs 0 1.0045  scale 1.0075}
  {550, coeffs 0 1.0045  scale 1.0075}
- {553, coeffs 0.5 0.982  scale 1.0325}
- {552, coeffs 0.5 0.9865  scale 1.0375}
- {554, coeffs 0.5 0.991  scale 1.045}
- {556, coeffs 0.5 1  scale 1.0475}
- {559, coeffs 0.5 1  scale 1.0475}
- {558, coeffs 0.5 1  scale 1.0475}
- {531, coeffs 0.5 1  scale 1.0475}
- {561, coeffs 0.5 1  scale 1.0475}
- {560, coeffs 0.5 1  scale 1.0475}
- {551, coeffs 0.5 1  scale 1.0475}
- {579, coeffs 0.5 1  scale 1.0475}
- {557, coeffs 0.5 0.991  scale 1.04}
- {591, coeffs 0.5 1  scale 1.0475}
- {563, coeffs 0 1.009  scale 1.01}
+ {551, coeffs 0 1.0045  scale 1.0075}
+ {553, coeffs 0 0.9955  scale 1}
+ {554, coeffs 0 0.991  scale 0.9975}
+ {556, coeffs 0 1  scale 1.0075}
+ {557, coeffs 0 1.0045  scale 1.0075}
+ {558, coeffs 0 1.009  scale 1.0125}
+ {559, coeffs 0 1.0045  scale 1.0075}
+ {552, coeffs 0 1.0045  scale 1.0075}
+ {560, coeffs 0 1.0045  scale 1.0075}
+ {561, coeffs 0 1.009  scale 1.01}
  {562, coeffs 0 1.009  scale 1.01}
- {592, coeffs 0.5 1  scale 1.0475}
- {599, coeffs 0 1.0045  scale 1.0075}
- {634, coeffs 0 0.9775  scale 0.975}
- {631, coeffs 0 0.991  scale 0.995}
- {635, coeffs 0 0.9685  scale 0.9675}
- {638, coeffs -0.5 1  scale 0.9525}
- {639, coeffs -0.5 1  scale 0.955}
- {632, coeffs 0 0.9865  scale 0.9875}
- {637, coeffs 0 0.9685  scale 0.9675}
- {642, coeffs -0.5 1  scale 0.955}
- {640, coeffs -0.5 1  scale 0.955}
- {644, coeffs 0 0.9955  scale 0.995}
- {643, coeffs 0 0.991  scale 0.99}
- {641, coeffs 0 0.9865  scale 0.9875}
- {636, coeffs 0 0.9685  scale 0.9675}
+ {563, coeffs 0 1.009  scale 1.01}
+ {579, coeffs 0 1.018  scale 1.02}
+ {591, coeffs 0 1.018  scale 1.02}
+ {592, coeffs 0 1.018  scale 1.02}
+ {599, coeffs 0 0.9955  scale 1}
  {630, coeffs 0 0.991  scale 0.9925}
- {647, coeffs 0 0.9955  scale 0.9975}
+ {631, coeffs 0 0.991  scale 0.995}
+ {632, coeffs 0 0.9865  scale 0.9875}
+ {634, coeffs 0 0.9775  scale 0.9775}
+ {635, coeffs 0 0.9685  scale 0.9675}
+ {636, coeffs 0 0.9685  scale 0.9675}
+ {637, coeffs 0 0.9685  scale 0.9675}
+ {638, coeffs 0 0.982  scale 0.98}
  {633, coeffs 0 0.991  scale 0.9925}
- {654, coeffs 0 0.9955  scale 0.9975}
- {645, coeffs 0 1.0045  scale 1.005}
- {656, coeffs 0 1.0045  scale 1.0075}
+ {639, coeffs 0 0.9775  scale 0.98}
+ {640, coeffs 0 0.982  scale 0.985}
+ {641, coeffs 0 0.9865  scale 0.9875}
+ {642, coeffs 0 0.9865  scale 0.9875}
+ {643, coeffs 0 0.991  scale 0.99}
+ {644, coeffs 0 0.9955  scale 0.995}
  {646, coeffs 0 1.0045  scale 1.0075}
- {658, coeffs 0.5 1  scale 1.0475}
+ {645, coeffs 0 1.0045  scale 1.005}
+ {647, coeffs 0 0.9955  scale 0.9975}
+ {649, coeffs 0 0.991  scale 0.99}
+ {650, coeffs 0 0.982  scale 0.98}
+ {651, coeffs 0 0.991  scale 0.995}
  {652, coeffs 0 0.991  scale 0.9925}
- {648, coeffs -0.5 1  scale 0.955}
- {650, coeffs -0.5 1  scale 0.955}
- {655, coeffs 0 1.0045  scale 1.0075}
+ {648, coeffs 0 0.9865  scale 0.9875}
+ {658, coeffs 0 1  scale 0.995}
+ {653, coeffs 0 0.991  scale 0.9925}
+ {654, coeffs 0 0.9955  scale 0.9975}
+ {655, coeffs 0 0.9955  scale 0.9975}
+ {656, coeffs 0 1.0045  scale 1.0075}
+ {657, coeffs 0 1.0135  scale 1.015}
  {659, coeffs 0 1.0045  scale 1.0075}
- {660, coeffs 0 0.9955  scale 1}
- {672, coeffs 0.5 1  scale 1.0425}
- {649, coeffs -0.5 1  scale 0.9525}
- {670, coeffs 0.5 1  scale 1.0475}

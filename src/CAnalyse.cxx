@@ -102,6 +102,55 @@ CalibMap loadCalibFile(const std::string& filename) {
     return result;
 }
 
+// ---------- Paramètres de résolution par PARIS Pour la déconvolution----------
+struct ResParams { double resA; double resPower; };
+
+// Tes valeurs (resA, resPower)
+static const std::map<std::string, ResParams> kParisRes = {
+  {"PARIS50",  {1.12145,  -0.441244}},
+  {"PARIS70",  {1.80973,  -0.550685}},
+  {"PARIS90",  {1.94868,  -0.564616}},
+  {"PARIS110", {2.11922,  -0.582147}},
+  {"PARIS130", {0.794233, -0.377311}},
+  {"PARIS235", {1.30727,  -0.477402}},
+  {"PARIS262", {1.76345,  -0.542769}},
+  {"PARIS278", {1.98579,  -0.559095}},
+  {"PARIS305", {1.9886,   -0.574021}}
+};
+
+// ---------- Génère des bords jusqu'à Emax ----------
+static std::vector<double>
+MakeEdgesUpToEmax(double resA, double resPower,
+                  double Emax_keV,
+                  double E0_keV   = 0.0,
+                  double E1_keV   = 100.0,
+                  double minStep  = 30.0,
+                  int    maxBins  = 200000)
+{
+  std::vector<double> edges;
+  edges.reserve(1024);
+  edges.push_back(E0_keV);
+  edges.push_back(E1_keV);
+
+  int safe = 0;
+  while (edges.back() < Emax_keV && safe++ < maxBins) {
+    const double prev = edges.back();
+    double step = resA * TMath::Power(prev, resPower) * prev; // = resA * prev^(resPower+1)
+    if (!std::isfinite(step) || step < minStep) step = minStep;
+    double next = prev + step;
+    if (next <= prev) next = prev + minStep; // ordre strict
+    edges.push_back(next);
+  }
+
+  // Ajuste le dernier bord si on dépasse Emax
+  if (!edges.empty()) {
+    if (edges.back() > Emax_keV) edges.back() = Emax_keV;
+    if (edges.size() >= 2 && edges[edges.size()-1] <= edges[edges.size()-2]) {
+      edges[edges.size()-1] = edges[edges.size()-2] + minStep;
+    }
+  }
+  return edges;
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //          Peak CORRELATED FUNCTIONS
@@ -4123,7 +4172,7 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
   
   //outputfilename += "CalibratedEnergyspectra_all.root";
   //outputfilename += "refCumulatedSpectrum.root";
-  outputfilename += "Check2Energyspectra_all.root";
+  outputfilename += "CheckEnergyspectra_all.root";
   TFile *outputfile = new TFile(outputfilename,"RECREATE");
 
 
@@ -5458,7 +5507,7 @@ std::vector<TH1F*> DrawTimeShifts_fissionevents_Calibrated(const CExperiment &ex
     std::cout << "ID extrait : " << cf252_id << std::endl;
     outputfilename+=cf252_id.c_str();
   }
-  outputfilename += "alignedCalibratedPARIS_CathodeResolution.root"; //When aligned
+  outputfilename += "CORRalignedCalibratedPARIS_CathodeResolution.root"; //When aligned
   //outputfilename += "CalibratedPARIS_CathodeResolution.root"; //When not aligned
   std::cout << "Output filename: " << outputfilename << std::endl;
   TFile* outputfile = new TFile(outputfilename, "RECREATE");
@@ -5805,7 +5854,7 @@ const std::string TimeAlignator (const CExperiment &experiment, Bool_t isCalibra
   label_Rawtype index;
   tm_Rawtype tm;
   Double_t enrj, enrj2;
-  Bool_t pileup = false;
+  Bool_t pileup;
   // First I count the number of PARIS
   int nbrparis=0;
   for(int d=0; d < (int)experiment.GetDetectors().size();d++)
@@ -5822,7 +5871,7 @@ const std::string TimeAlignator (const CExperiment &experiment, Bool_t isCalibra
   cout<<inputfilename<<endl;
   int it1 = inputfilename.Index(".root",5,1,inputfilename.kExact);
   TString outputfilename = inputfilename(0,it1);
-  outputfilename += "_TShift.root";
+  outputfilename += "_TShiftCORR.root";
   TFile *outputfile = new TFile(outputfilename, "RECREATE");
 
   // Declaration of the new TTree with the applied time shifts
@@ -5865,9 +5914,7 @@ const std::string TimeAlignator (const CExperiment &experiment, Bool_t isCalibra
     TTreeReaderValue<nrj_t> QDC1RV(myReader,"nrj");
     TTreeReaderValue<nrj_t> QDC2RV(myReader,"nrj2");
     TTreeReaderValue<branchtime_t> TMRV(myReader,"time");
-
-    
-    //TTreeReaderValue<pu_type> PURV(myReader,"pileup");
+    TTreeReaderValue<pu_type> PURV(myReader,"pileup");
 
     ULong64_t hitnumber = 0;
     //CHit *hit = new CHit(threadnbr++);
@@ -5879,11 +5926,13 @@ const std::string TimeAlignator (const CExperiment &experiment, Bool_t isCalibra
       nrj_t NRJ    = *QDC1RV;  // Short Gate
       nrj_t NRJ2   = *QDC2RV;  // Long Gate
       branchtime_t TIME = *TMRV;
+      pu_type PILEUP = *PURV;
       // Copy the read values into doubles if you like
       tm    = TIME;
       index = label;
       enrj  = NRJ;
       enrj2 = NRJ2;
+      pileup = PILEUP;
      
       //cout<<"2"<<endl;
       // I define a new hit a fill in the information
@@ -6330,7 +6379,8 @@ std::vector<TH1F*>  CheckTimeShifts(const CExperiment &experiment, Double_t delt
 void SortTreeByTime(const std::string& treename, const std::string& filename)
 {
     std::cout << "Sorting tree '" << treename << "' in file '" << filename << "'...\n";
-
+    //ROOT::EnableThreadSafety();
+    //ROOT::EnableImplicitMT(0);  // Disable ROOT's internal multithreading
     // Ouvrir le fichier en UPDATE
     TFile* file = TFile::Open(filename.c_str(), "UPDATE");
     if (!file || file->IsZombie()) { std::cerr << "Error opening file!\n"; return; }
@@ -6423,7 +6473,7 @@ void SortTreeByTime(const std::string& treename, const std::string& filename)
     std::cout << "✅ Done. Tree '" << treename << "' sorted by 'time'.\n";
     std::cout << "   New tree is saved in the same file: " << filename << "\n";
     std::cout << " Now let's check the time order of the tree.\n";
-    checktimeorder(filename, "DataTree");
+    //checktimeorder(filename, "DataTree");
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -6828,7 +6878,7 @@ void generate_dat_files_CORR(const std::string& CORR_file_path)
     // === Récupérer le numéro de run via regex ===
     int run_number = 0;
     std::smatch match;
-    std::regex pattern(R"(Cf252_(\d+))");
+    std::regex pattern(R"((?:Cf252_|run)(\d+))");
 
     if (std::regex_search(folder_name, match, pattern)) {
         std::string run_str = match[1];
@@ -6996,16 +7046,15 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   
   // Declaration of time spectra
 
-   std::vector<TH1F*> timespectra;
-   std::vector<TH1F*> NRJspectra;
-   std::vector<TH2F*> TimeNRJmatrix;
-   std::vector<TH2F*> ResbinTimeNRJmatrix;
-   std::vector<TH1F*> ResbinNRJspectra;
-  //  std::vector<TH1F*> multigammaspectra;
-  //  std::vector<TH1F*> multigammaspectra1;
-  //  std::vector<TH1F*> multigammaspectra2;
-  //  std::vector<TH1F*> multigammaspectra3;
-  //  std::vector<TH1F*> multigammaspectra4;
+  std::vector<TH1F*> timespectra;
+  std::vector<TH1F*> NRJspectra;
+  std::vector<TH2F*> TimeNRJmatrix;
+  std::vector<TH2F*> ResbinTimeNRJmatrix;
+  std::vector<TH1F*> ResbinNRJspectra;
+
+  // --- [AJOUT] callbacks globaux pour remplir/écrire (no-op si non initialisés)
+  std::function<void(double)> FillGammaCommonHists = [](double){};
+  std::function<void()>       WriteGammaCommonHists = [](){};
   constexpr int MAX_MULT = 14; // on va de 0 à 20 inclus
   std::array<std::vector<TH1F*>, MAX_MULT + 1> multigammaspectraM; // multigammaspectraM[m] = vector<TH1F*> (par détecteur)
    
@@ -7180,8 +7229,11 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
     TH1F* ring_multiplicity = new TH1F("TotalMultiplicity",
                                     "Total Neutron Multiplicity ;Multiplicity;Counts",
                                     21, 0, 21);
+    TH1F* background_multiplicity = new TH1F("BackgroundMultiplicity",
+                                    "Total Background Neutron Multiplicity ;Multiplicity;Counts",
+                                    21, 0, 21);
 
-    TH2F* lastneutron = new TH2F("Max Prompt Neutron Detection Time in TETRA for each Neutron Multiplicity", "Multiplicity; Time since fission (#mus)", 21,0,21,neutronwindow/100.,0,neutronwindow/1000.);
+    TH2F* lastneutron = new TH2F("Max Prompt Neutron Detection Time in TETRA for each Neutron Multiplicity", "Multiplicity; Time since fission (#ns)", 21,0,21,neutronwindow/100.,0,neutronwindow/1000.);
 
     TH1F* fissiongap = new TH1F("Time between 2 fisions", "time (us)", 100000, 0, 10000);
     TH1F* neutroncathodegap = new TH1F("Time between 2 cathodes in the neutron window", "time (us)", 10000, 0, 10000);
@@ -7206,6 +7258,105 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   }
   std::cout << FOREGRN << "correction parameters loaded "<< std::endl;
 
+  // ===== [AJOUT] — 10+ histogrammes "comme Cfspectrum.cpp" (et 2 seeds en plus) =====
+  #include "../include/binedge_andreas.hpp" // expose BIN_EDGES_KEV
+
+  // Déclarer des maps pour garder les pointeurs (accessibles plus bas pour Fill & Write)
+  std::map<std::string, TH1F*> hGammaParis100; // seed 100 keV
+  std::map<std::string, TH1F*> hGammaParis11;  // seed 11 keV
+  std::map<std::string, TH1F*> hGammaParis2;   // seed 2 keV
+  std::map<std::string, TH1F*> hGammaParisRef;  // ref per PARIS (binning = BIN_EDGES_KEV)
+
+  if (BIN_EDGES_KEV.size() >= 2 && std::is_sorted(BIN_EDGES_KEV.begin(), BIN_EDGES_KEV.end())) {
+    const int nbins_var_ref   = static_cast<int>(BIN_EDGES_KEV.size()) - 1;
+    const double Emax_ref_keV = BIN_EDGES_KEV.back();
+
+    
+
+    // 1) 4 histos PARIS (binning par résolution) pour CHAQUE PARIS (seeds 100, 11, 2 keV)
+    for (const auto& kv : kParisRes) {
+      const std::string& name = kv.first;
+      const auto& rp = kv.second;
+
+      std::vector<double> edges_100 = MakeEdgesUpToEmax(rp.resA, rp.resPower, Emax_ref_keV,
+                                                        /*E0*/0.0, /*E1*/100.0, /*minStep*/30.0);
+      std::vector<double> edges_11  = MakeEdgesUpToEmax(rp.resA, rp.resPower, Emax_ref_keV,
+                                                        /*E0*/0.0, /*E1*/11.0,  /*minStep*/30.0);
+      std::vector<double> edges_2   = MakeEdgesUpToEmax(rp.resA, rp.resPower, Emax_ref_keV,
+                                                        /*E0*/0.0, /*E1*/2.0,   /*minStep*/30.0);
+
+      // vérifs basiques
+      if (edges_100.size() < 2 || edges_11.size() < 2 || edges_2.size() < 2) {
+        ::Warning("FissionEventReconstruction", "Bords insuffisants pour %s", name.c_str());
+        continue;
+      }
+
+      TH1F* hRef = new TH1F(
+        (std::string("RefGamma_") + name).c_str(),
+        (std::string("Prompt gamma (keV) — ") + name + " (ref);E_{#gamma} [keV];Counts").c_str(),
+        nbins_var_ref, BIN_EDGES_KEV.data()
+      );
+      hGammaParisRef[name] = hRef;
+
+      TH1F* h100 = new TH1F(
+        (std::string("Res100keVGamma_") + name).c_str(),
+        (std::string("Prompt gamma (keV) — ") + name + " (seed 100 keV);E_{#gamma} [keV];Counts").c_str(),
+        static_cast<int>(edges_100.size()) - 1, edges_100.data()
+      );
+      h100->Sumw2(false);
+      hGammaParis100[name] = h100;
+
+      TH1F* h11 = new TH1F(
+        (std::string("Res11keVGamma_") + name).c_str(),
+        (std::string("Prompt gamma (keV) — ") + name + " (seed 11 keV);E_{#gamma} [keV];Counts").c_str(),
+        static_cast<int>(edges_11.size()) - 1, edges_11.data()
+      );
+      h11->Sumw2(false);
+      hGammaParis11[name] = h11;
+
+      TH1F* h2 = new TH1F(
+        (std::string("Res2keVGamma_") + name).c_str(),
+        (std::string("Prompt gamma (keV) — ") + name + " (seed 2 keV);E_{#gamma} [keV];Counts").c_str(),
+        static_cast<int>(edges_2.size()) - 1, edges_2.data()
+      );
+      h2->Sumw2(false);
+      hGammaParis2[name] = h2;
+    }
+
+    // === petite lambda pour remplir tout d'un coup ===
+    FillGammaCommonHists = [&](double E_keV){
+      for (auto& kv : hGammaParisRef) kv.second->Fill(E_keV);
+      for (auto& kv : hGammaParis100) kv.second->Fill(E_keV);
+      for (auto& kv : hGammaParis11)  kv.second->Fill(E_keV);
+      for (auto& kv : hGammaParis2)   kv.second->Fill(E_keV);
+    };
+
+    // === et une lambda pour écrire à la fin ===
+    WriteGammaCommonHists = [&](){
+      for (auto& kv : hGammaParisRef) if (kv.second) kv.second->Write();
+      for (auto& kv : hGammaParis100) if (kv.second) kv.second->Write();
+      for (auto& kv : hGammaParis11)  if (kv.second) kv.second->Write();
+      for (auto& kv : hGammaParis2)   if (kv.second) kv.second->Write();
+    };
+    // ASSIGNATION des callbacks utilisables partout plus bas :
+    FillGammaCommonHists = [&hGammaParisRef, &hGammaParis100, &hGammaParis11, &hGammaParis2](double E_keV) {
+      for (auto& kv : hGammaParisRef) kv.second->Fill(E_keV);
+      for (auto& kv : hGammaParis100) kv.second->Fill(E_keV);
+      for (auto& kv : hGammaParis11)  kv.second->Fill(E_keV);
+      for (auto& kv : hGammaParis2)   kv.second->Fill(E_keV);
+    };
+
+    WriteGammaCommonHists = [&hGammaParisRef, &hGammaParis100, &hGammaParis11, &hGammaParis2]() {
+      for (auto& kv : hGammaParisRef) if (kv.second) kv.second->Write();
+      for (auto& kv : hGammaParis100) if (kv.second) kv.second->Write();
+      for (auto& kv : hGammaParis11)  if (kv.second) kv.second->Write();
+      for (auto& kv : hGammaParis2)   if (kv.second) kv.second->Write();
+    };
+
+  } else {
+    ::Warning("FissionEventReconstruction", "BIN_EDGES_KEV invalide: pas assez de bords ou non trié.");
+  }
+
 
   TString outputfilename = experiment.GetFileDirectory_OUT();
   TString fullpath = experiment.GetDataFileNames().at(0);
@@ -7225,13 +7376,14 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   }
   else std::cerr << "Nom de fichier inattendu : " << filename << std::endl;
 
-  outputfilename += "REJmyevents.root";
+  outputfilename += "resolution_myevents.root";
   TFile* outputfile = new TFile(outputfilename, "RECREATE");
 
   std::cout << FOREGRN << "Output file: " << outputfilename << std::endl;
   //std::vector<TChain*> tab_chained_oak = experiment.GettheTChain();
   //TChain* chained_oak = tab_chained_oak.at(0);
   // to uncomment if I use many files at the same time or find a solution for it
+
   
   
   TFile* rootfile = TFile::Open(filename.c_str());
@@ -7268,11 +7420,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   if (experiment.GetisQDC2()) chained_oak->AddBranchToCache("nrj2");
   cout << FOREBLU << "Tree loaded" << endl;
 
-  // TTreeReader reader(chained_sequoia);
-  // TTreeReaderValue<label_Rawtype>r_label(reader, "label");
-  // TTreeReaderValue<tm_Rawtype>r_tm(reader, "time");
-  // TTreeReaderValue<Double_t>r_nrj(reader, "nrj");
-  // TTreeReaderValue<Double_t>r_nrj2(reader, "nrj2");
+
 
   
   TStopwatch timer2;
@@ -7333,16 +7481,17 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
     int hitexist = chained_oak->GetEntry(hitI);//chained_sequoia->GetEntry(hitI);
     //std::cout<< "Hit number: " << hitI << std::endl;
     if (hitexist <= 0 || PILEUP) continue;
-    label_Rawtype index = LABEL;//*r_label;
-    tm_Rawtype tm = TM;//*r_tm;
-    Double_t enrj = NRJ;//*r_nrj;
-    Double_t enrj2 = NRJ2;//*r_nrj2;
+    // label_Rawtype index = LABEL;//*r_label;
+    // tm_Rawtype tm = TM;//*r_tm;
+    // Double_t enrj = NRJ;//*r_nrj;
+    // Double_t enrj2 = NRJ2;//*r_nrj2;
+    // pileup_Rawtype pileup = PILEUP;//*r_pileup;
     //Double_t corrected_nrj = 0.;
     double hitTime = TM/ 1000.0; // Convert to ns
     if (hitTime < blockedUntil) continue; // Skip hits within the blocked period
 
     CHit* hit = new CHit(hitI);
-    hit->SetHit(LABEL, TM, NRJ, NRJ2, 1);
+    hit->SetHit(LABEL, TM, NRJ, NRJ2, PILEUP);
     if (g_coinc_windows->IsHitInside(hit)) {
       // if (LABEL >= 20 && LABEL <= 28) {
       //     //Double_t PSD = hit->PerformPARISPSD();
@@ -7354,7 +7503,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
       //std::cout<<"collection window size "<< g_coinc_windows->GetCollectionSize()<<endl;
     } 
     else {
-      if (g_coinc_windows->GetCollectionSize() > 4) {
+      if (g_coinc_windows->GetCollectionSize() > 6) {
         if (g_coinc_windows->CountLabel(1) > 0 ) { //avant c'était  g_coinc_windows->CountLabel(1) > 1
           // We have a cathode in the window, check for fission event
           fission = true;
@@ -7424,7 +7573,8 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                 if (i > (lookahead + g_coinc_windows->GetCollectionSize()) && label == 1){
                   // Trouvé une autre cathode dans la fenêtre neutronwindow
                   lastCathode = TM/1000.; //convertir de ps vers ns
-                  for (int p = i ; p< chainentries; p++){
+                  f_coinc_windows->Clear();
+                  for (ULong64_t p = i ; p< chainentries; p++){
                     chained_oak->GetEntry(p);
                     CHit* f_hit = new CHit(p);
                     f_hit->SetHit(LABEL, TM, NRJ, NRJ2,1);
@@ -7438,7 +7588,10 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                         delay_R1.clear(); delay_R2.clear(); delay_R3.clear(); delay_R4.clear();
                         blockedUntil = lastCathode + neutronwindow;
                       }
-                      else discard = false; blockedUntil = 0; // to avoid blocking if the second cathode is not a fission
+                      else {
+                        discard = false; 
+                        blockedUntil = 0.; // to avoid blocking if the second cathode is not a fission
+                      }
                       break; // sortir de la boucle
                     }
                   }
@@ -7472,11 +7625,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
             extracathode = 0; // Reset for the next fission event
             // ======= REMPLACEMENT DES 5 BLOCS (multigammaspectra, ...1, ...2, ...3, ...4) PAR =======
             // ======= UN SEUL BLOC UTILISANT multigammaspectraM[m] où m est la =======
-            // multiplicité mesurée via ring_multiplicity_storing[*]
-            int m = ring_multiplicity_sum;
             
-            if (m < 0) m = 0;
-            if (m > MAX_MULT) m = MAX_MULT; // on sature à 20
 
             // ======= Détection neutrons par ring =======
             if (!discard){
@@ -7490,7 +7639,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                 // on cherche les neutrons avant la cathode
                 double bckgnd_deltaT_ns = TMath::Abs(bckgnd_neutronTime - cathodeTime_bis) ; // ns
     
-                if (bckgnd_deltaT_ns < neutronwindow) { // within neutron window before cathode
+                if (bckgnd_deltaT_ns <= neutronwindow) { // within neutron window before cathode
                   if ( label == 31 || label == 32) {
                     bckgnd++;
                   } 
@@ -7508,7 +7657,15 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                 
               }
             
-              ring_multiplicity->Fill(ring_multiplicity_sum-bckgnd); // bckgnd = 0 pour l'instant
+              //std::cout<<"Background neutrons counted: "<< bckgnd << std::endl;
+              int m = ring_multiplicity_sum - bckgnd;
+              ring_multiplicity->Fill(m); 
+              background_multiplicity->Fill(bckgnd);
+              // multiplicité mesurée via ring_multiplicity_storing[*]
+              
+              
+              if (m < 0) m = 0;
+              if (m > MAX_MULT) m = MAX_MULT; // on sature à 14
               // boucle pour vider mes vecteurs dans mes histo
 
               for (double t : delay_R1) {
@@ -7534,14 +7691,18 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
               // ======= Corrélations n/g =======
               for (int k = 0; k < g_coinc_windows->GetCollectionSize(); ++k) {
                 int label = g_coinc_windows->GetHit(k).GetHitLabel();
+                Bool_t pileup = g_coinc_windows->GetHit(k).GetHitPileUp();
+                if (pileup) continue; // skip pileup events
                 // if (label == 1) {
                 //   cathodeTime = g_coinc_windows->GetHit(k).GetHitTime() / 1000.0; // cathode
                 //   //continue;
                 // }
-                if (label >= 20 && label <= 28) {
+                if (label >= 20 && label <= 28 ) { //rajouter la condition sur le pileup si besoin pour différencier NaI et CeBr3
+                  if ((label == 27 || label == 26 || label == 24) && (run_number>=806 && run_number<=878)) continue; // remove PARIS27 for these runs because of saturation at 2MeV + bad calibration
+                  if ((label == 28 ) && ((run_number>=120 && run_number<=165) || (run_number>=774 && run_number<=872))) continue; // remove PARIS305 and 21 for these runs because of saturation at 2MeV + bad calibration
                   
                   double gammaE = g_coinc_windows->GetHit(k).GetHitE1();
-                  double gammaT = g_coinc_windows->GetHit(k).GetHitTime() / 1000.0;
+                  double gammaT = g_coinc_windows->GetHit(k).GetHitTime() / 1000.0; // pour passer de ps en ns
                   double tof    = gammaT - cathodeTime_bis;
 
                   // correction alignement éventuelle
@@ -7555,10 +7716,12 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                   }
 
                   int specIndex2 = label - 20; // 0..8 pour PARIS20..28
-                  if (specIndex2 >= 0 && specIndex2 < (int)timespectra.size() && tof > -4. && tof < 4.) {
+                  if (specIndex2 >= 0 && specIndex2 < (int)timespectra.size() && tof > -7.75 && tof < 7.75) { //I nee
                     g_evt++; // compteur de détecteurs  rencontrés
                     // on remplit l’histo de multiplicité m pour ce détecteur
                     multigammaspectraM[m][specIndex2]->Fill(gammaE);
+                    // On remplit aussi les histos avec les binning résolution + binning andreas pour la déconvolution
+                    if (gammaE<7500.){FillGammaCommonHists(gammaE);}
                     // ------ Association des gammas totaux avec les évènement de fission retenus ------
                     timespectra[specIndex2]->Fill(tof);
                     NRJspectra[specIndex2]->Fill(gammaE);
@@ -7568,11 +7731,11 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                 }
               }
               g_multiplicity.push_back(g_evt);
-              n_multiplicity.push_back(ring_multiplicity_sum);
-              g_n_multiplicity.emplace_back(g_evt, ring_multiplicity_sum);
+              n_multiplicity.push_back(m);
+              g_n_multiplicity.emplace_back(g_evt, m);
             }
 
-            lastCathode = cathodeTime_bis;//hitI - (g_coinc_windows->GetCollectionSize()) + cathodePos; // Update the last cathode index
+            //lastCathode = cathodeTime_bis;//hitI - (g_coinc_windows->GetCollectionSize()) + cathodePos; // Update the last cathode index
           } //fin fission event
         // 
       } // fin gamma coinc window full
@@ -7708,6 +7871,8 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
     //ring_multiplicity->Scale(1.0 / f);
     //neutron_multiplicity->SetName("NormalizedAverageMultiplicity");
     ring_multiplicity->SetName("RingMultiplicity");
+    background_multiplicity->SetName("BackgroundMultiplicity");
+
 
     // Calcul de la moyenne de multiplicité neutronique 
     double mean_mult = 0.0;
@@ -7724,11 +7889,14 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
     }
     //neutron_multiplicity->Write();
     ring_multiplicity->Write();
+    background_multiplicity->Write();
     timematrix->SetOption("colz");
     timematrix->Write();
     fissiongap->Write();
     neutroncathodegap->Write();
     //lastneutron->Write();
+    //Ecrire les histos binné à la résolution dans le fichier
+    WriteGammaCommonHists();
     outputfile->Close();
     rootfile->Close();
     std::cout << "Results saved to " << outputfilename << std::endl;
@@ -8831,7 +8999,7 @@ int BISFissionEventReconstruction(const CExperiment &experiment, Double_t deltaT
             
 
             //--------Association des neutrons avec les évènements de fission retenus --------
-            for (int i = lookahead; i < chainentries; i++){//n_coinc_windows->GetCollectionSize(); ++i) {
+            for (ULong64_t i = lookahead; i < chainentries; i++){//n_coinc_windows->GetCollectionSize(); ++i) {
               //std::cout << "n_coinc_windows->GetHit(i).GetHitLabel() = " << n_coinc_windows->GetHit(i).GetHitLabel() << std::endl;
               //CHit* neutronHit = ;
               chained_oak->GetEntry(i);//n_coinc_windows->GetHit(i).GetHitI();

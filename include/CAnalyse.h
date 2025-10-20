@@ -46,6 +46,7 @@
 #include <tuple>
 #include <random>
 #include <filesystem>  // C++17
+#include <functional> 
 
 
 // Call for ROOT Libraries
