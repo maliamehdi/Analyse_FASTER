@@ -105,17 +105,29 @@ CalibMap loadCalibFile(const std::string& filename) {
 // ---------- Paramètres de résolution par PARIS Pour la déconvolution----------
 struct ResParams { double resA; double resPower; };
 
-// Tes valeurs (resA, resPower)
-static const std::map<std::string, ResParams> kParisRes = {
-  {"PARIS50",  {1.12145,  -0.441244}},
-  {"PARIS70",  {1.80973,  -0.550685}},
-  {"PARIS90",  {1.94868,  -0.564616}},
-  {"PARIS110", {2.11922,  -0.582147}},
-  {"PARIS130", {0.794233, -0.377311}},
-  {"PARIS235", {1.30727,  -0.477402}},
-  {"PARIS262", {1.76345,  -0.542769}},
-  {"PARIS278", {1.98579,  -0.559095}},
-  {"PARIS305", {1.9886,   -0.574021}}
+// Tes valeurs (resA, resPower) 05/08/2024
+// static const std::map<std::string, ResParams> kParisRes = {
+//   {"PARIS50",  {1.12145,  -0.441244}},
+//   {"PARIS70",  {1.80973,  -0.550685}},
+//   {"PARIS90",  {1.94868,  -0.564616}},
+//   {"PARIS110", {2.11922,  -0.582147}},
+//   {"PARIS130", {0.794233, -0.377311}},
+//   {"PARIS235", {1.30727,  -0.477402}},
+//   {"PARIS262", {1.76345,  -0.542769}},
+//   {"PARIS278", {1.98579,  -0.559095}},
+//   {"PARIS305", {1.9886,   -0.574021}}
+// };
+// Pour les gamma prompt du 252Cf je prends la pire résolution dans le temps pour chaque PARIS
+static const std::map<std::string, ResParams> kParisRes =  { //run du 05/08/2024
+    {"PARIS50",  {1.12145,  -0.441244}}, // 05/08 pour PARIS50 
+    {"PARIS70",  {1.80973,  -0.550685}}, // 05/08 pour PARIS70 je peux aussi mettre 24/09
+    {"PARIS90",  {1.65564,	-0.53887}}, //20/06 pour PARIS90
+    {"PARIS110", {1.93549,	-0.564697}}, //29/08 pour PARIS110
+    {"PARIS130", {0.836128,	-0.368968}}, //17/06 pour PARIS130
+    {"PARIS235", {1.30727,  -0.477402}}, //05/08 pour PARIS235
+    {"PARIS262", {1.76345,  -0.542769}}, //05/08 pour PARIS262
+    {"PARIS278", {1.76703,	-0.536899}}, //07/10 pour PARIS278
+    {"PARIS305", {1.30165,	-0.503266}} //20/06 pour PARIS305
 };
 
 // ---------- Génère des bords jusqu'à Emax ----------
@@ -123,7 +135,7 @@ static std::vector<double>
 MakeEdgesUpToEmax(double resA, double resPower,
                   double Emax_keV,
                   double E0_keV   = 0.0,
-                  double E1_keV   = 100.0,
+                  double E1_keV   = 11.0,
                   double minStep  = 30.0,
                   int    maxBins  = 200000)
 {
@@ -4162,7 +4174,7 @@ int DrawAllCalibrationSpectra(const CExperiment &experiment)
   std::string filename = fullpath.Data();
   checktimeorder(filename, "DataTree");
   std::smatch match;
-  std::regex pattern(R"(Cf252_\d+)");
+  std::regex pattern(R"((?:Cf252_|run)(\d+))");
 
   if (std::regex_search(filename, match, pattern)) {
     std::string cf252_id = match.str(0);
@@ -4751,6 +4763,7 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
   // Declaration of time spectra
   int nbrofspectra = experiment.GetDetectors().size();
   std::vector<TH1F*> timespectra;
+  std::vector<TH1F*> nrjspectra;
   std::vector<TH2F*> NRJtimematrix;
   TH2F *timematrix;
   int highestdetlabel(0);
@@ -4770,6 +4783,7 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
     localtimespectrum = new TH1F(spectrumname,title,nbrchannels,deltaTinit,deltaTfin);
     timespectra.push_back(localtimespectrum);
     NRJtimematrix.push_back(new TH2F(spectrumname+"energymatrix",title,nbrchannels,deltaTinit,deltaTfin,nbrchannels,deltaTinit,deltaTfin));
+    nrjspectra.push_back(new TH1F("nrjspectrum"+experiment.GetDetector(sindex)->GetDetectorName(),title,300000.,0.,300000.));
     spectrumname.Clear();
     title.Clear();
   }
@@ -4790,7 +4804,8 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
     std::cout << "ID extrait : " << cf252_id << std::endl;
     outputfilename+=cf252_id.c_str();
   }
-  outputfilename += "NoEconditionTimespectra_all.root"; //A voir si ça fait pas n'importe quoi
+  //outputfilename += "NoEconditionTimespectra_all.root"; //A voir si ça fait pas n'importe quoi
+  outputfilename += "CoEconditionCoincspectra_all.root"; //A voir si ça fait pas n'importe quoi
   TFile *outputfile = new TFile(outputfilename,"RECREATE");
 
   // Loading the TTree for reading the Data
@@ -4917,32 +4932,37 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
                 for (int HitC = 0; HitC < coinc_windows->GetCollectionSize(); HitC++) {
                     if (HitC != Refdetector_pos) {
                         // Get the energy of the reference detector and the other detector
-                        //Double_t ref_energy = (Double_t) coinc_windows->GetHit(Refdetector_pos).GetHitE1();
-                        //Double_t det_energy = (Double_t) coinc_windows->GetHit(HitC).GetHitE1();
+                        Double_t ref_energy = (Double_t) coinc_windows->GetHit(Refdetector_pos).GetHitE1();
+                        Double_t det_energy = (Double_t) coinc_windows->GetHit(HitC).GetHitE1();
                         //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
                         // Check if the energy conditions are satisfied
                         //Energy condition
-                        //if ((ref_energy >= E_ref_min && ref_energy <= E_ref_max &&
-                          // det_energy >= E_det_min && det_energy <= E_det_max) ||
-                          // (ref_energy >= E_det_min && ref_energy <= E_det_max &&
-                          // det_energy >= E_ref_min && det_energy <= E_ref_max)) {
+                        // if ((ref_energy >= E_ref_min && ref_energy <= E_ref_max &&
+                        //   det_energy >= E_det_min && det_energy <= E_det_max) ||
+                        //   (ref_energy >= E_det_min && ref_energy <= E_det_max &&
+                        //   det_energy >= E_ref_min && det_energy <= E_ref_max)) {
+                        if ((ref_energy >= E_ref_min && ref_energy <= E_ref_max)) {
                             // Calculate the time difference
                             deltaT = (double)((coinc_windows->GetHit(HitC).GetHitTime() -
                                               coinc_windows->GetHit(Refdetector_pos).GetHitTime())/1000);
                             //std::cout << "DeltaT = " << deltaT << "ns" << std::endl;
                             //std::cout << "Ref Energy: " << ref_energy << ", Det Energy: " << det_energy << std::endl;
-                            int spectrumindex = experiment.GetLabel2Detnbrs(coinc_windows->GetHit(HitC).GetHitLabel());
-                            if (spectrumindex < timespectra.size()) {
-                              timespectra.at(spectrumindex)->Fill(deltaT);
-                              NRJtimematrix.at(spectrumindex)->Fill(coinc_windows->GetHit(HitC).GetHitE1(), deltaT);
-                            } 
-                            else {
-                                std::cerr << "spectrumindex = " << spectrumindex << ", timespectra.size() = " << timespectra.size() << std::endl;
-                                continue;
+                            if (TMath::Abs(deltaT) < 800.) { //ns
+                              int spectrumindex = experiment.GetLabel2Detnbrs(coinc_windows->GetHit(HitC).GetHitLabel());
+                              if (spectrumindex < timespectra.size()) {
+                                timespectra.at(spectrumindex)->Fill(deltaT);
+                                nrjspectra.at(spectrumindex)->Fill(coinc_windows->GetHit(HitC).GetHitE1());
+                                NRJtimematrix.at(spectrumindex)->Fill(coinc_windows->GetHit(HitC).GetHitE1(), deltaT);
+                              } 
+                              else {
+                                  std::cerr << "spectrumindex = " << spectrumindex << ", timespectra.size() = " << timespectra.size() << std::endl;
+                                  continue;
+                              }
+                              
+                              
                             }
-                            
                             timematrix->Fill(coinc_windows->GetHit(HitC).GetHitLabel(), deltaT);
-                        //} //energy condition
+                          } //energy condition
                         
                     }
                 }
@@ -4965,6 +4985,7 @@ std::vector<TH1F*>  DrawTimeShifts(const CExperiment &experiment, Double_t delta
   {
     timespectra.at(i)->Write();
     NRJtimematrix.at(i)->Write();
+    nrjspectra.at(i)->Write();
   }
   timematrix->Write();
   outputfile->Close();
@@ -5490,7 +5511,7 @@ std::vector<TH1F*> DrawTimeShifts_fissionevents_Calibrated(const CExperiment &ex
   // 2D matrix: x-axis = label, y-axis = deltaT
   TH2F* timematrix = new TH2F("timealignementmatrix",
   "Time spectra of all detectors",
-  9, 20, 29, // 9 Paris detectors (labels 20 to 28)
+  9, 0, 9, // 9 Paris detectors (labels 20 to 28)
   nbrchannels, deltaTinit, deltaTfin);
   
 
@@ -7051,57 +7072,75 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   std::vector<TH2F*> TimeNRJmatrix;
   std::vector<TH2F*> ResbinTimeNRJmatrix;
   std::vector<TH1F*> ResbinNRJspectra;
+  std::vector<TH1F*> NaI_timespectra;
+  std::vector<TH1F*> NaI_NRJspectra;
+  std::vector<TH2F*> NaI_TimeNRJmatrix;
 
   // --- [AJOUT] callbacks globaux pour remplir/écrire (no-op si non initialisés)
   std::function<void(double)> FillGammaCommonHists = [](double){};
   std::function<void()>       WriteGammaCommonHists = [](){};
   constexpr int MAX_MULT = 14; // on va de 0 à 20 inclus
   std::array<std::vector<TH1F*>, MAX_MULT + 1> multigammaspectraM; // multigammaspectraM[m] = vector<TH1F*> (par détecteur)
+  std::array<std::vector<TH1F*>, MAX_MULT + 1> NaI_multigammaspectraM; // multigammaspectraM[m] = vector<TH1F*> (par détecteur)
    
    std::vector<double> binedges;
    int nbrbin = 1000;
 
    for (int sindex = 18; sindex <= 26; ++sindex) {
-     TH1F* localtimespectrum;
-     TH1F* localNRJspectrum;
-     TH1F* localResbinNRJspectrum;
-     TH1F* localmultigammaspectrum;
-     TH1F* localmultigammaspectrum1;
-     TH1F* localmultigammaspectrum2;
-     TH1F* localmultigammaspectrum3;
-     TH1F* localmultigammaspectrum4;
-     TH2F* localTimeNRJmatrix;
-     TH2F* localResbinTimeNRJmatrix;
-     TString title = "Time Spectrum of detector ";
-     TString title2 = "Prompt Gamma Energy Spectrum of detector ";
-     TString title3 = "TOF-cathode vs Energy of detector ";
-     
-     
+      TH1F* localtimespectrum;
+      TH1F* localNRJspectrum;
+      TH1F* localResbinNRJspectrum;
+      TH1F* localmultigammaspectrum;
+      TH1F* localmultigammaspectrum1;
+      TH1F* localmultigammaspectrum2;
+      TH1F* localmultigammaspectrum3;
+      TH1F* localmultigammaspectrum4;
+      TH2F* localTimeNRJmatrix;
+      TH2F* localResbinTimeNRJmatrix;
 
-     TString spectrumname = "timespectrum";
-     TString spectrumname2 = "GatedPromptgammaenergyspectrum";
-     TString spectrumname3 = "TOF_vs_energy";
-     
+      TH1F* NaI_localtimespectrum;
+      TH1F* NaI_localNRJspectrum;
+      TH2F* NaI_localTimeNRJmatrix;
+
+      TString title = "Time Spectrum of detector ";
+      TString title2 = "Prompt Gamma Energy Spectrum of detector ";
+      TString title3 = "TOF-cathode vs Energy of detector ";
+      
+      
+
+      TString spectrumname = "timespectrum";
+      TString spectrumname2 = "GatedPromptgammaenergyspectrum";
+      TString spectrumname3 = "TOF_vs_energy";
+      
+      TString NaI_spectrumname = "NaI_timespectrum";
+      TString NaI_spectrumname2 = "NaI_GatedPromptgammaenergyspectrum";
+      TString NaI_spectrumname3 = "NaI_TOF_vs_energy";
 
 
-     title += experiment.GetDetector(sindex)->GetDetectorName();
-     title2 += experiment.GetDetector(sindex)->GetDetectorName();
-     title3 += experiment.GetDetector(sindex)->GetDetectorName();
-     
-     spectrumname += experiment.GetDetector(sindex)->GetDetectorName();
-     spectrumname2 += experiment.GetDetector(sindex)->GetDetectorName();
-     spectrumname3 += experiment.GetDetector(sindex)->GetDetectorName();
-     
-     title += " vs ";
-     spectrumname += "vs";
-     spectrumname3 += "vs";
-     title += "Cathode";
-     spectrumname += "Cathode";
-     spectrumname3 += "Cathode";
+      title += experiment.GetDetector(sindex)->GetDetectorName();
+      title2 += experiment.GetDetector(sindex)->GetDetectorName();
+      title3 += experiment.GetDetector(sindex)->GetDetectorName();
+      
+      spectrumname += experiment.GetDetector(sindex)->GetDetectorName();
+      spectrumname2 += experiment.GetDetector(sindex)->GetDetectorName();
+      spectrumname3 += experiment.GetDetector(sindex)->GetDetectorName();
+      NaI_spectrumname += experiment.GetDetector(sindex)->GetDetectorName();
+      NaI_spectrumname2 += experiment.GetDetector(sindex)->GetDetectorName();
+      NaI_spectrumname3 += experiment.GetDetector(sindex)->GetDetectorName();
 
-     Double_t resA = experiment.GetDetector(sindex)->GetResA();
-     Double_t respower = experiment.GetDetector(sindex)->GetRespower();
-     std::cout << FOREGRN << "The resolution fit parameter:" << resA << " power:" << respower << std::endl;
+      
+      title += " vs ";
+      spectrumname += "vs";
+      spectrumname3 += "vs";
+      NaI_spectrumname += "vs";
+      NaI_spectrumname3 += "vs";
+      title += "Cathode";
+      NaI_spectrumname += "Cathode";
+      NaI_spectrumname3 += "Cathode";
+
+      Double_t resA = experiment.GetDetector(sindex)->GetResA();
+      Double_t respower = experiment.GetDetector(sindex)->GetRespower();
+      std::cout << FOREGRN << "The resolution fit parameter:" << resA << " power:" << respower << std::endl;
 
      if (resA != 0 && resA < 100 && respower != 0 && respower < 1) {
        binedges.resize(nbrbin + 1);
@@ -7111,12 +7150,16 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
          binedges[i] = (binedges[i - 1] + (resA * TMath::Power(binedges[i - 1], respower) * binedges[i - 1]));
        }
        localNRJspectrum = new TH1F(spectrumname2, title2, 2000, 0, 20000);
+       NaI_localNRJspectrum = new TH1F(NaI_spectrumname2, title2, 2000, 0, 20000);
        localResbinNRJspectrum = new TH1F(spectrumname2 + "_resbin", title2 + "_resbin", nbrbin, binedges.data());
        localNRJspectrum->SetXTitle("Energy (keV)");
+        NaI_localNRJspectrum->SetXTitle("Energy (keV)");
        localResbinNRJspectrum->SetXTitle("Energy (keV)");
        localNRJspectrum->SetYTitle("Counts");
+        NaI_localNRJspectrum->SetYTitle("Counts");
        localResbinNRJspectrum->SetYTitle("Counts");
        NRJspectra.push_back(localNRJspectrum);
+        NaI_NRJspectra.push_back(NaI_localNRJspectrum);
        ResbinNRJspectra.push_back(localResbinNRJspectrum);
 
        localTimeNRJmatrix = new TH2F(spectrumname3, title3, 2000, 0, 20000, nbrchannels, deltaTinit, deltaTfin);
@@ -7124,6 +7167,12 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
        localTimeNRJmatrix->SetYTitle("Time (ns)");
        localTimeNRJmatrix->SetZTitle("Counts");
        TimeNRJmatrix.push_back(localTimeNRJmatrix);
+
+       NaI_localTimeNRJmatrix = new TH2F(NaI_spectrumname3, title3, 2000, 0, 20000, nbrchannels, deltaTinit, deltaTfin);
+       NaI_localTimeNRJmatrix->SetXTitle("Energy (keV)");
+       NaI_localTimeNRJmatrix->SetYTitle("Time (ns)");
+       NaI_localTimeNRJmatrix->SetZTitle("Counts");
+       NaI_TimeNRJmatrix.push_back(NaI_localTimeNRJmatrix);
 
        localResbinTimeNRJmatrix = new TH2F(spectrumname3 + "_resbin", title3 + "_resbin", nbrbin, binedges.data(), nbrchannels, deltaTinit, deltaTfin);
        localResbinTimeNRJmatrix->SetXTitle("Energy (keV)");
@@ -7155,6 +7204,18 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
           hM->SetXTitle("Energy (keV)");
           hM->SetYTitle("Counts");
           multigammaspectraM[m].push_back(hM);
+
+          TString NaI_titleM = Form("%s NaI Neutron multiplicity Gamma spectrum of detector %s",
+                                multLabel.Data(),
+                                experiment.GetDetector(sindex)->GetDetectorName().Data());
+
+          TString NaI_spectrumnameM = Form("%dNaI_NeutronMultiplicityGammaspectrum%s",
+                                m, experiment.GetDetector(sindex)->GetDetectorName().Data());
+
+          TH1F* NaI_hM = new TH1F(NaI_spectrumnameM, titleM, 2000, 0, 20000);
+          NaI_hM->SetXTitle("Energy (keV)");
+          NaI_hM->SetYTitle("Counts");
+          NaI_multigammaspectraM[m].push_back(NaI_hM);
         }
       } else {
        localNRJspectrum = new TH1F(spectrumname2, title2, 2000, 0, 20000);
@@ -7190,6 +7251,18 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
           hM->SetXTitle("Energy (keV)");
           hM->SetYTitle("Counts");
           multigammaspectraM[m].push_back(hM);
+
+          TString NaI_titleM = Form("%s NaI Neutron multiplicity Gamma spectrum of detector %s",
+                                multLabel.Data(),
+                                experiment.GetDetector(sindex)->GetDetectorName().Data());
+
+          TString NaI_spectrumnameM = Form("%dNaI_NeutronMultiplicityGammaspectrum%s",
+                                m, experiment.GetDetector(sindex)->GetDetectorName().Data());
+
+          TH1F* NaI_hM = new TH1F(NaI_spectrumnameM, titleM, 2000, 0, 20000);
+          NaI_hM->SetXTitle("Energy (keV)");
+          NaI_hM->SetYTitle("Counts");
+          NaI_multigammaspectraM[m].push_back(NaI_hM);
         }
 
        ResbinNRJspectra.push_back(localNRJspectrum);
@@ -7197,8 +7270,11 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
       }
 
      localtimespectrum = new TH1F(spectrumname, title, nbrchannels, deltaTinit, deltaTfin);
+      localtimespectrum->SetXTitle("Time (ns)");
      timespectra.push_back(localtimespectrum);
-
+      NaI_localtimespectrum = new TH1F(NaI_spectrumname, title, nbrchannels, deltaTinit, deltaTfin);
+      NaI_localtimespectrum->SetXTitle("Time (ns)");
+     NaI_timespectra.push_back(NaI_localtimespectrum);
      
       title.Clear();
       title2.Clear();
@@ -7208,10 +7284,14 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
       spectrumname.Clear();
       spectrumname2.Clear();
       spectrumname3.Clear();
+      NaI_spectrumname.Clear();
+      NaI_spectrumname2.Clear();
+      NaI_spectrumname3.Clear();
 
     }
 
     TH2F* timematrix = new TH2F("timealignementmatrix", "Time spectra of all detectors", 9, 20, 29, nbrchannels, deltaTinit, deltaTfin);
+    TH2F* NaI_timematrix = new TH2F("NaI_timealignementmatrix", "NaI Time spectra of all detectors", 9, 20, 29, nbrchannels, deltaTinit, deltaTfin);
 
     // ----- Histogramme retard neutron -----
     TH1F* neutron_delay = new TH1F("Total Number of Detected Neutrons post-fission","Time of neutron detection after cathode;Time since fission (#mus);Counts",1+(2*neutronwindow),0, neutronwindow); // 0.1 µs bins
@@ -7231,6 +7311,12 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                                     21, 0, 21);
     TH1F* background_multiplicity = new TH1F("BackgroundMultiplicity",
                                     "Total Background Neutron Multiplicity ;Multiplicity;Counts",
+                                    21, 0, 21);
+    TH1F* ring_gamma_multiplicity = new TH1F("GammaTaggedMultiplicity",
+                                    "Gamma-Tagged Neutron Multiplicity ;Multiplicity;Counts",
+                                    21, 0, 21);
+    TH1F* background_gamma_multiplicity = new TH1F("BackgroundGammaTaggedMultiplicity",
+                                    "Background Gamma-Tagged Neutron Multiplicity ;Multiplicity;Counts",
                                     21, 0, 21);
 
     TH2F* lastneutron = new TH2F("Max Prompt Neutron Detection Time in TETRA for each Neutron Multiplicity", "Multiplicity; Time since fission (#ns)", 21,0,21,neutronwindow/100.,0,neutronwindow/1000.);
@@ -7259,17 +7345,17 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   std::cout << FOREGRN << "correction parameters loaded "<< std::endl;
 
   // ===== [AJOUT] — 10+ histogrammes "comme Cfspectrum.cpp" (et 2 seeds en plus) =====
-  #include "../include/binedge_andreas.hpp" // expose BIN_EDGES_KEV
+  // #include "../include/binedge_andreas.hpp" // expose BIN_EDGES_KEV
 
   // Déclarer des maps pour garder les pointeurs (accessibles plus bas pour Fill & Write)
-  std::map<std::string, TH1F*> hGammaParis100; // seed 100 keV
+  // std::map<std::string, TH1F*> hGammaParis100; // seed 100 keV
   std::map<std::string, TH1F*> hGammaParis11;  // seed 11 keV
   std::map<std::string, TH1F*> hGammaParis2;   // seed 2 keV
-  std::map<std::string, TH1F*> hGammaParisRef;  // ref per PARIS (binning = BIN_EDGES_KEV)
+  // std::map<std::string, TH1F*> hGammaParisRef;  // ref per PARIS (binning = BIN_EDGES_KEV)
 
-  if (BIN_EDGES_KEV.size() >= 2 && std::is_sorted(BIN_EDGES_KEV.begin(), BIN_EDGES_KEV.end())) {
-    const int nbins_var_ref   = static_cast<int>(BIN_EDGES_KEV.size()) - 1;
-    const double Emax_ref_keV = BIN_EDGES_KEV.back();
+  // if (BIN_EDGES_KEV.size() >= 2 && std::is_sorted(BIN_EDGES_KEV.begin(), BIN_EDGES_KEV.end())) {
+  //   const int nbins_var_ref   = static_cast<int>(BIN_EDGES_KEV.size()) - 1;
+  //   const double Emax_ref_keV = BIN_EDGES_KEV.back();
 
     
 
@@ -7278,33 +7364,33 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
       const std::string& name = kv.first;
       const auto& rp = kv.second;
 
-      std::vector<double> edges_100 = MakeEdgesUpToEmax(rp.resA, rp.resPower, Emax_ref_keV,
-                                                        /*E0*/0.0, /*E1*/100.0, /*minStep*/30.0);
-      std::vector<double> edges_11  = MakeEdgesUpToEmax(rp.resA, rp.resPower, Emax_ref_keV,
-                                                        /*E0*/0.0, /*E1*/11.0,  /*minStep*/30.0);
-      std::vector<double> edges_2   = MakeEdgesUpToEmax(rp.resA, rp.resPower, Emax_ref_keV,
+      // std::vector<double> edges_100 = MakeEdgesUpToEmax(rp.resA, rp.resPower, Emax_ref_keV,
+      //                                                   /*E0*/0.0, /*E1*/100.0, /*minStep*/30.0);
+      std::vector<double> edges_11  = MakeEdgesUpToEmax(rp.resA, rp.resPower, 15000.,
+                                                        /*E0*/0.0, /*E1*/11.0,  /*minStep*/2.0);
+      std::vector<double> edges_2   = MakeEdgesUpToEmax(rp.resA, rp.resPower, 15000.,
                                                         /*E0*/0.0, /*E1*/2.0,   /*minStep*/30.0);
 
-      // vérifs basiques
-      if (edges_100.size() < 2 || edges_11.size() < 2 || edges_2.size() < 2) {
-        ::Warning("FissionEventReconstruction", "Bords insuffisants pour %s", name.c_str());
-        continue;
-      }
+      // // vérifs basiques
+      // if (edges_100.size() < 2 || edges_11.size() < 2 || edges_2.size() < 2) {
+      //   ::Warning("FissionEventReconstruction", "Bords insuffisants pour %s", name.c_str());
+      //   continue;
+      // }
 
-      TH1F* hRef = new TH1F(
-        (std::string("RefGamma_") + name).c_str(),
-        (std::string("Prompt gamma (keV) — ") + name + " (ref);E_{#gamma} [keV];Counts").c_str(),
-        nbins_var_ref, BIN_EDGES_KEV.data()
-      );
-      hGammaParisRef[name] = hRef;
+      // TH1F* hRef = new TH1F(
+      //   (std::string("RefGamma_") + name).c_str(),
+      //   (std::string("Prompt gamma (keV) — ") + name + " (ref);E_{#gamma} [keV];Counts").c_str(),
+      //   nbins_var_ref, BIN_EDGES_KEV.data()
+      // );
+      // hGammaParisRef[name] = hRef;
 
-      TH1F* h100 = new TH1F(
-        (std::string("Res100keVGamma_") + name).c_str(),
-        (std::string("Prompt gamma (keV) — ") + name + " (seed 100 keV);E_{#gamma} [keV];Counts").c_str(),
-        static_cast<int>(edges_100.size()) - 1, edges_100.data()
-      );
-      h100->Sumw2(false);
-      hGammaParis100[name] = h100;
+      // TH1F* h100 = new TH1F(
+      //   (std::string("Res100keVGamma_") + name).c_str(),
+      //   (std::string("Prompt gamma (keV) — ") + name + " (seed 100 keV);E_{#gamma} [keV];Counts").c_str(),
+      //   static_cast<int>(edges_100.size()) - 1, edges_100.data()
+      // );
+      // h100->Sumw2(false);
+      // hGammaParis100[name] = h100;
 
       TH1F* h11 = new TH1F(
         (std::string("Res11keVGamma_") + name).c_str(),
@@ -7325,37 +7411,37 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
 
     // === petite lambda pour remplir tout d'un coup ===
     FillGammaCommonHists = [&](double E_keV){
-      for (auto& kv : hGammaParisRef) kv.second->Fill(E_keV);
-      for (auto& kv : hGammaParis100) kv.second->Fill(E_keV);
+      // for (auto& kv : hGammaParisRef) kv.second->Fill(E_keV);
+      // for (auto& kv : hGammaParis100) kv.second->Fill(E_keV);
       for (auto& kv : hGammaParis11)  kv.second->Fill(E_keV);
       for (auto& kv : hGammaParis2)   kv.second->Fill(E_keV);
     };
 
     // === et une lambda pour écrire à la fin ===
     WriteGammaCommonHists = [&](){
-      for (auto& kv : hGammaParisRef) if (kv.second) kv.second->Write();
-      for (auto& kv : hGammaParis100) if (kv.second) kv.second->Write();
+      // for (auto& kv : hGammaParisRef) if (kv.second) kv.second->Write();
+      // for (auto& kv : hGammaParis100) if (kv.second) kv.second->Write();
       for (auto& kv : hGammaParis11)  if (kv.second) kv.second->Write();
       for (auto& kv : hGammaParis2)   if (kv.second) kv.second->Write();
     };
     // ASSIGNATION des callbacks utilisables partout plus bas :
-    FillGammaCommonHists = [&hGammaParisRef, &hGammaParis100, &hGammaParis11, &hGammaParis2](double E_keV) {
-      for (auto& kv : hGammaParisRef) kv.second->Fill(E_keV);
-      for (auto& kv : hGammaParis100) kv.second->Fill(E_keV);
+    FillGammaCommonHists = [ &hGammaParis11, &hGammaParis2](double E_keV) { //&hGammaParisRef, &hGammaParis100,
+      // for (auto& kv : hGammaParisRef) kv.second->Fill(E_keV);
+      // for (auto& kv : hGammaParis100) kv.second->Fill(E_keV);
       for (auto& kv : hGammaParis11)  kv.second->Fill(E_keV);
       for (auto& kv : hGammaParis2)   kv.second->Fill(E_keV);
     };
 
-    WriteGammaCommonHists = [&hGammaParisRef, &hGammaParis100, &hGammaParis11, &hGammaParis2]() {
-      for (auto& kv : hGammaParisRef) if (kv.second) kv.second->Write();
-      for (auto& kv : hGammaParis100) if (kv.second) kv.second->Write();
+    WriteGammaCommonHists = [ &hGammaParis11, &hGammaParis2]() { //&hGammaParisRef, &hGammaParis100,
+      // for (auto& kv : hGammaParisRef) if (kv.second) kv.second->Write();
+      // for (auto& kv : hGammaParis100) if (kv.second) kv.second->Write();
       for (auto& kv : hGammaParis11)  if (kv.second) kv.second->Write();
       for (auto& kv : hGammaParis2)   if (kv.second) kv.second->Write();
     };
 
-  } else {
-    ::Warning("FissionEventReconstruction", "BIN_EDGES_KEV invalide: pas assez de bords ou non trié.");
-  }
+  // } else {
+  //   ::Warning("FissionEventReconstruction", "BIN_EDGES_KEV invalide: pas assez de bords ou non trié.");
+  // }
 
 
   TString outputfilename = experiment.GetFileDirectory_OUT();
@@ -7376,7 +7462,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   }
   else std::cerr << "Nom de fichier inattendu : " << filename << std::endl;
 
-  outputfilename += "resolution_myevents.root";
+  outputfilename += "worseRes_FullmyeventsCORR.root";
   TFile* outputfile = new TFile(outputfilename, "RECREATE");
 
   std::cout << FOREGRN << "Output file: " << outputfilename << std::endl;
@@ -7446,7 +7532,9 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
   double cathodeTime_bis = 0;
   double cathodeTime = 0;
   int ring_multiplicity_storing[4] = {0, 0, 0, 0};
+  int ring_gamma_multiplicity_storing[4] = {0, 0, 0, 0};
   std::vector<int> IClabels = {1, 2, 6};//, 52, 53};
+  std::vector<int> PARISlabels = {20,21,22,23,24,25,26,27,28};
   int f = 0; // Counter for fission events
   int d(0); //Counter for overlaping events
   int g_evt(0); // Counter for prompt gammas
@@ -7480,7 +7568,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
 
     int hitexist = chained_oak->GetEntry(hitI);//chained_sequoia->GetEntry(hitI);
     //std::cout<< "Hit number: " << hitI << std::endl;
-    if (hitexist <= 0 || PILEUP) continue;
+    if (hitexist <= 0 ) continue; //|| PILEUP
     // label_Rawtype index = LABEL;//*r_label;
     // tm_Rawtype tm = TM;//*r_tm;
     // Double_t enrj = NRJ;//*r_nrj;
@@ -7503,7 +7591,8 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
       //std::cout<<"collection window size "<< g_coinc_windows->GetCollectionSize()<<endl;
     } 
     else {
-      if (g_coinc_windows->GetCollectionSize() > 6) {
+      if (g_coinc_windows->GetCollectionSize() > 2) { // Minimum 3 hits to process the window size of IClabels 1,2,6
+        // Process the current coincidence window
         if (g_coinc_windows->CountLabel(1) > 0 ) { //avant c'était  g_coinc_windows->CountLabel(1) > 1
           // We have a cathode in the window, check for fission event
           fission = true;
@@ -7516,7 +7605,14 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
               break;
             }
           }
-        } 
+        }
+        bool isGammaEvent = false;
+        for (int i : PARISlabels) {
+            if (g_coinc_windows->HasLabel(i)) {
+                isGammaEvent = true;
+                break; // on peut s'arrêter car une seule occurrence suffit
+            }
+        }
           // else {
           //   fission = true;
           //   // Check if all IClabels are present in the coincidence window
@@ -7538,6 +7634,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
             cathodeTime_bis = g_coinc_windows->GetHit(cathodePos).GetHitTime()/1000.; // ns
             double deltaT_ns = 0;
             for (int i = 0; i < 4; ++i) ring_multiplicity_storing[i] = 0;
+            for (int i = 0; i < 4; ++i) ring_gamma_multiplicity_storing[i] = 0;
             fission_intervals.push_back(cathodeTime_bis - lastCathode); // Store fission time in seconds
             fissiongap->Fill((cathodeTime_bis - lastCathode)/1000.); // en us
 
@@ -7601,19 +7698,35 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                   if ( label == 31 || label == 32) {
                     ring_multiplicity_storing[0]++;
                     delay_R1.push_back(deltaT_ns);
+                    if (isGammaEvent) {
+                      //std::cout<<"Neutron associated to gamma event "<< std::endl;
+                      ring_gamma_multiplicity_storing[0]++;
+                    }
                     
                   } 
                   else if (label == 33 || label == 34 || label == 43) {
                     ring_multiplicity_storing[1]++;
                     delay_R2.push_back(deltaT_ns);
+                    if (isGammaEvent) {
+                      //std::cout<<"Neutron associated to gamma event "<< std::endl;
+                      ring_gamma_multiplicity_storing[1]++;
+                    }
                   }
                   else if (label == 37 || label == 38 || label == 39) {
                     ring_multiplicity_storing[2]++;
                     delay_R3.push_back(deltaT_ns);
+                    if (isGammaEvent) {
+                      //std::cout<<"Neutron associated to gamma event "<< std::endl;
+                      ring_gamma_multiplicity_storing[2]++;
+                    }
                   }
                   else if (label == 47 || label == 48 || label == 49 || label == 50) {
                     ring_multiplicity_storing[3]++;
                     delay_R4.push_back(deltaT_ns);
+                    if (isGammaEvent) {
+                      //std::cout<<"Neutron associated to gamma event "<< std::endl;
+                      ring_gamma_multiplicity_storing[3]++;
+                    }
                   }
                 }
               }
@@ -7622,6 +7735,7 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
             }
             // Fin du comptage des neutrons
             int ring_multiplicity_sum = ring_multiplicity_storing[0] + ring_multiplicity_storing[1] + ring_multiplicity_storing[2] + ring_multiplicity_storing[3];
+            int ring_gamma_multiplicity_sum = ring_gamma_multiplicity_storing[0] + ring_gamma_multiplicity_storing[1] + ring_gamma_multiplicity_storing[2] + ring_gamma_multiplicity_storing[3];
             extracathode = 0; // Reset for the next fission event
             // ======= REMPLACEMENT DES 5 BLOCS (multigammaspectra, ...1, ...2, ...3, ...4) PAR =======
             // ======= UN SEUL BLOC UTILISANT multigammaspectraM[m] où m est la =======
@@ -7631,6 +7745,8 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
             if (!discard){
               good_fissions++;
               int bckgnd = 0; // valeur de fond à soustraire à la multiplicité
+              int bckgnd_gamma = 0;
+              //--------Recherche des neutrons de fond avant la cathode --------
               for (int b = lookahead; b > 0; b--){
                 chained_oak->GetEntry(b);
                 int label = LABEL;
@@ -7642,15 +7758,27 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
                 if (bckgnd_deltaT_ns <= neutronwindow) { // within neutron window before cathode
                   if ( label == 31 || label == 32) {
                     bckgnd++;
+                    if (isGammaEvent) {
+                      bckgnd_gamma++;
+                    }
                   } 
                   else if (label == 33 || label == 34 || label == 43) {
                     bckgnd++;
+                    if (isGammaEvent) {
+                      bckgnd_gamma++;
+                    }
                   }
                   else if (label == 37 || label == 38 || label == 39) {
                     bckgnd++;
+                    if (isGammaEvent) {
+                      bckgnd_gamma++;
+                    }
                   }
                   else if (label == 47 || label == 48 || label == 49 || label == 50) {
                     bckgnd++;
+                    if (isGammaEvent) {
+                      bckgnd_gamma++;
+                    }
                   }
                 }
                 else break; // Stop looking for neutrons after the neutron window and move on to the gammas and the next fission events
@@ -7658,9 +7786,13 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
               }
             
               //std::cout<<"Background neutrons counted: "<< bckgnd << std::endl;
-              int m = ring_multiplicity_sum - bckgnd;
+              int m = ring_multiplicity_sum;// - bckgnd;
               ring_multiplicity->Fill(m); 
               background_multiplicity->Fill(bckgnd);
+              if (isGammaEvent) {
+                ring_gamma_multiplicity->Fill(ring_gamma_multiplicity_sum);
+                background_gamma_multiplicity->Fill(bckgnd_gamma);
+              }
               // multiplicité mesurée via ring_multiplicity_storing[*]
               
               
@@ -7692,43 +7824,80 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
               for (int k = 0; k < g_coinc_windows->GetCollectionSize(); ++k) {
                 int label = g_coinc_windows->GetHit(k).GetHitLabel();
                 Bool_t pileup = g_coinc_windows->GetHit(k).GetHitPileUp();
-                if (pileup) continue; // skip pileup events
+                if (pileup) {
+                  if (label >= 20 && label <= 28 ) { //rajouter la condition sur le pileup si besoin pour différencier NaI et CeBr3
+                    if ((label == 27 || label == 26 || label == 24) && (run_number>=806 && run_number<=878)) continue; // remove PARIS27 for these runs because of saturation at 2MeV + bad calibration
+                    if ((label == 28 ) && ((run_number>=120 && run_number<=165) || (run_number>=774 && run_number<=872))) continue; // remove PARIS305 and 21 for these runs because of saturation at 2MeV + bad calibration
+                    
+                    double NaI_gammaE = g_coinc_windows->GetHit(k).GetHitE2();
+                    double NaI_gammaT = g_coinc_windows->GetHit(k).GetHitTime() / 1000.0; // pour passer de ps en ns
+                    double NaI_tof    = NaI_gammaT - cathodeTime_bis;
+
+                    // correction alignement éventuelle
+                    // bool applyCorr = true;
+                    // if (parisAlignMaps.find(label) == parisAlignMaps.end() ||
+                    //     parisAlignMaps[label].find(run_number) == parisAlignMaps[label].end()) {
+                    //   applyCorr = false;
+                    // }
+                    // if (applyCorr) {
+                    //   gammaE = alignCalib(parisAlignMaps[label], run_number, gammaE);
+                    // }
+
+                    int specIndex2 = label - 20; // 0..8 pour PARIS20..28
+                    if (specIndex2 >= 0 && specIndex2 < (int)timespectra.size() && NaI_tof > -7.75 && NaI_tof < 7.75) { //I nee
+                      //g_evt++; // compteur de détecteurs  rencontrés
+                      // on remplit l’histo de multiplicité m pour ce détecteur
+                      NaI_multigammaspectraM[m][specIndex2]->Fill(NaI_gammaE);
+                      // On remplit aussi les histos avec les binning résolution + binning andreas pour la déconvolution
+                      //FillGammaCommonHists(gammaE);
+                      // ------ Association des gammas totaux avec les évènement de fission retenus ------
+                      NaI_timespectra[specIndex2]->Fill(NaI_tof);
+                      NaI_NRJspectra[specIndex2]->Fill(NaI_gammaE);
+                      NaI_timematrix->Fill(label, NaI_tof);
+                      NaI_TimeNRJmatrix[specIndex2]->Fill(NaI_gammaE, NaI_tof);
+                    }
+                  }
+
+                }//continue; // skip pileup events
                 // if (label == 1) {
                 //   cathodeTime = g_coinc_windows->GetHit(k).GetHitTime() / 1000.0; // cathode
                 //   //continue;
                 // }
-                if (label >= 20 && label <= 28 ) { //rajouter la condition sur le pileup si besoin pour différencier NaI et CeBr3
-                  if ((label == 27 || label == 26 || label == 24) && (run_number>=806 && run_number<=878)) continue; // remove PARIS27 for these runs because of saturation at 2MeV + bad calibration
-                  if ((label == 28 ) && ((run_number>=120 && run_number<=165) || (run_number>=774 && run_number<=872))) continue; // remove PARIS305 and 21 for these runs because of saturation at 2MeV + bad calibration
-                  
-                  double gammaE = g_coinc_windows->GetHit(k).GetHitE1();
-                  double gammaT = g_coinc_windows->GetHit(k).GetHitTime() / 1000.0; // pour passer de ps en ns
-                  double tof    = gammaT - cathodeTime_bis;
+                else {
+                  if (label >= 20 && label <= 28 ) { //rajouter la condition sur le pileup si besoin pour différencier NaI et CeBr3
+                    if ((label == 27 || label == 26 || label == 24) && (run_number>=806 && run_number<=878)) continue; // remove PARIS27 for these runs because of saturation at 2MeV + bad calibration
+                    if ((label == 28 ) && ((run_number>=120 && run_number<=165) || (run_number>=774 && run_number<=872))) continue; // remove PARIS305 and 21 for these runs because of saturation at 2MeV + bad calibration
+                    
+                    double gammaE = g_coinc_windows->GetHit(k).GetHitE1();
+                    double gammaT = g_coinc_windows->GetHit(k).GetHitTime() / 1000.0; // pour passer de ps en ns
+                    double tof    = gammaT - cathodeTime_bis;
 
-                  // correction alignement éventuelle
-                  bool applyCorr = true;
-                  if (parisAlignMaps.find(label) == parisAlignMaps.end() ||
-                      parisAlignMaps[label].find(run_number) == parisAlignMaps[label].end()) {
-                    applyCorr = false;
-                  }
-                  if (applyCorr) {
-                    gammaE = alignCalib(parisAlignMaps[label], run_number, gammaE);
-                  }
+                    // correction alignement éventuelle
+                    // bool applyCorr = true;
+                    // if (parisAlignMaps.find(label) == parisAlignMaps.end() ||
+                    //     parisAlignMaps[label].find(run_number) == parisAlignMaps[label].end()) {
+                    //   applyCorr = false;
+                    // }
+                    // if (applyCorr) {
+                    //   gammaE = alignCalib(parisAlignMaps[label], run_number, gammaE);
+                    // }
 
-                  int specIndex2 = label - 20; // 0..8 pour PARIS20..28
-                  if (specIndex2 >= 0 && specIndex2 < (int)timespectra.size() && tof > -7.75 && tof < 7.75) { //I nee
-                    g_evt++; // compteur de détecteurs  rencontrés
-                    // on remplit l’histo de multiplicité m pour ce détecteur
-                    multigammaspectraM[m][specIndex2]->Fill(gammaE);
-                    // On remplit aussi les histos avec les binning résolution + binning andreas pour la déconvolution
-                    if (gammaE<7500.){FillGammaCommonHists(gammaE);}
-                    // ------ Association des gammas totaux avec les évènement de fission retenus ------
-                    timespectra[specIndex2]->Fill(tof);
-                    NRJspectra[specIndex2]->Fill(gammaE);
-                    timematrix->Fill(label, tof);
-                    TimeNRJmatrix[specIndex2]->Fill(gammaE, tof);
+                    int specIndex2 = label - 20; // 0..8 pour PARIS20..28
+                    if (specIndex2 >= 0 && specIndex2 < (int)timespectra.size() && tof > -7.75 && tof < 7.75) { //I nee
+                      g_evt++; // compteur de détecteurs  rencontrés
+                      // on remplit l’histo de multiplicité m pour ce détecteur
+                      multigammaspectraM[m][specIndex2]->Fill(gammaE);
+                      // On remplit aussi les histos avec les binning résolution + binning andreas pour la déconvolution
+                      FillGammaCommonHists(gammaE);
+                      // ------ Association des gammas totaux avec les évènement de fission retenus ------
+                      timespectra[specIndex2]->Fill(tof);
+                      NRJspectra[specIndex2]->Fill(gammaE);
+                      timematrix->Fill(label, tof);
+                      TimeNRJmatrix[specIndex2]->Fill(gammaE, tof);
+                    }
                   }
                 }
+                  
               }
               g_multiplicity.push_back(g_evt);
               n_multiplicity.push_back(m);
@@ -7841,6 +8010,12 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
     // p_meanG_vs_N->SetMarkerStyle(20); p_meanG_vs_N->SetMarkerSize(1.0);
     
 
+    //soustraction du fond aléatoire dans l'histogramme 2D
+    //ring_multiplicity->Clone("bckgndsub_ring_multiplicity");
+    TH1F* bckgndsub_ring_multiplicity = (TH1F*)ring_multiplicity->Clone("bckgndsub_ring_multiplicity");
+    bckgndsub_ring_multiplicity->Add(background_multiplicity, -1.0);
+    
+    
 
     outputfile->cd();
     // Écriture dans le fichier courant
@@ -7858,6 +8033,15 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
         spectrum->Write();
       }
     }
+    for (int m = 0; m <= MAX_MULT; ++m) {
+      for (TH1F* spectrum : NaI_multigammaspectraM[m]) {
+        spectrum->Write();
+      }
+    }
+    for (TH1F* spectrum : NaI_timespectra) spectrum->Write();
+    for (TH1F* spectrum : NaI_NRJspectra) spectrum->Write();
+    NaI_timematrix->Write();
+    for (TH2F* matrix : NaI_TimeNRJmatrix) matrix->Write();
         
     neutron_delay->Write();
     ring1->Write();
@@ -7872,6 +8056,8 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
     //neutron_multiplicity->SetName("NormalizedAverageMultiplicity");
     ring_multiplicity->SetName("RingMultiplicity");
     background_multiplicity->SetName("BackgroundMultiplicity");
+    bckgndsub_ring_multiplicity->SetName("BackgroundSubtractedRingMultiplicity");
+    
 
 
     // Calcul de la moyenne de multiplicité neutronique 
@@ -7890,6 +8076,9 @@ std::vector<TH1F*> FissionEventReconstruction(const CExperiment &experiment, Dou
     //neutron_multiplicity->Write();
     ring_multiplicity->Write();
     background_multiplicity->Write();
+    ring_gamma_multiplicity->Write();
+    background_gamma_multiplicity->Write();
+    bckgndsub_ring_multiplicity->Write();
     timematrix->SetOption("colz");
     timematrix->Write();
     fissiongap->Write();
@@ -8318,7 +8507,7 @@ int DrawAllCorrectedCalibrationSpectra(const CExperiment &experiment)
       if (resolutionbin && resA!=0 && resA<100 && respower!=0 && respower<1)
       {
         binedges[0]=0.;
-        binedges[1]=2.;
+        binedges[1]=11.;
         //binedges[nbrbin]=400000.;
         for (Int_t i = 2; i < nbrbin+1; i++)
         {
@@ -8576,6 +8765,7 @@ int BISFissionEventReconstruction(const CExperiment &experiment, Double_t deltaT
   //  std::vector<TH1F*> multigammaspectra4;
   constexpr int MAX_MULT = 20; // on va de 0 à 20 inclus
   std::array<std::vector<TH1F*>, MAX_MULT + 1> multigammaspectraM; // multigammaspectraM[m] = vector<TH1F*> (par détecteur)
+  std::array<std::vector<TH1F*>, MAX_MULT + 1> NaI_multigammaspectraM; 
    
    std::vector<double> binedges;
    int nbrbin = 1000;

@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
   Bool_t isCalculating_E_Calibration = kFALSE;
   Bool_t isApplying_E_Calibration = kFALSE;
   Bool_t isApplying_E_Correction = kFALSE;
-  Bool_t isChecking_E_Calib = kFALSE;
+  Bool_t isChecking_E_Calib = kTRUE;
   Bool_t isChecking_E_Correction = kFALSE;
   Bool_t isCalculating_T_Calibration = kFALSE;
   Bool_t isApplying_T_Calibration = kFALSE;
@@ -248,7 +248,7 @@ int main(int argc, char* argv[])
     experiment->LoadTimeCalibration(CalibrationFileName);
     std::string ecal_file = TimeAlignator(*experiment, isCalibrated);
     // 2️⃣ Générer le .dat associé
-    generate_dat_files_CORR(ecal_file);
+    //generate_dat_files_CORR(ecal_file);
 
     
   }
@@ -269,6 +269,7 @@ int main(int argc, char* argv[])
     //experiment->SetReferenceDetector(1);
 
     DrawTimeShifts_fissionevents_Calibrated(*experiment,-800.,800.);
+    //DrawTimeShifts(*experiment,-800.,800., "AllDetectors_TimeCalibrated"); // Begin/End of Time Window in ns
     
     //CheckTimeShifts(*experiment,-20.,20.); // Begin/End of Time Window in ns
     Bool_t isCalibrated = kTRUE;
